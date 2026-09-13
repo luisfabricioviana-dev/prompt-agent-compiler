@@ -1,0 +1,36 @@
+name: restore-v028-original
+on:
+  push:
+    branches: [automation-restore-v028]
+permissions:
+  contents: write
+jobs:
+  restore:
+    if: "!contains(github.event.head_commit.message, '[restore-complete]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Materialize recovered v0.2.8 source tree
+        run: |
+          set -euxo pipefail
+          curl -L --fail --silent --show-error -o /tmp/source.zip 'https://drive.google.com/uc?export=download&id=1Q_76H7WgFGIshi16RVOXj9xaQM1qSbPj'
+          python - <<'PY'
+          import zipfile
+          p='/tmp/source.zip'
+          assert zipfile.is_zipfile(p)
+          with zipfile.ZipFile(p) as z:
+              print('members', len(z.namelist()))
+          PY
+          rm -rf /tmp/restored && mkdir -p /tmp/restored
+          unzip -q /tmp/source.zip -d /tmp/restored
+          SRC=$(find /tmp/restored -mindepth 1 -maxdepth 1 -type d | head -n 1)
+          cp .github/workflows/restore-v028.yml /tmp/restore-v028.yml
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a "$SRC"/. .
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          find . -type f -name '*.pyc' -delete
+          mkdir -p .github/workflows
+          cp /tmp/restore-v028.yml .github/workflows/restore-v028.yml
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'restore: recovered original v0.2.8 source tree [restore-complete]'
