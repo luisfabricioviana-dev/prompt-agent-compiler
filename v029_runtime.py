@@ -31,3 +31,14 @@ def classify_solvability(requires_context=False, requires_evidence=False, requir
     if requires_context:
         return 'REQUIRES_CONTEXT'
     return 'SOLVABLE_NOW'
+
+
+class NormalizedTask:
+    def __init__(self, intent, objective, task_mode):
+        if task_mode not in TASK_MODES:
+            raise ValueError('invalid task_mode')
+        if not intent.strip() or not objective.strip():
+            raise ValueError('intent and objective are required')
+        self.intent = intent.strip()
+        self.objective = objective.strip()
+        self.task_mode = task_mode
