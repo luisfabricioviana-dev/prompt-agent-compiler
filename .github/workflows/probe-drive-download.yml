@@ -1,0 +1,27 @@
+name: probe-drive-download
+on:
+  push:
+    branches: [staging-restore-v028]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe public Drive download
+        run: |
+          set -euxo pipefail
+          URL='https://drive.google.com/uc?export=download&id=1Q_76H7WgFGIshi16RVOXj9xaQM1qSbPj'
+          curl -L --fail --silent --show-error -o /tmp/source.zip "$URL"
+          file /tmp/source.zip
+          ls -lh /tmp/source.zip
+          python - <<'PY'
+          import zipfile
+          p='/tmp/source.zip'
+          print('is_zip', zipfile.is_zipfile(p))
+          if zipfile.is_zipfile(p):
+              with zipfile.ZipFile(p) as z:
+                  print('members', len(z.namelist()))
+                  print('first', z.namelist()[:5])
+          PY
