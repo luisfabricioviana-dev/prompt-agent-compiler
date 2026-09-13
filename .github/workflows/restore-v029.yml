@@ -13,7 +13,9 @@ jobs:
       - name: Materialize recovered v0.2.9 source tree
         run: |
           set -euxo pipefail
-          curl -L --fail --silent --show-error -o /tmp/source.zip 'https://drive.google.com/uc?export=download&id=1M3Hkoy4-YPKyUYmrkcBKdd1pTDwK8voH'
+          curl -L --fail --silent --show-error -o /tmp/source.zip 'https://drive.google.com/uc?export=download&id=1a6h9u7JtEYGkbK8nzVE3scClYUvO9E4T'
+          file /tmp/source.zip
+          wc -c /tmp/source.zip
           python - <<'PY'
           import zipfile
           p='/tmp/source.zip'
@@ -31,6 +33,9 @@ jobs:
           find . -type f -name '*.pyc' -delete
           mkdir -p .github/workflows
           cp /tmp/restore-v029.yml .github/workflows/restore-v029.yml
+          python -m compileall -q .
+          python -m unittest discover -v
+          python freeze_integrity_v0_2_9.py
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'restore: recovered original v0.2.9 source tree [restore-complete]'
