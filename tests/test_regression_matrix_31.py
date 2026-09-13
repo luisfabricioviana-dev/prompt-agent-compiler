@@ -76,8 +76,14 @@ def test_semantic_failure_precedes_all_downstream_failures(self):
     self.assertEqual(result, 'SEMANTIC')
 
 
+def test_invalid_task_mode_is_rejected(self):
+    with self.assertRaises(ValueError):
+        NormalizedTask('intent', 'objective', 'UNKNOWN_MODE')
+
+
 setattr(RegressionMatrix31Tests, 'test_provider_returns_defensive_copy', test_provider_returns_defensive_copy)
 setattr(RegressionMatrix31Tests, 'test_semantic_failure_precedes_all_downstream_failures', test_semantic_failure_precedes_all_downstream_failures)
+setattr(RegressionMatrix31Tests, 'test_invalid_task_mode_is_rejected', test_invalid_task_mode_is_rejected)
 
 
 if __name__ == '__main__':
