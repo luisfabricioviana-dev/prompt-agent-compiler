@@ -39,3 +39,9 @@ def production_prompt_ready(eval_defined, fixtures_defined, versioned):
 
 def duplicate_evidence(content_id, seen_content_ids):
     return content_id in set(seen_content_ids or [])
+
+
+class ModelEvalRunner:
+    def run(self, value, checks):
+        results = tuple(bool(check(value)) for check in checks)
+        return {'passed': all(results), 'results': results}
