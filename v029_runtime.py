@@ -34,7 +34,7 @@ def classify_solvability(requires_context=False, requires_evidence=False, requir
 
 
 class NormalizedTask:
-    def __init__(self, intent, objective, task_mode):
+    def __init__(self, intent, objective, task_mode, evidence_required=False, material_ambiguity=False):
         if task_mode not in TASK_MODES:
             raise ValueError('invalid task_mode')
         if not intent.strip() or not objective.strip():
@@ -42,3 +42,30 @@ class NormalizedTask:
         self.intent = intent.strip()
         self.objective = objective.strip()
         self.task_mode = task_mode
+        self.evidence_required = bool(evidence_required)
+        self.material_ambiguity = bool(material_ambiguity)
+
+
+class ExecutionSpec:
+    def __init__(self, route, task, require_eval=True, require_grounding=False):
+        self.route = route
+        self.task = task
+        self.require_eval = require_eval
+        self.require_grounding = require_grounding
+
+
+class PolicyRouter:
+    def route(self, task):
+        if task.material_ambiguity:
+            return ExecutionSpec('CLARIFY', task, require_eval=False)
+        if task.evidence_required:
+            return ExecutionSpec('GROUNDED_EXECUTION', task, require_grounding=True)
+        routes = {
+            'EXPLORE': 'DIVERGENT_PLANNER',
+            'SELECT': 'DECISION_ROUTER',
+            'PLAN': 'PLANNER',
+            'EXECUTE': 'EXECUTOR',
+            'VALIDATE': 'VALIDATOR',
+            'REPAIR': 'REPAIR_ROUTER',
+        }
+        return ExecutionSpec(routes.get(task.task_mode, 'DIRECT_EXECUTION'), task)
