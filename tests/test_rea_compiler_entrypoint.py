@@ -91,5 +91,58 @@ class EntryPointTests(unittest.TestCase):
             self.assertIsNone(db.execute(
                 "SELECT name FROM sqlite_master WHERE name='rea_release_claims'").fetchone())
 
+    def test_github_wrapper_confirmed_by_signed_observer(self):
+        import hashlib
+        import hmac
+        import json
+        from compiler import run_optional_rea_github_release
+        from contracts.rea_release_authority import ReleaseAuthorization
+        from contracts.rea_release_reconciliation import DestinationObservation
+        from contracts.rea_security_gate import ArtifactEvidence
+        payload = b"safe integration fixture"
+        sha = hashlib.sha256(payload).hexdigest()
+        destination = "owner/destination"
+        release = "release-unique-202"
+        issuer = "issuer"
+        observer = "observer-01"
+        issuer_key = b"issuer-key-for-test-only-1234567890"
+        observer_key = b"observer-key-for-test-only-1234567890"
+        signed = f"REA-RELEASE-DEST-v2\n{issuer}\n{release}\n{sha}\n{destination}".encode()
+        auth = ReleaseAuthorization(sha, release, issuer,
+            hmac.new(issuer_key, signed, hashlib.sha256).hexdigest())
+        evidence = ArtifactEvidence(True, False, False, True, sha)
+        requests = []
+        delivered = []
+        class Response:
+            def __init__(self, obj): self.raw = json.dumps(obj).encode()
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, limit): return self.raw[:limit]
+        def opener(request, timeout):
+            requests.append(request.full_url)
+            if request.full_url.endswith("/user"): return Response({"login": "tester"})
+            if "/collaborators/" in request.full_url: return Response({"permission": "write"})
+            return Response({"full_name": destination, "id": 42})
+        def observe(release_id, destination_id):
+            signature_message = (
+                f"REA-DESTINATION-v2\n{observer}\n{release_id}\n{sha}\n"
+                f"{destination_id}\ndelivered").encode()
+            return DestinationObservation(release_id, sha, destination_id, True,
+                hmac.new(observer_key, signature_message, hashlib.sha256).hexdigest())
+        with sqlite3.connect(":memory:") as db:
+            result = run_optional_rea_github_release(
+                db, payload, evidence, auth, issuer=issuer, issuer_key=issuer_key,
+                destination_id=destination, github_token="fixture-only",
+                observer_id=observer, observer_key=observer_key,
+                dispatch=lambda data, digest: delivered.append((data, digest)),
+                observe=observe, enable_dispatch=True, github_opener=opener,
+                expected_repository_id=42)
+            self.assertEqual(result.state, "CONFIRMED_BY_OBSERVER")
+            self.assertEqual(delivered, [(payload, sha)])
+            self.assertEqual(len(requests), 3)
+            self.assertEqual(db.execute(
+                "SELECT destination_id FROM rea_release_confirmations WHERE release_id=?",
+                (release,)).fetchone()[0], destination)
+
 if __name__ == "__main__":
     unittest.main()
