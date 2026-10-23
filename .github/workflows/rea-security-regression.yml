@@ -1,0 +1,27 @@
+name: REA security regression
+on:
+  pull_request:
+    paths:
+      - 'contracts/rea_security_gate.py'
+      - 'tests/test_rea_security_gate.py'
+      - '.github/workflows/rea-security-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'contracts/rea_security_gate.py'
+      - 'tests/test_rea_security_gate.py'
+      - '.github/workflows/rea-security-regression.yml'
+permissions:
+  contents: read
+jobs:
+  security-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax and REA policy tests
+        run: |
+          python -m py_compile contracts/rea_security_gate.py tests/test_rea_security_gate.py
+          python -m unittest discover -s tests -p test_rea_security_gate.py -v
