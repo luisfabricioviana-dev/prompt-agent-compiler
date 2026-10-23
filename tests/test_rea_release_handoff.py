@@ -46,6 +46,25 @@ class HandoffTests(unittest.TestCase):
             self.assertFalse(result.accepted)
         self.assertEqual(seen, [])
 
+    def test_malformed_inputs_fail_closed_without_callback(self):
+        payload = b"fixture"
+        calls = []
+        for kwargs, expected in (
+            (dict(evidence=None), "artifact_evidence_missing"),
+            (dict(callback=None), "callback_unavailable"),
+            (dict(max_size_bytes="unbounded"), "payload_unavailable_or_oversized"),
+            (dict(max_size_bytes=True), "payload_unavailable_or_oversized"),
+            (dict(payload=b""), "payload_unavailable_or_oversized"),
+        ):
+            options = dict(payload=payload, evidence=self.evidence(payload),
+                           authorized_for_release=True,
+                           callback=lambda *_: calls.append(True))
+            options.update(kwargs)
+            result = handoff.governed_artifact_handoff(**options)
+            self.assertFalse(result.accepted)
+            self.assertIn(expected, result.reasons)
+        self.assertEqual(calls, [])
+
     def test_callback_failure_never_claims_success(self):
         payload = b"fixture"
         def broken(contents, digest):
