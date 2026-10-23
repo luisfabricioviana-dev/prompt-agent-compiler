@@ -48,6 +48,17 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("artifact_digest_mismatch", result.reason)
             self.assertEqual(sent, [])
 
+    def test_destination_retargeting_is_blocked(self):
+        with sqlite3.connect(":memory:") as db:
+            sent = []
+            result = run_governed_pipeline(db, self.payload, self.evidence(), self.authorization(),
+                issuer="release-owner", issuer_key=self.key, destination_id="attacker-repository",
+                observer_id=self.observer, observer_key=self.observer_key,
+                dispatch=lambda *_: sent.append(True), observe=self.observation,
+                enable_dispatch=True)
+            self.assertEqual(result.state, "BLOCKED")
+            self.assertEqual(sent, [])
+
     def test_default_never_dispatches(self):
         sent = []
         with sqlite3.connect(":memory:") as db:
