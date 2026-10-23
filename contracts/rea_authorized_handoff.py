@@ -25,14 +25,20 @@ def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
     byte_proof = verify_artifact_bytes(payload, evidence.artifact_sha256)
     if not byte_proof.allowed:
         return HandoffResult(False, byte_proof.reasons)
-    conn.execute("CREATE TABLE IF NOT EXISTS rea_release_claims (release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL)")
     try:
+        conn.execute("CREATE TABLE IF NOT EXISTS rea_release_claims (release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL)")
         conn.execute("INSERT INTO rea_release_claims (release_id, artifact_sha256) VALUES (?, ?)",
                      (auth.release_id, auth.artifact_sha256))
         conn.commit()
     except sqlite3.IntegrityError:
         conn.rollback()
         return HandoffResult(False, ("release_id_already_consumed",))
+    except sqlite3.Error:
+        try:
+            conn.rollback()
+        except sqlite3.Error:
+            pass
+        return HandoffResult(False, ("release_claim_persistence_failed",))
     # A persisted claim without an outcome is IN_DOUBT after a crash.
     # Callback return never proves delivery to the final destination.
     outcome = governed_artifact_handoff(
