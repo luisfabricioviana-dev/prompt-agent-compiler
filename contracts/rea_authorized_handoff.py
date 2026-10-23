@@ -14,6 +14,8 @@ def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
                        trusted_issuer: str, trusted_key: bytes, callback, destination_id: str | None = None) -> HandoffResult:
     if not isinstance(payload, bytes):
         return HandoffResult(False, ("payload_unavailable",))
+    if not isinstance(evidence, ArtifactEvidence):
+        return HandoffResult(False, ("artifact_evidence_missing",))
     verifier = verify_destination_bound_authorization if destination_id is not None else verify_release_authorization
     verification = dict(trusted_issuer=trusted_issuer, trusted_key=trusted_key,
                         artifact_sha256=evidence.artifact_sha256)
