@@ -70,5 +70,18 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(result.state, "BLOCKED")
             self.assertEqual(calls, [])
 
+    def test_dispatch_timeout_is_in_doubt_and_never_retried(self):
+        deliveries = []
+        with sqlite3.connect(":memory:") as db:
+            def lost_ack(data, digest):
+                deliveries.append(digest)
+                raise TimeoutError("acknowledgment lost")
+            first = self.execute_pipeline(db, lost_ack, enabled=True)
+            self.assertEqual(first.state, "IN_DOUBT")
+            self.assertEqual(deliveries, [self.sha])
+            second = self.execute_pipeline(db, lambda *_: deliveries.append("retry"), enabled=True)
+            self.assertEqual(second.state, "BLOCKED")
+            self.assertEqual(deliveries, [self.sha])
+
 if __name__ == "__main__":
     unittest.main()
