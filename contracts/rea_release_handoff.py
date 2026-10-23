@@ -31,8 +31,14 @@ def governed_artifact_handoff(
     # Production callers must obtain this fact from a verified release authority.
     if authorized_for_release is not True:
         return HandoffResult(False, ("release_authorization_absent",))
-    if not isinstance(payload, bytes) or len(payload) > max_size_bytes or max_size_bytes <= 0:
+    if (not isinstance(max_size_bytes, int) or isinstance(max_size_bytes, bool)
+        or max_size_bytes <= 0 or not isinstance(payload, bytes)
+        or not payload or len(payload) > max_size_bytes):
         return HandoffResult(False, ("payload_unavailable_or_oversized",))
+    if not isinstance(evidence, ArtifactEvidence):
+        return HandoffResult(False, ("artifact_evidence_missing",))
+    if not callable(callback):
+        return HandoffResult(False, ("callback_unavailable",))
     policy = evaluate_artifact(evidence)
     if not policy.allowed:
         return HandoffResult(False, policy.reasons)
