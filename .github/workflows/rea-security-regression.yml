@@ -4,16 +4,20 @@ on:
     paths:
       - 'contracts/rea_security_gate.py'
       - 'contracts/rea_artifact_admission.py'
+      - 'contracts/rea_release_handoff.py'
       - 'tests/test_rea_security_gate.py'
       - 'tests/test_rea_artifact_admission.py'
+      - 'tests/test_rea_release_handoff.py'
       - '.github/workflows/rea-security-regression.yml'
   push:
     branches: [main]
     paths:
       - 'contracts/rea_security_gate.py'
       - 'contracts/rea_artifact_admission.py'
+      - 'contracts/rea_release_handoff.py'
       - 'tests/test_rea_security_gate.py'
       - 'tests/test_rea_artifact_admission.py'
+      - 'tests/test_rea_release_handoff.py'
       - '.github/workflows/rea-security-regression.yml'
 permissions:
   contents: read
@@ -27,5 +31,5 @@ jobs:
           python-version: '3.11'
       - name: Syntax and REA policy tests
         run: |
-          python -m py_compile contracts/rea_security_gate.py contracts/rea_artifact_admission.py tests/test_rea_security_gate.py tests/test_rea_artifact_admission.py
+          python -m py_compile contracts/rea_security_gate.py contracts/rea_artifact_admission.py contracts/rea_release_handoff.py tests/test_rea_security_gate.py tests/test_rea_artifact_admission.py tests/test_rea_release_handoff.py
           python -m unittest discover -s tests -p 'test_rea_*.py' -v
