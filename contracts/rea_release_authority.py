@@ -51,6 +51,6 @@ def verify_destination_bound_authorization(auth: ReleaseAuthorization, *,
         not isinstance(auth.signature_hex, str) or
         not re.fullmatch(r"[a-f0-9]{64}", auth.signature_hex)):
         return False
-    message = f"REA-RELEASE-DEST-v2\\n{auth.issuer}\\n{auth.release_id}\\n{auth.artifact_sha256}\\n{destination_id}".encode()
+    message = f"REA-RELEASE-DEST-v2\n{auth.issuer}\n{auth.release_id}\n{auth.artifact_sha256}\n{destination_id}".encode()
     expected = hmac.new(trusted_key, message, hashlib.sha256).hexdigest()
     return hmac.compare_digest(expected, auth.signature_hex)
