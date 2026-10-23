@@ -12,7 +12,7 @@ import sqlite3
 from .rea_authorized_handoff import authorized_handoff, read_release_dispatch_state
 from .rea_release_authority import ReleaseAuthorization
 from .rea_release_reconciliation import reconcile_delivery
-from .rea_security_gate import ArtifactEvidence
+from .rea_security_gate import ArtifactEvidence, evaluate_artifact, verify_artifact_bytes
 
 @dataclass(frozen=True)
 class PipelineResult:
@@ -30,8 +30,14 @@ def run_governed_pipeline(
     if not isinstance(payload, bytes):
         return PipelineResult("BLOCKED", "invalid_payload", "")
     digest = hashlib.sha256(payload).hexdigest()
+    if not isinstance(evidence, ArtifactEvidence):
+        return PipelineResult("BLOCKED", "artifact_evidence_missing", digest)
+    policy = evaluate_artifact(evidence)
+    bytes_proof = verify_artifact_bytes(payload, evidence.artifact_sha256)
+    if not policy.allowed or not bytes_proof.allowed:
+        return PipelineResult("BLOCKED", ",".join((*policy.reasons, *bytes_proof.reasons)), digest)
     if enable_dispatch is not True:
-        return PipelineResult("DRY_RUN", "external_dispatch_disabled", digest)
+        return PipelineResult("DRY_RUN", "artifact_checked_dispatch_disabled", digest)
     if not isinstance(destination_id, str) or not destination_id:
         return PipelineResult("BLOCKED", "destination_missing", digest)
     attempt = authorized_handoff(
