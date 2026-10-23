@@ -1,0 +1,74 @@
+import hashlib
+import hmac
+import sqlite3
+import unittest
+from contracts.rea_pipeline import run_governed_pipeline
+from contracts.rea_release_authority import ReleaseAuthorization
+from contracts.rea_release_reconciliation import DestinationObservation
+from contracts.rea_security_gate import ArtifactEvidence
+
+class PipelineTests(unittest.TestCase):
+    payload = b"safe pipeline fixture"
+    sha = hashlib.sha256(payload).hexdigest()
+    key = b"release-key-for-unit-tests-only-123456"
+    observer_key = b"independent-observer-test-key-123456"
+    release = "release-001"
+    destination = "target-repository"
+    observer = "trusted-observer-A"
+
+    def evidence(self):
+        return ArtifactEvidence(True, False, False, True, self.sha)
+
+    def authorization(self):
+        msg = ("REA-RELEASE-v1\nrelease-owner\n" + self.release + "\n" + self.sha).encode()
+        return ReleaseAuthorization(self.sha, self.release, "release-owner",
+                                    hmac.new(self.key, msg, hashlib.sha256).hexdigest())
+
+    def observation(self, release, destination):
+        msg = ("REA-DESTINATION-v2\n" + self.observer + "\n" + release +
+               "\n" + self.sha + "\n" + destination + "\ndelivered").encode()
+        return DestinationObservation(release, self.sha, destination, True,
+            hmac.new(self.observer_key, msg, hashlib.sha256).hexdigest())
+
+    def run(self, db, dispatch, *, enabled=False, observe=None, payload=None):
+        return run_governed_pipeline(
+            db, self.payload if payload is None else payload, self.evidence(),
+            self.authorization(), issuer="release-owner", issuer_key=self.key,
+            destination_id=self.destination, observer_id=self.observer,
+            observer_key=self.observer_key, dispatch=dispatch,
+            observe=self.observation if observe is None else observe,
+            enable_dispatch=enabled,
+        )
+
+    def test_default_never_dispatches(self):
+        sent = []
+        with sqlite3.connect(":memory:") as db:
+            result = self.run(db, lambda *_: sent.append(True))
+            self.assertEqual(result.state, "DRY_RUN")
+            self.assertEqual(sent, [])
+
+    def test_explicit_simulated_dispatch_and_signed_observation(self):
+        sent = []
+        with sqlite3.connect(":memory:") as db:
+            result = self.run(db, lambda data, digest: sent.append((data, digest)), enabled=True)
+            self.assertEqual(result.state, "CONFIRMED_BY_OBSERVER")
+            self.assertEqual(sent, [(self.payload, self.sha)])
+            duplicate = self.run(db, lambda *_: sent.append("duplicate"), enabled=True)
+            self.assertEqual(duplicate.state, "BLOCKED")
+            self.assertEqual(len(sent), 1)
+
+    def test_false_observer_or_tampered_bytes_fail_closed(self):
+        with sqlite3.connect(":memory:") as db:
+            wrong = lambda *_: DestinationObservation(
+                self.release, self.sha, self.destination, True, "0"*64)
+            result = self.run(db, lambda *_: None, enabled=True, observe=wrong)
+            self.assertEqual(result.state, "IN_DOUBT")
+        with sqlite3.connect(":memory:") as db:
+            calls = []
+            result = self.run(db, lambda *_: calls.append(True),
+                              enabled=True, payload=b"tampered")
+            self.assertEqual(result.state, "BLOCKED")
+            self.assertEqual(calls, [])
+
+if __name__ == "__main__":
+    unittest.main()
