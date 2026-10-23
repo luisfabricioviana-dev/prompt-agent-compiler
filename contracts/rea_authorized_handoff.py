@@ -6,7 +6,7 @@ A failed/uncertain callback intentionally stays consumed: reconcile externally.
 from __future__ import annotations
 import sqlite3
 from .rea_release_authority import ReleaseAuthorization, verify_destination_bound_authorization
-from .rea_release_handoff import governed_artifact_handoff, HandoffResult
+from .rea_release_handoff import verify_handoff_candidate, HandoffResult
 from .rea_security_gate import ArtifactEvidence, evaluate_artifact, verify_artifact_bytes
 
 def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
@@ -45,9 +45,16 @@ def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
         return HandoffResult(False, ("release_claim_persistence_failed",))
     # A persisted claim without an outcome is IN_DOUBT after a crash.
     # Callback return never proves delivery to the final destination.
-    outcome = governed_artifact_handoff(
-        payload, evidence, authorized_for_release=True, callback=callback
-    )
+    checked = verify_handoff_candidate(payload, evidence)
+    if not checked.accepted:
+        outcome = checked
+    else:
+        try:
+            callback(payload, checked.digest)
+        except Exception:
+            outcome = HandoffResult(False, ("downstream_dispatch_failed",), checked.digest)
+        else:
+            outcome = checked
     try:
         conn.execute(
             "CREATE TABLE IF NOT EXISTS rea_release_outcomes "
