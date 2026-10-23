@@ -14,6 +14,7 @@ on:
       - 'tests/test_rea_authorized_handoff.py'
       - 'tests/test_rea_release_reconciliation.py'
       - '.github/workflows/rea-security-regression.yml'
+      - 'docs/integrations/GOVERNED_FACTORY_REA_ADOPTION_20261023.md'
   push:
     branches: [main]
     paths:
@@ -43,3 +44,6 @@ jobs:
         run: |
           python -m compileall -q contracts/rea_*.py tests/test_rea_*.py
           python -m unittest discover -s tests -p 'test_rea_*.py' -v
+      - name: Entire reconstructed baseline regression
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py' -v
