@@ -24,6 +24,22 @@ class GithubDestinationTests(unittest.TestCase):
             resolve_github_destination("owner/destination", token="fixture-key",
                 opener=lambda *_ , **__: Response(b'{"full_name":"other/destination"}'))
 
+    def test_immutable_repository_id_pin(self):
+        def response(repository_id):
+            return lambda *_args, **_kwargs: Response(
+                json.dumps({"full_name": "owner/destination", "id": repository_id}).encode())
+        actual = resolve_github_destination(
+            "owner/destination", token="fixture-key", opener=response(42),
+            expected_repository_id=42)
+        self.assertEqual(actual, "owner/destination")
+        with self.assertRaisesRegex(ValueError, "github_repository_id_mismatch"):
+            resolve_github_destination(
+                "owner/destination", token="fixture-key", opener=response(43),
+                expected_repository_id=42)
+        with self.assertRaisesRegex(ValueError, "expected_repository_id_invalid"):
+            resolve_github_destination(
+                "owner/destination", token="fixture-key", expected_repository_id=True)
+
     def test_missing_credentials_invalid_path_and_bad_metadata(self):
         with self.assertRaisesRegex(ValueError, "github_token_missing"):
             resolve_github_destination("owner/destination", token="")
