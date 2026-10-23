@@ -19,7 +19,13 @@ def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
         artifact_sha256=evidence.artifact_sha256
     ):
         return HandoffResult(False, ("release_authority_unverified",))
-    policy = evaluate_artifact(evidence)\n    if not policy.allowed:\n        return HandoffResult(False, policy.reasons)\n    byte_proof = verify_artifact_bytes(payload, evidence.artifact_sha256)\n    if not byte_proof.allowed:\n        return HandoffResult(False, byte_proof.reasons)\n    conn.execute("CREATE TABLE IF NOT EXISTS rea_release_claims (release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL)")
+    policy = evaluate_artifact(evidence)
+    if not policy.allowed:
+        return HandoffResult(False, policy.reasons)
+    byte_proof = verify_artifact_bytes(payload, evidence.artifact_sha256)
+    if not byte_proof.allowed:
+        return HandoffResult(False, byte_proof.reasons)
+    conn.execute("CREATE TABLE IF NOT EXISTS rea_release_claims (release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL)")
     try:
         conn.execute("INSERT INTO rea_release_claims (release_id, artifact_sha256) VALUES (?, ?)",
                      (auth.release_id, auth.artifact_sha256))
