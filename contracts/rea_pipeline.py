@@ -43,6 +43,7 @@ def run_governed_pipeline(
     attempt = authorized_handoff(
         conn, payload, evidence, authorization,
         trusted_issuer=issuer, trusted_key=issuer_key, callback=dispatch,
+        destination_id=destination_id,
     )
     if not attempt.accepted:
         # Once a release ID is claimed, a failure can represent a remotely
