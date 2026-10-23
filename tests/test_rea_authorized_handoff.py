@@ -93,5 +93,18 @@ class AuthorizedHandoffTests(unittest.TestCase):
             self.assertFalse(retry.accepted)
             self.assertEqual(retry.reasons, ("release_id_already_consumed",))
 
+    def test_unavailable_ledger_never_dispatches(self):
+        sent = []
+        db = sqlite3.connect(":memory:")
+        db.close()
+        result = authorized_handoff(
+            db, self.PAYLOAD, self.evidence(), self.auth(),
+            trusted_issuer="release-owner", trusted_key=self.KEY,
+            callback=lambda *_: sent.append(True),
+        )
+        self.assertFalse(result.accepted)
+        self.assertEqual(result.reasons, ("release_claim_persistence_failed",))
+        self.assertEqual(sent, [])
+
 if __name__ == "__main__":
     unittest.main()
