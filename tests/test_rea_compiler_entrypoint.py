@@ -32,5 +32,21 @@ class EntryPointTests(unittest.TestCase):
         self.assertEqual(result.reason, "artifact_evidence_missing")
         self.assertEqual(calls, [])
 
+    def test_enabled_github_release_requires_pinned_repository_id(self):
+        from compiler import run_optional_rea_github_release
+        calls = []
+        with sqlite3.connect(":memory:") as db:
+            result = run_optional_rea_github_release(
+                db, b"candidate", None, None, issuer="owner", issuer_key=b"",
+                destination_id="owner/repo", github_token="fixture",
+                observer_id="observer", observer_key=b"",
+                dispatch=lambda *_: calls.append("dispatch"),
+                observe=lambda *_: calls.append("observe"),
+                github_opener=lambda *_args, **_kwargs: calls.append("network"),
+                enable_dispatch=True)
+        self.assertEqual(result.state, "BLOCKED")
+        self.assertEqual(result.reason, "trusted_repository_id_required")
+        self.assertEqual(calls, [])
+
 if __name__ == "__main__":
     unittest.main()
