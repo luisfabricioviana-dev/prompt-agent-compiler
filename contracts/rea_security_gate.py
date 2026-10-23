@@ -50,3 +50,26 @@ def evaluate_artifact(evidence: ArtifactEvidence) -> Verdict:
         elif not evidence.matching_reconstruction_evidence:
             reasons.append("reconstruction_claim_unproven")
     return Verdict(not reasons, tuple(reasons))
+
+def verify_artifact_bytes(payload: bytes, expected_sha256: str) -> Verdict:
+    """Independently hash supplied bytes and detect selected high-risk secret markers.
+
+    This is not a general secret scanner and cannot attest that no secrets exist.
+    """
+    import hashlib
+    import hmac
+    import re
+    reasons = []
+    if not isinstance(payload, bytes):
+        return Verdict(False, ("artifact_bytes_unavailable",))
+    actual = hashlib.sha256(payload).hexdigest()
+    if not isinstance(expected_sha256, str) or not hmac.compare_digest(actual, expected_sha256):
+        reasons.append("artifact_digest_mismatch")
+    markers = (
+        rb"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----",
+        rb"gh[pousr]_[A-Za-z0-9_]{20,}",
+        rb"github_pat_[A-Za-z0-9_]{20,}",
+    )
+    if any(re.search(marker, payload) for marker in markers):
+        reasons.append("high_risk_secret_marker_detected")
+    return Verdict(not reasons, tuple(reasons))
