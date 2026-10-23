@@ -20,7 +20,7 @@ class PipelineTests(unittest.TestCase):
         return ArtifactEvidence(True, False, False, True, self.sha)
 
     def authorization(self):
-        msg = ("REA-RELEASE-v1\nrelease-owner\n" + self.release + "\n" + self.sha).encode()
+        msg = ("REA-RELEASE-DEST-v2\nrelease-owner\n" + self.release + "\n" + self.sha + "\n" + self.destination).encode()
         return ReleaseAuthorization(self.sha, self.release, "release-owner",
                                     hmac.new(self.key, msg, hashlib.sha256).hexdigest())
 
