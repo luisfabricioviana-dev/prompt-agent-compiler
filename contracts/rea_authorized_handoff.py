@@ -33,7 +33,38 @@ def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
     except sqlite3.IntegrityError:
         conn.rollback()
         return HandoffResult(False, ("release_id_already_consumed",))
-    # At-most-once invocation, not a claim of exactly-once delivery.
-    return governed_artifact_handoff(
+    # A persisted claim without an outcome is IN_DOUBT after a crash.
+    # Callback return never proves delivery to the final destination.
+    outcome = governed_artifact_handoff(
         payload, evidence, authorized_for_release=True, callback=callback
     )
+    try:
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS rea_release_outcomes "
+            "(release_id TEXT PRIMARY KEY, dispatch_state TEXT NOT NULL)"
+        )
+        conn.execute(
+            "INSERT INTO rea_release_outcomes (release_id, dispatch_state) VALUES (?, ?)",
+            (auth.release_id, "DISPATCH_RETURNED" if outcome.accepted else "IN_DOUBT"),
+        )
+        conn.commit()
+    except sqlite3.Error:
+        conn.rollback()
+        return HandoffResult(False, ("dispatch_outcome_persistence_failed",))
+    return outcome
+
+def read_release_dispatch_state(conn: sqlite3.Connection, release_id: str) -> str:
+    """Read local dispatch state, never final delivery confirmation."""
+    try:
+        claimed = conn.execute(
+            "SELECT 1 FROM rea_release_claims WHERE release_id = ?", (release_id,)
+        ).fetchone()
+        if claimed is None:
+            return "NOT_CLAIMED"
+        state = conn.execute(
+            "SELECT dispatch_state FROM rea_release_outcomes WHERE release_id = ?",
+            (release_id,),
+        ).fetchone()
+        return state[0] if state else "IN_DOUBT"
+    except sqlite3.Error:
+        return "STATE_UNAVAILABLE"
