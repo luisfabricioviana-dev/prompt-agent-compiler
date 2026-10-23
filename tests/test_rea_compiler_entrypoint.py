@@ -13,7 +13,8 @@ class EntryPointTests(unittest.TestCase):
                 dispatch=lambda *_: calls.append(True),
                 observe=lambda *_: calls.append("observed"))
         self.assertIsInstance(result,PipelineResult)
-        self.assertEqual(result.state,"DRY_RUN")
+        self.assertEqual(result.state,"BLOCKED")
+        self.assertEqual(result.reason,"artifact_evidence_missing")
         self.assertEqual(calls,[])
 
 if __name__ == "__main__":
