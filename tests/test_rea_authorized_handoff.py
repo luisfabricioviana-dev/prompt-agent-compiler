@@ -21,6 +21,17 @@ class AuthorizedHandoffTests(unittest.TestCase):
         signature = hmac.new(self.KEY, data, hashlib.sha256).hexdigest()
         return ReleaseAuthorization(sha, release_id, "release-owner", signature)
 
+    def test_missing_evidence_never_dispatches(self):
+        calls = []
+        with sqlite3.connect(":memory:") as db:
+            result = authorized_handoff(
+                db, self.PAYLOAD, None, self.auth(),
+                trusted_issuer="release-owner", trusted_key=self.KEY,
+                callback=lambda *_: calls.append(True))
+            self.assertFalse(result.accepted)
+            self.assertEqual(result.reasons, ("artifact_evidence_missing",))
+            self.assertEqual(calls, [])
+
     def test_single_use_verified_handoff(self):
         sent = []
         with tempfile.TemporaryDirectory() as td:
