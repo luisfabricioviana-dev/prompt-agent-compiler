@@ -1,0 +1,57 @@
+import hashlib
+import hmac
+import sqlite3
+import tempfile
+import unittest
+from contracts.rea_release_authority import ReleaseAuthorization, verify_release_authorization
+from contracts.rea_authorized_handoff import authorized_handoff
+from contracts.rea_security_gate import ArtifactEvidence
+
+class AuthorizedHandoffTests(unittest.TestCase):
+    KEY = b"fixture-not-for-production-very-long-secret-key"
+    PAYLOAD = b"artifact without secrets"
+    SHA = hashlib.sha256(PAYLOAD).hexdigest()
+
+    def evidence(self):
+        return ArtifactEvidence(True, False, False, True, self.SHA)
+
+    def auth(self, release_id="release-001", sha=None):
+        sha = sha or self.SHA
+        data = f"REA-RELEASE-v1\nrelease-owner\n{release_id}\n{sha}".encode()
+        signature = hmac.new(self.KEY, data, hashlib.sha256).hexdigest()
+        return ReleaseAuthorization(sha, release_id, "release-owner", signature)
+
+    def test_single_use_verified_handoff(self):
+        sent = []
+        with tempfile.TemporaryDirectory() as td:
+            path = td + "/claims.db"
+            with sqlite3.connect(path) as db:
+                args = dict(trusted_issuer="release-owner", trusted_key=self.KEY,
+                            callback=lambda data, sha: sent.append((data, sha)))
+                first = authorized_handoff(db, self.PAYLOAD, self.evidence(), self.auth(), **args)
+                second = authorized_handoff(db, self.PAYLOAD, self.evidence(), self.auth(), **args)
+        self.assertTrue(first.accepted)
+        self.assertFalse(second.accepted)
+        self.assertEqual(len(sent), 1)
+        self.assertEqual(second.reasons, ("release_id_already_consumed",))
+
+    def test_forged_signature_never_dispatches(self):
+        sent = []
+        with sqlite3.connect(":memory:") as db:
+            auth = self.auth()
+            forged = ReleaseAuthorization(auth.artifact_sha256, auth.release_id, auth.issuer, "0"*64)
+            result = authorized_handoff(db, self.PAYLOAD, self.evidence(), forged,
+                trusted_issuer="release-owner", trusted_key=self.KEY,
+                callback=lambda *_: sent.append(True))
+        self.assertFalse(result.accepted)
+        self.assertEqual(sent, [])
+
+    def test_digest_binding_and_short_key(self):
+        auth = self.auth()
+        self.assertFalse(verify_release_authorization(auth, trusted_issuer="release-owner",
+                         trusted_key=b"weak", artifact_sha256=self.SHA))
+        self.assertFalse(verify_release_authorization(auth, trusted_issuer="release-owner",
+                         trusted_key=self.KEY, artifact_sha256="b"*64))
+
+if __name__ == "__main__":
+    unittest.main()
