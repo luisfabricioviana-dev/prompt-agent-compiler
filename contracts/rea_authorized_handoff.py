@@ -5,7 +5,7 @@ A failed/uncertain callback intentionally stays consumed: reconcile externally.
 """
 from __future__ import annotations
 import sqlite3
-from .rea_release_authority import ReleaseAuthorization, verify_release_authorization, verify_destination_bound_authorization
+from .rea_release_authority import ReleaseAuthorization, verify_destination_bound_authorization
 from .rea_release_handoff import governed_artifact_handoff, HandoffResult
 from .rea_security_gate import ArtifactEvidence, evaluate_artifact, verify_artifact_bytes
 
@@ -16,12 +16,12 @@ def authorized_handoff(conn: sqlite3.Connection, payload: bytes,
         return HandoffResult(False, ("payload_unavailable",))
     if not isinstance(evidence, ArtifactEvidence):
         return HandoffResult(False, ("artifact_evidence_missing",))
-    verifier = verify_destination_bound_authorization if destination_id is not None else verify_release_authorization
-    verification = dict(trusted_issuer=trusted_issuer, trusted_key=trusted_key,
-                        artifact_sha256=evidence.artifact_sha256)
-    if destination_id is not None:
-        verification['destination_id'] = destination_id
-    if not verifier(auth, **verification):
+    if destination_id is None:
+        return HandoffResult(False, ("destination_required",))
+    if not verify_destination_bound_authorization(
+        auth, trusted_issuer=trusted_issuer, trusted_key=trusted_key,
+        artifact_sha256=evidence.artifact_sha256, destination_id=destination_id,
+    ):
         return HandoffResult(False, ("release_authority_unverified",))
     policy = evaluate_artifact(evidence)
     if not policy.allowed:
