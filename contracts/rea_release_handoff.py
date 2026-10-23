@@ -27,27 +27,31 @@ def governed_artifact_handoff(
     callback: Callable[[bytes, str], None],
     max_size_bytes: int = 20_000_000,
 ) -> HandoffResult:
-    # A boolean is only a local invocation prerequisite, not authenticated proof.
-    # Production callers must obtain this fact from a verified release authority.
-    if authorized_for_release is not True:
-        return HandoffResult(False, ("release_authorization_absent",))
+    """Compatibility API: never dispatches regardless of caller's boolean.
+
+    The caller must use authorized_handoff with a destination-bound signature
+    and a durable release claim. A truthy boolean is not authorization.
+    """
+    return HandoffResult(False, ("authenticated_release_authority_required",))
+
+
+def verify_handoff_candidate(
+    payload: bytes,
+    evidence: ArtifactEvidence,
+    *,
+    max_size_bytes: int = 20_000_000,
+) -> HandoffResult:
+    """Pure byte/policy validation. Does not invoke downstream callbacks."""
     if (not isinstance(max_size_bytes, int) or isinstance(max_size_bytes, bool)
         or max_size_bytes <= 0 or not isinstance(payload, bytes)
         or not payload or len(payload) > max_size_bytes):
         return HandoffResult(False, ("payload_unavailable_or_oversized",))
     if not isinstance(evidence, ArtifactEvidence):
         return HandoffResult(False, ("artifact_evidence_missing",))
-    if not callable(callback):
-        return HandoffResult(False, ("callback_unavailable",))
     policy = evaluate_artifact(evidence)
     if not policy.allowed:
         return HandoffResult(False, policy.reasons)
     verified = verify_artifact_bytes(payload, evidence.artifact_sha256)
     if not verified.allowed:
         return HandoffResult(False, verified.reasons)
-    digest = hashlib.sha256(payload).hexdigest()
-    try:
-        callback(payload, digest)
-    except Exception:
-        return HandoffResult(False, ("downstream_dispatch_failed",))
-    return HandoffResult(True, (), digest)
+    return HandoffResult(True, (), hashlib.sha256(payload).hexdigest())
