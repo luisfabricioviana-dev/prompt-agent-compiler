@@ -40,6 +40,14 @@ class PipelineTests(unittest.TestCase):
             enable_dispatch=enabled,
         )
 
+    def test_dry_run_rejects_tampered_artifacts_without_dispatch(self):
+        sent = []
+        with sqlite3.connect(":memory:") as db:
+            result = self.execute_pipeline(db, lambda *_: sent.append(True), payload=b"tampered")
+            self.assertEqual(result.state, "BLOCKED")
+            self.assertIn("artifact_digest_mismatch", result.reason)
+            self.assertEqual(sent, [])
+
     def test_default_never_dispatches(self):
         sent = []
         with sqlite3.connect(":memory:") as db:
