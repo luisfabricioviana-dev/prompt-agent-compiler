@@ -41,6 +41,8 @@ def run_governed_pipeline(
     if not attempt.accepted:
         # Once a release ID is claimed, a failure can represent a remotely
         # completed dispatch whose acknowledgement was lost. Never retry.
+        if "release_id_already_consumed" in attempt.reasons:
+            return PipelineResult("BLOCKED", "release_id_already_consumed", digest)
         claim_state = read_release_dispatch_state(conn, authorization.release_id)
         if claim_state != "NOT_CLAIMED":
             return PipelineResult("IN_DOUBT", ",".join(attempt.reasons), digest)
