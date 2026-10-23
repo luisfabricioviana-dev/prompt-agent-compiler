@@ -10,9 +10,13 @@ import urllib.request
 
 _REPO = re.compile(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")
 
-def resolve_github_destination(repository: str, *, token: str, opener=None) -> str:
+def resolve_github_destination(repository: str, *, token: str, opener=None,
+                               expected_repository_id: int | None = None) -> str:
     if not isinstance(repository, str) or not _REPO.fullmatch(repository):
         raise ValueError("invalid_repository")
+    if (expected_repository_id is not None and
+        (type(expected_repository_id) is not int or expected_repository_id <= 0)):
+        raise ValueError("expected_repository_id_invalid")
     if not isinstance(token, str) or not token.strip():
         raise ValueError("github_token_missing")
     request = urllib.request.Request(
@@ -36,4 +40,8 @@ def resolve_github_destination(repository: str, *, token: str, opener=None) -> s
         raise ValueError("github_identity_unverified")
     if actual != repository:
         raise ValueError("github_identity_mismatch")
+    if expected_repository_id is not None:
+        remote_id = metadata.get("id")
+        if type(remote_id) is not int or remote_id != expected_repository_id:
+            raise ValueError("github_repository_id_mismatch")
     return actual
