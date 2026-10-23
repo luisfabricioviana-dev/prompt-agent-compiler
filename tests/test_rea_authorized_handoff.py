@@ -53,5 +53,16 @@ class AuthorizedHandoffTests(unittest.TestCase):
         self.assertFalse(verify_release_authorization(auth, trusted_issuer="release-owner",
                          trusted_key=self.KEY, artifact_sha256="b"*64))
 
+    def test_invalid_bytes_do_not_consume_authorization(self):
+        sent = []
+        with sqlite3.connect(":memory:") as db:
+            args = dict(trusted_issuer="release-owner", trusted_key=self.KEY,
+                        callback=lambda data, digest: sent.append(data))
+            rejected = authorized_handoff(db, b"tampered", self.evidence(), self.auth(), **args)
+            self.assertFalse(rejected.accepted)
+            accepted = authorized_handoff(db, self.PAYLOAD, self.evidence(), self.auth(), **args)
+            self.assertTrue(accepted.accepted)
+            self.assertEqual(sent, [self.PAYLOAD])
+
 if __name__ == "__main__":
     unittest.main()
