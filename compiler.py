@@ -29,14 +29,20 @@ def run_optional_rea_github_release(conn, payload, evidence, authorization, *,
     callback are required. No ExecutionSpec or automatic deployment is implied.
     """
     from contracts.rea_github_destination import resolve_github_destination
+    from contracts.rea_github_role_preflight import check_github_actor_repository_role
     resolver = None
     if enable_dispatch is True:
         if type(expected_repository_id) is not int or expected_repository_id <= 0:
             from contracts.rea_pipeline import PipelineResult
             return PipelineResult("BLOCKED", "trusted_repository_id_required", "")
-        resolver = lambda: resolve_github_destination(
-            destination_id, token=github_token, opener=github_opener,
-            expected_repository_id=expected_repository_id)
+        def resolver():
+            resolved = resolve_github_destination(
+                destination_id, token=github_token, opener=github_opener,
+                expected_repository_id=expected_repository_id)
+            # Advisory actor role preflight; never substitutes release authorization.
+            check_github_actor_repository_role(
+                resolved, token=github_token, opener=github_opener)
+            return resolved
     return run_optional_rea_release(
         conn, payload, evidence, authorization, issuer=issuer, issuer_key=issuer_key,
         destination_id=destination_id, observer_id=observer_id,
