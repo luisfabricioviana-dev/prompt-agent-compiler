@@ -17,7 +17,12 @@ class ReconciliationTests(unittest.TestCase):
         db.commit()
 
     def observe(self, release_id, destination_id):
-        data = f"REA-DESTINATION-v2\n{self.OBSERVER}\n{release_id}\n{self.SHA}\n{destination_id}\ndelivered".encode()
+        data = f"REA-DESTINATION-v2
+{self.OBSERVER}
+{release_id}
+{self.SHA}
+{destination_id}
+delivered".encode()
         sig = hmac.new(self.KEY, data, hashlib.sha256).hexdigest()
         return DestinationObservation(release_id, self.SHA, destination_id, True, sig)
 
