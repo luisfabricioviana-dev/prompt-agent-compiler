@@ -67,10 +67,17 @@ def read_release_dispatch_state(conn: sqlite3.Connection, release_id: str) -> st
         ).fetchone()
         if claimed is None:
             return "NOT_CLAIMED"
-        state = conn.execute(
-            "SELECT dispatch_state FROM rea_release_outcomes WHERE release_id = ?",
-            (release_id,),
-        ).fetchone()
+        try:
+            state = conn.execute(
+                "SELECT dispatch_state FROM rea_release_outcomes WHERE release_id = ?",
+                (release_id,),
+            ).fetchone()
+        except sqlite3.OperationalError as error:
+            # A crash after the durable claim but before the outcomes table
+            # was initialized has an unknown delivery result, not a clean state.
+            if "no such table: rea_release_outcomes" in str(error):
+                return "IN_DOUBT"
+            return "STATE_UNAVAILABLE"
         return state[0] if state else "IN_DOUBT"
     except sqlite3.Error:
         return "STATE_UNAVAILABLE"
