@@ -4,7 +4,7 @@ import sqlite3
 import tempfile
 import unittest
 from contracts.rea_release_authority import ReleaseAuthorization, verify_release_authorization
-from contracts.rea_authorized_handoff import authorized_handoff
+from contracts.rea_authorized_handoff import authorized_handoff, read_release_dispatch_state
 from contracts.rea_security_gate import ArtifactEvidence
 
 class AuthorizedHandoffTests(unittest.TestCase):
@@ -63,6 +63,35 @@ class AuthorizedHandoffTests(unittest.TestCase):
             accepted = authorized_handoff(db, self.PAYLOAD, self.evidence(), self.auth(), **args)
             self.assertTrue(accepted.accepted)
             self.assertEqual(sent, [self.PAYLOAD])
+
+    def test_dispatch_state_is_not_delivery_confirmation(self):
+        with sqlite3.connect(":memory:") as db:
+            result = authorized_handoff(
+                db, self.PAYLOAD, self.evidence(), self.auth(),
+                trusted_issuer="release-owner", trusted_key=self.KEY,
+                callback=lambda *_: None,
+            )
+            self.assertTrue(result.accepted)
+            self.assertEqual(read_release_dispatch_state(db, "release-001"), "DISPATCH_RETURNED")
+            self.assertEqual(read_release_dispatch_state(db, "missing-claim"), "NOT_CLAIMED")
+
+    def test_failed_callback_requires_reconciliation(self):
+        with sqlite3.connect(":memory:") as db:
+            def fail(*_):
+                raise RuntimeError("provider timeout")
+            result = authorized_handoff(
+                db, self.PAYLOAD, self.evidence(), self.auth(),
+                trusted_issuer="release-owner", trusted_key=self.KEY, callback=fail,
+            )
+            self.assertFalse(result.accepted)
+            self.assertEqual(read_release_dispatch_state(db, "release-001"), "IN_DOUBT")
+            retry = authorized_handoff(
+                db, self.PAYLOAD, self.evidence(), self.auth(),
+                trusted_issuer="release-owner", trusted_key=self.KEY,
+                callback=lambda *_: None,
+            )
+            self.assertFalse(retry.accepted)
+            self.assertEqual(retry.reasons, ("release_id_already_consumed",))
 
 if __name__ == "__main__":
     unittest.main()
