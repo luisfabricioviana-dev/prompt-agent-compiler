@@ -44,7 +44,7 @@ def run_governed_pipeline(
         if "release_id_already_consumed" in attempt.reasons:
             return PipelineResult("BLOCKED", "release_id_already_consumed", digest)
         claim_state = read_release_dispatch_state(conn, authorization.release_id)
-        if claim_state != "NOT_CLAIMED":
+        if claim_state in ("DISPATCH_RETURNED", "IN_DOUBT"):
             return PipelineResult("IN_DOUBT", ",".join(attempt.reasons), digest)
         return PipelineResult("BLOCKED", ",".join(attempt.reasons), digest)
     dispatched = read_release_dispatch_state(conn, authorization.release_id)
