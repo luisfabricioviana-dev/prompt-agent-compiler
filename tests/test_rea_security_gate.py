@@ -43,5 +43,24 @@ class TestReaGate(unittest.TestCase):
                              matching_reconstruction_evidence=True)
         self.assertTrue(module.evaluate_artifact(evidence).allowed)
 
+
+    def test_real_artifact_byte_digest(self):
+        import hashlib
+        payload = b"safe test artifact"
+        sha = hashlib.sha256(payload).hexdigest()
+        self.assertTrue(module.verify_artifact_bytes(payload, sha).allowed)
+        self.assertIn("artifact_digest_mismatch",
+                      module.verify_artifact_bytes(payload + b"x", sha).reasons)
+
+    def test_private_key_and_github_token_markers(self):
+        import hashlib
+        for payload in (
+            b"-----BEGIN PRIVATE KEY-----\\nsecret",
+            b"ghp_" + b"A"*40,
+            b"github_pat_" + b"B"*35,
+        ):
+            result = module.verify_artifact_bytes(payload, hashlib.sha256(payload).hexdigest())
+            self.assertIn("high_risk_secret_marker_detected", result.reasons)
+
 if __name__ == "__main__":
     unittest.main()
