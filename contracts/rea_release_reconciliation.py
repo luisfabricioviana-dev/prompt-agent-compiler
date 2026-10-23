@@ -20,12 +20,12 @@ class DestinationObservation:
 
 def reconcile_delivery(conn: sqlite3.Connection, *, release_id: str,
                        artifact_sha256: str, expected_destination: str,
-                       observe, trusted_observer_key: bytes) -> tuple[bool, str]:
+                       observe, trusted_observer_key: bytes,\n                       trusted_observer_id: str) -> tuple[bool, str]:
     if (not isinstance(release_id, str) or not re.fullmatch(r"[A-Za-z0-9_.:-]{8,128}", release_id)
         or not isinstance(expected_destination, str) or not expected_destination
         or not isinstance(artifact_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", artifact_sha256)):
         return False, "invalid_reconciliation_identity"
-    if not isinstance(trusted_observer_key, bytes) or len(trusted_observer_key) < 32:
+    if not isinstance(trusted_observer_id, str) or not re.fullmatch(r"[A-Za-z0-9_.:-]{8,128}", trusted_observer_id):\n        return False, "trusted_observer_identity_unavailable"\n    if not isinstance(trusted_observer_key, bytes) or len(trusted_observer_key) < 32:
         return False, "trusted_observer_key_unavailable"
     try:
         row = conn.execute("SELECT artifact_sha256 FROM rea_release_claims WHERE release_id = ?",
@@ -46,7 +46,7 @@ def reconcile_delivery(conn: sqlite3.Connection, *, release_id: str,
         or not isinstance(observation.signature_hex, str)
         or not re.fullmatch(r"[0-9a-f]{64}", observation.signature_hex)):
         return False, "delivery_unverified"
-    message = f"REA-DESTINATION-v1\n{release_id}\n{artifact_sha256}\n{expected_destination}\ndelivered".encode()
+    message = f"REA-DESTINATION-v2\n{trusted_observer_id}\n{release_id}\n{artifact_sha256}\n{expected_destination}\ndelivered".encode()
     expected = hmac.new(trusted_observer_key, message, hashlib.sha256).hexdigest()
     if not hmac.compare_digest(expected, observation.signature_hex):
         return False, "destination_signature_invalid"
