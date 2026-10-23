@@ -38,6 +38,7 @@ class PipelineTests(unittest.TestCase):
             observer_key=self.observer_key, dispatch=dispatch,
             observe=self.observation if observe is None else observe,
             enable_dispatch=enabled,
+            trusted_destination_resolver=lambda: self.destination,
         )
 
     def test_dry_run_rejects_tampered_artifacts_without_dispatch(self):
@@ -55,7 +56,7 @@ class PipelineTests(unittest.TestCase):
                 issuer="release-owner", issuer_key=self.key, destination_id="attacker-repository",
                 observer_id=self.observer, observer_key=self.observer_key,
                 dispatch=lambda *_: sent.append(True), observe=self.observation,
-                enable_dispatch=True)
+                enable_dispatch=True, trusted_destination_resolver=lambda: self.destination)
             self.assertEqual(result.state, "BLOCKED")
             self.assertEqual(sent, [])
 
@@ -72,6 +73,22 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(result.state, "BLOCKED")
             self.assertEqual(result.reason, "release_authorization_missing")
             self.assertEqual(calls, [])
+
+    def test_missing_or_mismatched_trusted_destination_blocks_dispatch(self):
+        for resolver, reason in ((None, "trusted_destination_resolver_missing"),
+                                 (lambda: "other-repo", "destination_identity_mismatch")):
+            calls = []
+            with sqlite3.connect(":memory:") as db:
+                result = run_governed_pipeline(
+                    db, self.payload, self.evidence(), self.authorization(),
+                    issuer="release-owner", issuer_key=self.key,
+                    destination_id=self.destination, observer_id=self.observer,
+                    observer_key=self.observer_key, dispatch=lambda *_: calls.append(True),
+                    observe=self.observation, enable_dispatch=True,
+                    trusted_destination_resolver=resolver)
+                self.assertEqual(result.state, "BLOCKED")
+                self.assertEqual(result.reason, reason)
+                self.assertEqual(calls, [])
 
     def test_default_never_dispatches(self):
         sent = []
