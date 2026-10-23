@@ -31,6 +31,9 @@ def run_optional_rea_github_release(conn, payload, evidence, authorization, *,
     from contracts.rea_github_destination import resolve_github_destination
     resolver = None
     if enable_dispatch is True:
+        if type(expected_repository_id) is not int or expected_repository_id <= 0:
+            from contracts.rea_pipeline import PipelineResult
+            return PipelineResult("BLOCKED", "trusted_repository_id_required", "")
         resolver = lambda: resolve_github_destination(
             destination_id, token=github_token, opener=github_opener,
             expected_repository_id=expected_repository_id)
