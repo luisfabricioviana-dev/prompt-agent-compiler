@@ -49,12 +49,7 @@ def reconcile_delivery(conn: sqlite3.Connection, *, release_id: str,
         or not isinstance(observation.signature_hex, str)
         or not re.fullmatch(r"[0-9a-f]{64}", observation.signature_hex)):
         return False, "delivery_unverified"
-    message = f"REA-DESTINATION-v2
-{trusted_observer_id}
-{release_id}
-{artifact_sha256}
-{expected_destination}
-delivered".encode()
+    message = f"REA-DESTINATION-v2\n{trusted_observer_id}\n{release_id}\n{artifact_sha256}\n{expected_destination}\ndelivered".encode()
     expected = hmac.new(trusted_observer_key, message, hashlib.sha256).hexdigest()
     if not hmac.compare_digest(expected, observation.signature_hex):
         return False, "destination_signature_invalid"
