@@ -30,7 +30,7 @@ class PipelineTests(unittest.TestCase):
         return DestinationObservation(release, self.sha, destination, True,
             hmac.new(self.observer_key, msg, hashlib.sha256).hexdigest())
 
-    def run(self, db, dispatch, *, enabled=False, observe=None, payload=None):
+    def execute_pipeline(self, db, dispatch, *, enabled=False, observe=None, payload=None):
         return run_governed_pipeline(
             db, self.payload if payload is None else payload, self.evidence(),
             self.authorization(), issuer="release-owner", issuer_key=self.key,
@@ -43,17 +43,17 @@ class PipelineTests(unittest.TestCase):
     def test_default_never_dispatches(self):
         sent = []
         with sqlite3.connect(":memory:") as db:
-            result = self.run(db, lambda *_: sent.append(True))
+            result = self.execute_pipeline(db, lambda *_: sent.append(True))
             self.assertEqual(result.state, "DRY_RUN")
             self.assertEqual(sent, [])
 
     def test_explicit_simulated_dispatch_and_signed_observation(self):
         sent = []
         with sqlite3.connect(":memory:") as db:
-            result = self.run(db, lambda data, digest: sent.append((data, digest)), enabled=True)
+            result = self.execute_pipeline(db, lambda data, digest: sent.append((data, digest)), enabled=True)
             self.assertEqual(result.state, "CONFIRMED_BY_OBSERVER")
             self.assertEqual(sent, [(self.payload, self.sha)])
-            duplicate = self.run(db, lambda *_: sent.append("duplicate"), enabled=True)
+            duplicate = self.execute_pipeline(db, lambda *_: sent.append("duplicate"), enabled=True)
             self.assertEqual(duplicate.state, "BLOCKED")
             self.assertEqual(len(sent), 1)
 
@@ -61,11 +61,11 @@ class PipelineTests(unittest.TestCase):
         with sqlite3.connect(":memory:") as db:
             wrong = lambda *_: DestinationObservation(
                 self.release, self.sha, self.destination, True, "0"*64)
-            result = self.run(db, lambda *_: None, enabled=True, observe=wrong)
+            result = self.execute_pipeline(db, lambda *_: None, enabled=True, observe=wrong)
             self.assertEqual(result.state, "IN_DOUBT")
         with sqlite3.connect(":memory:") as db:
             calls = []
-            result = self.run(db, lambda *_: calls.append(True),
+            result = self.execute_pipeline(db, lambda *_: calls.append(True),
                               enabled=True, payload=b"tampered")
             self.assertEqual(result.state, "BLOCKED")
             self.assertEqual(calls, [])
