@@ -40,6 +40,8 @@ def run_governed_pipeline(
         return PipelineResult("DRY_RUN", "artifact_checked_dispatch_disabled", digest)
     if not isinstance(destination_id, str) or not destination_id:
         return PipelineResult("BLOCKED", "destination_missing", digest)
+    if not isinstance(authorization, ReleaseAuthorization):
+        return PipelineResult("BLOCKED", "release_authorization_missing", digest)
     attempt = authorized_handoff(
         conn, payload, evidence, authorization,
         trusted_issuer=issuer, trusted_key=issuer_key, callback=dispatch,
