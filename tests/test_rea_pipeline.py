@@ -59,6 +59,20 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(result.state, "BLOCKED")
             self.assertEqual(sent, [])
 
+    def test_enabled_missing_authorization_does_not_dispatch(self):
+        calls = []
+        with sqlite3.connect(":memory:") as db:
+            result = run_governed_pipeline(
+                db, self.payload, self.evidence(), None,
+                issuer="release-owner", issuer_key=self.key,
+                destination_id=self.destination, observer_id=self.observer,
+                observer_key=self.observer_key,
+                dispatch=lambda *_: calls.append(True), observe=self.observation,
+                enable_dispatch=True)
+            self.assertEqual(result.state, "BLOCKED")
+            self.assertEqual(result.reason, "release_authorization_missing")
+            self.assertEqual(calls, [])
+
     def test_default_never_dispatches(self):
         sent = []
         with sqlite3.connect(":memory:") as db:
