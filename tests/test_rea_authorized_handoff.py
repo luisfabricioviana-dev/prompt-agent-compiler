@@ -106,5 +106,21 @@ class AuthorizedHandoffTests(unittest.TestCase):
         self.assertEqual(result.reasons, ("release_claim_persistence_failed",))
         self.assertEqual(sent, [])
 
+    def test_crash_after_durable_claim_without_outcome_table(self):
+        with sqlite3.connect(":memory:") as db:
+            db.execute("CREATE TABLE rea_release_claims (release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL)")
+            db.execute("INSERT INTO rea_release_claims VALUES (?, ?)",
+                       ("release-001", self.SHA))
+            db.commit()
+            self.assertEqual(read_release_dispatch_state(db, "release-001"), "IN_DOUBT")
+            sent = []
+            retry = authorized_handoff(
+                db, self.PAYLOAD, self.evidence(), self.auth(),
+                trusted_issuer="release-owner", trusted_key=self.KEY,
+                callback=lambda *_: sent.append(True),
+            )
+            self.assertEqual(retry.reasons, ("release_id_already_consumed",))
+            self.assertEqual(sent, [])
+
 if __name__ == "__main__":
     unittest.main()
