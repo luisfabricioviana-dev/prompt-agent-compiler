@@ -69,7 +69,7 @@ class PipelineTests(unittest.TestCase):
                 destination_id=self.destination, observer_id=self.observer,
                 observer_key=self.observer_key,
                 dispatch=lambda *_: calls.append(True), observe=self.observation,
-                enable_dispatch=True)
+                enable_dispatch=True, trusted_destination_resolver=lambda: self.destination)
             self.assertEqual(result.state, "BLOCKED")
             self.assertEqual(result.reason, "release_authorization_missing")
             self.assertEqual(calls, [])
