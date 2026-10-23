@@ -24,7 +24,7 @@ def run_governed_pipeline(
     conn: sqlite3.Connection, payload: bytes, evidence: ArtifactEvidence,
     authorization: ReleaseAuthorization, *, issuer: str, issuer_key: bytes,
     destination_id: str, observer_id: str, observer_key: bytes,
-    dispatch, observe, enable_dispatch: bool = False,
+    dispatch, observe, enable_dispatch: bool = False, trusted_destination_resolver=None,
 ) -> PipelineResult:
     """Disabled by default; dispatch is only called when explicitly enabled."""
     if not isinstance(payload, bytes):
@@ -40,6 +40,14 @@ def run_governed_pipeline(
         return PipelineResult("DRY_RUN", "artifact_checked_dispatch_disabled", digest)
     if not isinstance(destination_id, str) or not destination_id:
         return PipelineResult("BLOCKED", "destination_missing", digest)
+    if not callable(trusted_destination_resolver):
+        return PipelineResult("BLOCKED", "trusted_destination_resolver_missing", digest)
+    try:
+        resolved_destination = trusted_destination_resolver()
+    except Exception:
+        return PipelineResult("BLOCKED", "trusted_destination_resolution_failed", digest)
+    if not isinstance(resolved_destination, str) or resolved_destination != destination_id:
+        return PipelineResult("BLOCKED", "destination_identity_mismatch", digest)
     if not isinstance(authorization, ReleaseAuthorization):
         return PipelineResult("BLOCKED", "release_authorization_missing", digest)
     attempt = authorized_handoff(
