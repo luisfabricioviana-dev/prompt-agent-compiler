@@ -16,3 +16,24 @@ def run_optional_rea_release(conn, payload, evidence, authorization, *,
         enable_dispatch=enable_dispatch,
         trusted_destination_resolver=trusted_destination_resolver,
     )
+
+
+def run_optional_rea_github_release(conn, payload, evidence, authorization, *,
+                                    issuer, issuer_key, destination_id, github_token,
+                                    observer_id, observer_key, dispatch, observe,
+                                    enable_dispatch=False, github_opener=None):
+    """Resolve GitHub identity when dispatch is explicitly enabled.
+
+    This is a manual integration entrypoint: caller-provisioned token and
+    callback are required. No ExecutionSpec or automatic deployment is implied.
+    """
+    from contracts.rea_github_destination import resolve_github_destination
+    resolver = None
+    if enable_dispatch is True:
+        resolver = lambda: resolve_github_destination(
+            destination_id, token=github_token, opener=github_opener)
+    return run_optional_rea_release(
+        conn, payload, evidence, authorization, issuer=issuer, issuer_key=issuer_key,
+        destination_id=destination_id, observer_id=observer_id,
+        observer_key=observer_key, dispatch=dispatch, observe=observe,
+        enable_dispatch=enable_dispatch, trusted_destination_resolver=resolver)
