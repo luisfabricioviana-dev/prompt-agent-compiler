@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 import sqlite3
 import unittest
 from contracts.rea_release_reconciliation import DestinationObservation, reconcile_delivery
@@ -7,6 +8,7 @@ class ReconciliationTests(unittest.TestCase):
     RELEASE = "release-001"
     SHA = hashlib.sha256(b"artifact").hexdigest()
     DEST = "destination-A"
+    KEY = b"separate-observer-key-for-tests-only-123456"
 
     def setup_claim(self, db):
         db.execute("CREATE TABLE rea_release_claims (release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL)")
@@ -14,44 +16,43 @@ class ReconciliationTests(unittest.TestCase):
         db.commit()
 
     def observe(self, release_id, destination_id):
-        return DestinationObservation(release_id, self.SHA, destination_id, True)
+        data = f"REA-DESTINATION-v1\n{release_id}\n{self.SHA}\n{destination_id}\ndelivered".encode()
+        sig = hmac.new(self.KEY, data, hashlib.sha256).hexdigest()
+        return DestinationObservation(release_id, self.SHA, destination_id, True, sig)
 
-    def test_destination_bound_confirmation(self):
+    def check(self, db, release_id=None, observe=None, key=None):
+        return reconcile_delivery(
+            db, release_id=release_id or self.RELEASE,
+            artifact_sha256=self.SHA, expected_destination=self.DEST,
+            observe=observe or self.observe, trusted_observer_key=self.KEY if key is None else key)
+
+    def test_signed_delivery_and_idempotent_confirmation(self):
         with sqlite3.connect(":memory:") as db:
             self.setup_claim(db)
-            allowed, state = reconcile_delivery(
-                db, release_id=self.RELEASE, artifact_sha256=self.SHA,
-                expected_destination=self.DEST, observe=self.observe)
-            self.assertTrue(allowed)
-            self.assertEqual(state, "DELIVERY_CONFIRMED")
+            self.assertEqual(self.check(db), (True, "DELIVERY_CONFIRMED"))
+            self.assertEqual(self.check(db), (True, "DELIVERY_CONFIRMED"))
             self.assertEqual(db.execute("SELECT COUNT(*) FROM rea_release_confirmations").fetchone()[0], 1)
 
-    def test_forged_or_stale_observation_blocks(self):
+    def test_forged_observation_rejected(self):
         with sqlite3.connect(":memory:") as db:
             self.setup_claim(db)
-            for observation in (
-                DestinationObservation(self.RELEASE, "b"*64, self.DEST, True),
-                DestinationObservation(self.RELEASE, self.SHA, "other", True),
-                DestinationObservation(self.RELEASE, self.SHA, self.DEST, False),
+            original = self.observe(self.RELEASE, self.DEST)
+            for forged in (
+                DestinationObservation(self.RELEASE, "b"*64, self.DEST, True, original.signature_hex),
+                DestinationObservation(self.RELEASE, self.SHA, "other", True, original.signature_hex),
+                DestinationObservation(self.RELEASE, self.SHA, self.DEST, False, original.signature_hex),
+                DestinationObservation(self.RELEASE, self.SHA, self.DEST, True, "0"*64),
             ):
-                ok, reason = reconcile_delivery(
-                    db, release_id=self.RELEASE, artifact_sha256=self.SHA,
-                    expected_destination=self.DEST, observe=lambda *_: observation)
-                self.assertFalse(ok)
-                self.assertEqual(reason, "delivery_unverified")
+                accepted, _ = self.check(db, observe=lambda *_: forged)
+                self.assertFalse(accepted)
+            self.assertEqual(self.check(db, key=b"weak"), (False, "trusted_observer_key_unavailable"))
 
-    def test_missing_claim_and_unavailable_destination_block(self):
+    def test_missing_claim_and_observer_timeout(self):
         with sqlite3.connect(":memory:") as db:
             self.setup_claim(db)
-            ok, reason = reconcile_delivery(db, release_id="missing-release",
-                artifact_sha256=self.SHA, expected_destination=self.DEST, observe=self.observe)
-            self.assertFalse(ok)
-            self.assertEqual(reason, "release_claim_mismatch")
-            def offline(*_): raise TimeoutError("destination not reachable")
-            ok, reason = reconcile_delivery(db, release_id=self.RELEASE,
-                artifact_sha256=self.SHA, expected_destination=self.DEST, observe=offline)
-            self.assertFalse(ok)
-            self.assertEqual(reason, "destination_observation_unavailable")
+            self.assertEqual(self.check(db, release_id="missing-release")[1], "release_claim_mismatch")
+            def offline(*_): raise TimeoutError("offline")
+            self.assertEqual(self.check(db, observe=offline)[1], "destination_observation_unavailable")
 
 if __name__ == "__main__":
     unittest.main()
