@@ -1,5 +1,6 @@
 name: REA security regression
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - 'contracts/rea_security_gate.py'
@@ -9,6 +10,8 @@ on:
       - 'contracts/rea_release_reconciliation.py'
       - 'contracts/rea_release_authority.py'
       - 'contracts/rea_pipeline.py'
+      - 'contracts/rea_github_destination.py'
+      - 'contracts/rea_github_role_preflight.py'
       - 'compiler.py'
       - 'tests/test_rea_security_gate.py'
       - 'tests/test_rea_artifact_admission.py'
@@ -16,6 +19,8 @@ on:
       - 'tests/test_rea_authorized_handoff.py'
       - 'tests/test_rea_release_reconciliation.py'
       - 'tests/test_rea_pipeline.py'
+      - 'tests/test_rea_github_destination.py'
+      - 'tests/test_rea_github_role_preflight.py'
       - 'tests/test_rea_compiler_entrypoint.py'
       - '.github/workflows/rea-security-regression.yml'
       - 'docs/integrations/GOVERNED_FACTORY_REA_ADOPTION_20261023.md'
@@ -29,6 +34,8 @@ on:
       - 'contracts/rea_release_reconciliation.py'
       - 'contracts/rea_release_authority.py'
       - 'contracts/rea_pipeline.py'
+      - 'contracts/rea_github_destination.py'
+      - 'contracts/rea_github_role_preflight.py'
       - 'compiler.py'
       - 'tests/test_rea_security_gate.py'
       - 'tests/test_rea_artifact_admission.py'
@@ -36,6 +43,8 @@ on:
       - 'tests/test_rea_authorized_handoff.py'
       - 'tests/test_rea_release_reconciliation.py'
       - 'tests/test_rea_pipeline.py'
+      - 'tests/test_rea_github_destination.py'
+      - 'tests/test_rea_github_role_preflight.py'
       - 'tests/test_rea_compiler_entrypoint.py'
       - '.github/workflows/rea-security-regression.yml'
 permissions:
