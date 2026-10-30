@@ -23,7 +23,7 @@ jobs:
           suite = unittest.defaultTestLoader.discover("tests", pattern="test_*.py")
           count = suite.countTestCases()
           print(f"current_tree_discovered_tests={count}")
-          if count < 108:
+          if count < 117:
               raise SystemExit(f"current_tree_test_inventory_regressed:{count}")
           PY
       - name: Compile current tree
