@@ -2,10 +2,12 @@
 import hashlib
 import json
 from pathlib import Path
+from contracts.release_gate_source_binding import source_digests
 
 
 def verify_evidence(report_path: str | Path, manifest_path: str | Path,
-                    *, commit_sha: str, run_id: str, run_attempt: str) -> dict:
+                    *, commit_sha: str, run_id: str, run_attempt: str,
+                    source_root: str | Path = '.') -> dict:
     try:
         raw = Path(report_path).read_bytes()
         report = json.loads(raw)
@@ -26,6 +28,12 @@ def verify_evidence(report_path: str | Path, manifest_path: str | Path,
                           ("workflow_run_attempt", run_attempt)):
         if manifest.get(key) != expected:
             violations.append(key + "_mismatch")
+    try:
+        expected_sources = source_digests(source_root)
+        if manifest.get("source_sha256") != expected_sources:
+            violations.append("source_digest_mismatch")
+    except OSError:
+        violations.append("source_inventory_unreadable")
     cases = report.get("cases")
     # This fixed allowlist is verifier-owned, not read from the report or its
     # companion manifest. Detect rehashed omission, renaming, duplication or
