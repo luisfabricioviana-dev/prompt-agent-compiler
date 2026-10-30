@@ -5,6 +5,7 @@ The SHA-256 is over the report's raw bytes, excluding this manifest.
 import hashlib
 import json
 import os
+from contracts.release_gate_source_binding import source_digests
 from pathlib import Path
 
 
@@ -29,6 +30,7 @@ def build_manifest(report_path: Path, *, sha: str, run_id: str, run_attempt: str
         "case_count": report["case_count"],
         "match_count": report["match_count"],
         "scope": report["scope"],
+        "source_sha256": source_digests(Path(".")),
     }
 
 
