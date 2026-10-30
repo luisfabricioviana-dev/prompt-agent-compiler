@@ -65,6 +65,26 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                         continue
                     for item in node.names:
                         local[item.asname or item.name] = f"{prefix}.{item.name}"
+            # Function parameters must not shadow a pinned imported callee.
+            parameters = (fn.args.posonlyargs + fn.args.args +
+                          fn.args.kwonlyargs)
+            if fn.args.vararg is not None:
+                parameters.append(fn.args.vararg)
+            if fn.args.kwarg is not None:
+                parameters.append(fn.args.kwarg)
+            if any(arg.arg in local and local[arg.arg] == target
+                   for arg in parameters):
+                violations.append(f"shadowed_parameter:{relative}:{owner}:{callee}")
+            # An assignment at module level can replace an imported or
+            # same-module function without changing the apparent call syntax.
+            target_names = {name for name, identity in local.items()
+                            if identity == target}
+            for statement in tree.body:
+                if isinstance(statement, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
+                    targets = statement.targets if isinstance(statement, ast.Assign) else [statement.target]
+                    if any(isinstance(name, ast.Name) and name.id in target_names
+                           for target_node in targets for name in ast.walk(target_node)):
+                        violations.append(f"module_rebound_target:{relative}:{callee}")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
