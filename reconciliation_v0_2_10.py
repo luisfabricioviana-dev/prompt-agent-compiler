@@ -9,7 +9,9 @@ from __future__ import annotations
 import base64
 import codecs
 import hashlib
+import json
 import re
+from pathlib import Path
 
 RECOVERED_V029_SOURCE_KIND = "google_drive_recovered_bundle"
 RECOVERED_V029_DRIVE_FILE_ID = "1a6h9u7JtEYGkbK8nzVE3scClYUvO9E4T"
@@ -102,3 +104,84 @@ def reconstruct_rot13_archive(
         decode_rot13_base64_chunks(chunks),
         expected_sha256,
     )
+
+
+RETIRED_V029_HOLDOUT_SHA256 = (
+    "dcff8740576d0fd870078b6c0fca80e4c027cb8efedf997e0d70126315b33af5"
+)
+PUBLIC_SAFE_JSON_ARTIFACT_COUNT = 26
+PUBLIC_SAFE_FREEZE_FILE_COUNT = 11
+
+
+def verify_public_safe_recovered_tree(root: str | Path) -> dict:
+    """Verify the publishable recovered v0.2.9 tree without blind holdout bytes.
+
+    This contract intentionally validates only public-safe invariants. The
+    retired holdout digest may remain as metadata in the freeze manifest, but
+    the holdout content itself must not be present in the promotable tree.
+    """
+    root = Path(root)
+    reasons: list[str] = []
+    if not root.is_dir():
+        return {
+            "valid": False,
+            "reasons": ["recovered_tree_missing"],
+            "json_artifacts": 0,
+            "freeze_files_checked": 0,
+            "holdout_present": False,
+        }
+
+    holdout_path = root / "blind_holdout_v0_2_9.json"
+    holdout_present = holdout_path.exists()
+    if holdout_present:
+        reasons.append("blind_holdout_present")
+
+    if any(root.glob("*.zip")):
+        reasons.append("recovered_archive_present")
+
+    json_paths = sorted(root.glob("*.json"))
+    for path in json_paths:
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError):
+            reasons.append(f"json_invalid:{path.name}")
+    if len(json_paths) != PUBLIC_SAFE_JSON_ARTIFACT_COUNT:
+        reasons.append(
+            f"json_artifact_count_mismatch:{len(json_paths)}"
+        )
+
+    manifest_path = root / "FREEZE_MANIFEST_v0_2_9.json"
+    checked = 0
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        files = manifest["files"]
+    except (OSError, UnicodeError, json.JSONDecodeError, KeyError, TypeError):
+        reasons.append("freeze_manifest_unavailable")
+        files = {}
+
+    if files:
+        if files.get("blind_holdout_v0_2_9.json") != RETIRED_V029_HOLDOUT_SHA256:
+            reasons.append("retired_holdout_hash_metadata_mismatch")
+        for name, expected in files.items():
+            if name == "blind_holdout_v0_2_9.json":
+                continue
+            path = root / name
+            try:
+                actual = hashlib.sha256(path.read_bytes()).hexdigest()
+            except OSError:
+                reasons.append(f"freeze_file_missing:{name}")
+                continue
+            if actual != expected:
+                reasons.append(f"freeze_drift:{name}")
+                continue
+            checked += 1
+        if checked != PUBLIC_SAFE_FREEZE_FILE_COUNT:
+            reasons.append(f"freeze_file_count_mismatch:{checked}")
+
+    return {
+        "valid": not reasons,
+        "reasons": reasons,
+        "json_artifacts": len(json_paths),
+        "freeze_files_checked": checked,
+        "holdout_present": holdout_present,
+    }
