@@ -1,4 +1,5 @@
 import unittest
+import hashlib
 
 from contracts.capability_registry import (
     CapabilityRegistry,
@@ -6,7 +7,7 @@ from contracts.capability_registry import (
     CapabilityStatus,
 )
 from contracts.execution_spec_v2 import ArtifactContract, ExecutionNode, ExecutionSpecV2
-from contracts.rea_release_node import ReleaseNode
+from contracts.rea_release_node import ReleaseNode, ReleaseAdmission
 from contracts.reviewer_spec import ReviewResult
 from contracts.rea_pipeline import PipelineResult
 
@@ -190,7 +191,7 @@ class ReleaseNodeTests(unittest.TestCase):
         runner = FakeSignedReleaseRunner(
             PipelineResult("CONFIRMED_BY_OBSERVER", "DELIVERY_CONFIRMED", "abc")
         )
-        node = ReleaseNode(signed_release_runner=runner)
+        node = ReleaseNode(signed_release_runner=runner, provenance_verifier=lambda admission: True)
 
         result = node.execute(
             spec=make_spec(),
@@ -199,6 +200,7 @@ class ReleaseNodeTests(unittest.TestCase):
             payload=b"artifact",
             enable_dispatch=True,
             release_approved=True,
+            admission=ReleaseAdmission("spec-release", "artifact-1", hashlib.sha256(b"artifact").hexdigest(), "verified:test-fixture"),
             rea_kwargs={"destination_id": "repo:example"},
         )
 
