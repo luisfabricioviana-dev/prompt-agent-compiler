@@ -66,5 +66,31 @@ class ReconciliationContractTests(unittest.TestCase):
         self.assertEqual(restored, payload)
 
 
+    def test_public_safe_recovered_tree_contract_passes(self):
+        from pathlib import Path
+
+        result = reconciliation.verify_public_safe_recovered_tree(
+            Path("recovered_v0_2_9")
+        )
+
+        self.assertTrue(result["valid"])
+        self.assertEqual(result["json_artifacts"], 26)
+        self.assertEqual(result["freeze_files_checked"], 11)
+        self.assertFalse(result["holdout_present"])
+
+    def test_public_safe_contract_rejects_holdout_material(self):
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "blind_holdout_v0_2_9.json").write_text("{}", encoding="utf-8")
+            result = reconciliation.verify_public_safe_recovered_tree(root)
+
+        self.assertFalse(result["valid"])
+        self.assertTrue(result["holdout_present"])
+        self.assertIn("blind_holdout_present", result["reasons"])
+
+
 if __name__ == "__main__":
     unittest.main()
