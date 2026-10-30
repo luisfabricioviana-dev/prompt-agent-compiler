@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from .pattern_registry import PatternRegistry
+from .semantic_task_contract import validate_normalized_task
 
 
 REGISTRY_CONTRACT = "P01-P08-v0.2.10"
@@ -453,6 +454,7 @@ class RegistryAwarePolicyCompiler:
 
     def __call__(self, t: Any) -> RegistryPolicyResult:
         self._validate_registry_contract()
+        validate_normalized_task(t)
         score, level = self._complexity(t)
         patterns = self._patterns(t)
         gates = self._gates(t)

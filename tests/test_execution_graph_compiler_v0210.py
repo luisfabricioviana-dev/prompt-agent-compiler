@@ -190,12 +190,53 @@ class ExecutionGraphCompilerTests(unittest.TestCase):
         )
         self.assertEqual(
             [node.node_id for node in with_gate.execution_nodes],
-            ["execute", "verify", "independent-review"],
+            ["execute", "independent-review"],
         )
         self.assertEqual(
             with_gate.execution_nodes[-1].prerequisites,
-            ("verify",),
+            ("execute",),
         )
+        self.assertEqual(
+            with_gate.execution_nodes[-1].quality_gates,
+            ("INDEPENDENT_REVIEW_GATE",),
+        )
+
+
+    def test_independent_review_gate_is_not_duplicated_in_verify_phase(self):
+        plan = self.compiler.compile(
+            policy_result(
+                active=("P07",),
+                gates=(
+                    RegistryQualityGate(
+                        "EVIDENCE_GATE",
+                        "evidence",
+                        "Evidence required.",
+                    ),
+                    RegistryQualityGate(
+                        "INDEPENDENT_REVIEW_GATE",
+                        "consistency",
+                        "Independent review must pass.",
+                        True,
+                        "critical",
+                    ),
+                ),
+            ),
+            objective="Coordinate.",
+            success_definition=("reviewed",),
+        )
+
+        self.assertEqual(
+            [node.node_id for node in plan.execution_nodes],
+            ["execute", "verify", "independent-review"],
+        )
+        verify = next(n for n in plan.execution_nodes if n.node_id == "verify")
+        independent = plan.execution_nodes[-1]
+        self.assertEqual(verify.quality_gates, ("EVIDENCE_GATE",))
+        self.assertEqual(
+            independent.quality_gates,
+            ("INDEPENDENT_REVIEW_GATE",),
+        )
+        self.assertEqual(independent.prerequisites, ("verify",))
 
     def test_required_runtime_capabilities_are_declared_on_execute_node(self):
         result = policy_result(active=("P01",))

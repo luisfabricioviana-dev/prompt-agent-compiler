@@ -17,12 +17,18 @@ from .reviewer_spec import ReviewResult
 
 class ReleaseNode:
     def __init__(self, *, signed_release_runner: Callable[..., PipelineResult] | None = None):
-        if signed_release_runner is None:
-            from rea_signed_release_bridge import run_signed_optional_release
-            signed_release_runner = run_signed_optional_release
-        if not callable(signed_release_runner):
+        if signed_release_runner is not None and not callable(signed_release_runner):
             raise TypeError("signed_release_runner_callable_required")
         self.signed_release_runner = signed_release_runner
+
+    def _resolve_runner(self):
+        if self.signed_release_runner is not None:
+            return self.signed_release_runner
+        try:
+            from rea_signed_release_bridge import run_signed_optional_release
+        except (ImportError, ModuleNotFoundError):
+            return None
+        return run_signed_optional_release
 
     @staticmethod
     def _digest(payload: bytes) -> str:
@@ -89,8 +95,12 @@ class ReleaseNode:
         # boundary inputs to the existing fail-closed REA bridge.
         kwargs["enable_dispatch"] = enable_dispatch
 
+        runner = self._resolve_runner()
+        if runner is None:
+            return self._blocked("rea_release_runner_unavailable", payload)
+
         try:
-            result = self.signed_release_runner(
+            result = runner(
                 conn,
                 payload,
                 statement,

@@ -229,5 +229,20 @@ class RegistryPolicyEquivalenceTests(unittest.TestCase):
         self.assertEqual(spec.compiler_version, "0.2.10")
 
 
+    def test_registry_policy_preserves_legacy_semantic_validation(self):
+        invalid = task(
+            "invalid-human-approval",
+            actions=("OPERATE",),
+            execution=("HUMAN_APPROVAL",),
+            capabilities=("AUTHORIZATION",),
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "HUMAN_APPROVAL execution requires HUMAN_APPROVAL capability",
+        ):
+            self.compiler(invalid)
+
+
 if __name__ == "__main__":
     unittest.main()

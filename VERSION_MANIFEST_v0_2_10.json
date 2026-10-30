@@ -192,5 +192,17 @@
     "third_party_coverage_dependency": false,
     "build_backend_locked": false,
     "current_tree_discovered_test_floor": 153
+  },
+  "wave11": {
+    "status": "BOUNDED_REVIEW_HARDENING_CANDIDATE",
+    "verified_findings": 3,
+    "semantic_validation_restored": true,
+    "independent_review_gate_single_owner": true,
+    "optional_rea_bridge_lazy_fail_closed": true,
+    "packaged_release_node_constructor_smoke": true,
+    "current_tree_discovered_test_floor": 156,
+    "coverage_metric": "stdlib_trace_ast_statement_line_proxy",
+    "observed_green_coverage_percent": 87.53,
+    "coverage_minimum_percent": 85
   }
 }
