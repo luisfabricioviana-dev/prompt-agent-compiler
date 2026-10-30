@@ -211,7 +211,8 @@ class ReleaseNodeTests(unittest.TestCase):
             rea_kwargs={"destination_id": "repo:example"},
         )
 
-        self.assertEqual(result.state, "CONFIRMED_BY_OBSERVER")
+        self.assertEqual(result.state, "BLOCKED")
+        self.assertEqual(result.reason, "authenticated_reconciliation_required")
         self.assertEqual(len(runner.calls), 1)
         _, kwargs = runner.calls[0]
         self.assertTrue(kwargs["enable_dispatch"])
