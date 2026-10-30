@@ -20,9 +20,10 @@ def classify_legacy_release_result(value) -> AuditDecision:
     elif isinstance(value, tuple) and len(value) == 2:
         state = value[0]
 
-    if state in ("IN_DOUBT", "UNCERTAIN", "DISPATCHING", "DISPATCHED"):
+    if type(state) is str and state in ("IN_DOUBT", "UNCERTAIN", "DISPATCHING", "DISPATCHED"):
         return AuditDecision("IN_DOUBT", "legacy_unreconciled_no_retry")
-    if state in ("CONFIRMED_BY_OBSERVER", "DELIVERY_CONFIRMED", "CONFIRMED",
-                 "CONSISTENT", "SUCCESS", "PASS", True):
+    if state is True or (type(state) is str and state in (
+            "CONFIRMED_BY_OBSERVER", "DELIVERY_CONFIRMED", "CONFIRMED",
+            "CONSISTENT", "SUCCESS", "PASS")):
         return AuditDecision("BLOCK", "governed_audit_required")
     return AuditDecision("BLOCK", "legacy_release_result_untrusted")

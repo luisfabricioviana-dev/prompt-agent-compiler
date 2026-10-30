@@ -36,5 +36,13 @@ class ReleaseAuditService:
             return AuditDecision("BLOCK", "audit_reason_invalid")
         return AuditDecision(status, reason)
 
+    def inspect_legacy(self, value) -> AuditDecision:
+        """Quarantine a legacy result; never treat it as governed evidence."""
+        from .legacy_release_result_quarantine import classify_legacy_release_result
+        try:
+            return classify_legacy_release_result(value)
+        except Exception:
+            return AuditDecision("BLOCK", "legacy_release_result_untrusted")
+
     def authorize_dispatch(self, *args, **kwargs):
         raise PermissionError("audit_cannot_authorize_dispatch")
