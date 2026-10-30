@@ -16,7 +16,7 @@ MONITORED_FILES = (
     "contracts/rea_pipeline.py",
     "contracts/release_audit_service.py",
 )
-RELEASE_PREFIXES = ("run_optional_rea_", "inspect_", "execute", "run_governed_pipeline")
+RELEASE_PREFIXES = ("run_optional_rea_", "inspect", "execute", "run_governed_pipeline")
 
 
 def scan_release_entrypoints(root: str | Path) -> dict:
