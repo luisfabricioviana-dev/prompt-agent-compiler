@@ -25,5 +25,5 @@ def governed_release_audit(*, ledger, rea_conn, recovery, binding_registry,
     return versioned_audit(
         ledger=ledger, rea_conn=rea_conn,
         binding_registry=binding_registry,
-        audit=audit_stable_three_ledgers, **args,
+        audit=lambda: audit_stable_three_ledgers(**args),
     )
