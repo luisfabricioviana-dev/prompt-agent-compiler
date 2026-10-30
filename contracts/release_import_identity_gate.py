@@ -36,9 +36,16 @@ def validate_critical_import_identity(root: str | Path) -> dict:
             node, (ast.FunctionDef, ast.AsyncFunctionDef))}
         imports = {}
         for node in tree.body:
-            if isinstance(node, ast.ImportFrom) and node.level == 0:
+            if isinstance(node, ast.ImportFrom):
+                if node.level == 0:
+                    prefix = node.module
+                elif module.startswith("contracts.") and node.level == 1:
+                    prefix = "contracts" + ("." + node.module if node.module else "")
+                else:
+                    violations.append(f"unresolved_module_import:{relative}")
+                    continue
                 for item in node.names:
-                    imports[item.asname or item.name] = f"{node.module}.{item.name}"
+                    imports[item.asname or item.name] = f"{prefix}.{item.name}"
         for (owner, callee), target in edges.items():
             fn = functions.get(owner)
             if fn is None:
