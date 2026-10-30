@@ -17,7 +17,7 @@ def spec_with_artifact():
         success_definition=("result verified",),
         complexity_level="N1",
         complexity_score=1,
-        capabilities=CapabilityRegistry().resolve(),
+        capabilities=CapabilityRegistry().resolve(required=()),
         execution_nodes=(
             ExecutionNode(node_id="build", purpose="Build", role="executor",
                           output_artifacts=("result",)),
