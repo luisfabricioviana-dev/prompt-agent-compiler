@@ -91,6 +91,10 @@ class ExecutionGraphCompiler:
                 for gate in tuple(getattr(policy_result, "quality_gates", ()) or ())
             )
         )
+        independent_gate = "INDEPENDENT_REVIEW_GATE"
+        verification_gates = tuple(
+            gate for gate in gates if gate != independent_gate
+        )
 
         nodes: list[ExecutionNode] = []
         artifacts: list[ArtifactContract] = []
@@ -159,14 +163,14 @@ class ExecutionGraphCompiler:
                 )
             )
 
-        if gates:
+        if verification_gates:
             nodes.append(
                 ExecutionNode(
                     node_id="verify",
                     purpose="Verify policy-emitted quality gates.",
                     role="verifier",
                     prerequisites=("execute",),
-                    quality_gates=gates,
+                    quality_gates=verification_gates,
                     on_fail=("repair:verify",),
                 )
             )
@@ -180,8 +184,8 @@ class ExecutionGraphCompiler:
                 )
             )
 
-        if "INDEPENDENT_REVIEW_GATE" in gates:
-            parent = "verify" if gates else "execute"
+        if independent_gate in gates:
+            parent = "verify" if verification_gates else "execute"
             nodes.append(
                 ExecutionNode(
                     node_id="independent-review",
