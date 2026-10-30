@@ -143,6 +143,33 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
                     if node.func.id in aliases and node.func.id not in risky:
                         violations.append(f"aliased_dynamic_operation:{relative}:{owner}:{node.func.id}")
+            # Imports can alias dangerous namespace primitives without using
+            # their original names at the callsite. Track explicitly imported
+            # builtin reflection functions and importlib's dynamic loader.
+            dangerous_import_aliases = set()
+            for node in ast.walk(fn):
+                if isinstance(node, ast.ImportFrom):
+                    if node.module == "builtins":
+                        for item in node.names:
+                            if item.name in risky:
+                                dangerous_import_aliases.add(item.asname or item.name)
+                    if node.module == "importlib":
+                        for item in node.names:
+                            if item.name == "import_module":
+                                dangerous_import_aliases.add(item.asname or item.name)
+                elif isinstance(node, ast.Import):
+                    for item in node.names:
+                        if item.name == "importlib":
+                            dangerous_import_aliases.add(item.asname or item.name)
+            for node in ast.walk(fn):
+                if isinstance(node, ast.Call):
+                    if isinstance(node.func, ast.Name) and node.func.id in dangerous_import_aliases:
+                        violations.append(f"imported_dynamic_operation:{relative}:{owner}:{node.func.id}")
+                    if (isinstance(node.func, ast.Attribute)
+                            and node.func.attr == "import_module"
+                            and isinstance(node.func.value, ast.Name)
+                            and node.func.value.id in dangerous_import_aliases):
+                        violations.append(f"imported_dynamic_operation:{relative}:{owner}:import_module")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
