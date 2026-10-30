@@ -42,6 +42,8 @@ class RuntimeStateMachine:
         )
         if not isinstance(self.artifact_registry, ArtifactRegistry):
             raise TypeError("artifact_registry_invalid")
+        if not self.artifact_registry.matches_contracts(spec.artifacts):
+            raise RuntimeStateError("artifact_registry_contract_mismatch")
 
         self._nodes = {node.node_id: node for node in spec.execution_nodes}
         self._states: dict[str, NodeState] = {}
