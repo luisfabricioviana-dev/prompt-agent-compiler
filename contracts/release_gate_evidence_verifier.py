@@ -27,6 +27,20 @@ def verify_evidence(report_path: str | Path, manifest_path: str | Path,
         if manifest.get(key) != expected:
             violations.append(key + "_mismatch")
     cases = report.get("cases")
+    # This fixed allowlist is verifier-owned, not read from the report or its
+    # companion manifest. Detect rehashed omission, renaming, duplication or
+    # addition of cases in the scoped six-fixture corpus.
+    expected_case_names = (
+        "baseline", "module_rebind", "local_rebind",
+        "shadow_import", "nested_capture", "dynamic_exec",
+    )
+    if isinstance(cases, list):
+        actual_names = [item.get("case") if isinstance(item, dict) else None
+                        for item in cases]
+        if actual_names != list(expected_case_names):
+            violations.append("fixture_identity_mismatch")
+        if report.get("scope") != "six_scoped_deterministic_fixtures_not_exhaustive":
+            violations.append("fixture_scope_mismatch")
     if not isinstance(cases, list) or not cases:
         violations.append("missing_cases")
     else:
