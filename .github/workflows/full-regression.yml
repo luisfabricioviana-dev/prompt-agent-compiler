@@ -60,6 +60,16 @@ jobs:
           if result["status"] != "PASS_SCOPED":
               raise SystemExit("critical_release_callsite_drift")
           PY
+      - name: Enforce lexical owner binding of critical release calls
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from contracts.critical_release_call_baseline import validate_release_call_owners
+          result = validate_release_call_owners(Path("."))
+          print(result)
+          if result["status"] != "PASS_SCOPED":
+              raise SystemExit("critical_release_owner_drift")
+          PY
       - name: Run current-tree tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Run contract statement coverage gate
