@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11'
@@ -99,6 +101,17 @@ jobs:
           print(json.dumps(result, sort_keys=True))
           if result["status"] != "PASS_SCOPED":
               raise SystemExit("release_gate_evidence_validation_failed")
+          PY
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from contracts.release_gate_git_tree_verifier import verify_git_tree_sources
+          manifest = json.loads(Path("artifacts/release-gate-evidence-manifest.json").read_text())
+          result = verify_git_tree_sources(".", os.environ["GITHUB_SHA"], manifest["source_sha256"])
+          print(json.dumps(result, sort_keys=True))
+          if result["status"] != "PASS_SCOPED":
+              raise SystemExit("git_tree_source_evidence_drift")
           PY
       - name: Upload differential gate evidence
         if: always()
