@@ -9,14 +9,16 @@ import sys
 import trace
 import unittest
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from contracts.coverage_gate import (
     coverage_percent,
     enforce_minimum_coverage,
     executable_statement_lines,
 )
 
-
-ROOT = Path(__file__).resolve().parents[1]
 CONTRACTS = ROOT / "contracts"
 EXCLUDED_FILES = {"coverage_gate.py"}
 
