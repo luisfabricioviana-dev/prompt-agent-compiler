@@ -26,6 +26,13 @@ class ReleaseNode:
             raise TypeError("signed_release_runner_callable_required")
         self.signed_release_runner = signed_release_runner
 
+    def inspect_delivery(self, *, audit_service, **audit_context):
+        """Read-only governed inspection. Never invokes the release runner."""
+        from .release_audit_service import AuditDecision, ReleaseAuditService
+        if not isinstance(audit_service, ReleaseAuditService):
+            return AuditDecision("BLOCK", "governed_audit_service_required")
+        return audit_service.inspect(**audit_context)
+
     @staticmethod
     def _digest(payload: bytes) -> str:
         return hashlib.sha256(payload).hexdigest() if isinstance(payload, bytes) else ""
