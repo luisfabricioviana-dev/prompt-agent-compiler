@@ -10,6 +10,7 @@ import hmac
 import sqlite3
 
 from .durable_replay_ledger import DurableReplayLedger
+from .cross_ledger_binding import CrossLedgerBinding, CrossLedgerBindingVerifier
 from .governed_release_recovery import GovernedRecovery
 from .rea_release_reconciliation import verify_persisted_delivery
 
@@ -25,6 +26,8 @@ def audit_cross_ledger(
     recovery: GovernedRecovery, issuer: str, nonce: str,
     release_id: str, artifact_sha256: str, destination_id: str,
     observer_id: str, observer_key: bytes,
+    binding: CrossLedgerBinding | None = None,
+    binding_verifier: CrossLedgerBindingVerifier | None = None,
 ) -> CrossLedgerAudit:
     if (not isinstance(ledger, DurableReplayLedger)
             or not isinstance(recovery, GovernedRecovery)
@@ -34,6 +37,11 @@ def audit_cross_ledger(
                    (issuer, nonce, release_id, artifact_sha256, destination_id,
                     observer_id))):
         return CrossLedgerAudit("BLOCK", "audit_dependencies_or_identity_invalid")
+    if (not isinstance(binding_verifier, CrossLedgerBindingVerifier)
+            or not binding_verifier.verify(
+                binding=binding, issuer=issuer, nonce=nonce, release_id=release_id,
+                artifact_sha256=artifact_sha256, destination_id=destination_id)):
+        return CrossLedgerAudit("BLOCK", "cross_ledger_binding_unverified")
     # Avoid confusing different backing databases and accidental cross-tenant
     # correlations. Caller must bind release_id to (issuer, nonce) independently.
     try:
