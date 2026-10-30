@@ -70,6 +70,16 @@ jobs:
           if result["status"] != "PASS_SCOPED":
               raise SystemExit("critical_release_owner_drift")
           PY
+      - name: Enforce critical release import identities
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from contracts.release_import_identity_gate import validate_critical_import_identity
+          result = validate_critical_import_identity(Path("."))
+          print(result)
+          if result["status"] != "PASS_SCOPED":
+              raise SystemExit("critical_release_import_identity_drift")
+          PY
       - name: Run current-tree tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Run contract statement coverage gate
