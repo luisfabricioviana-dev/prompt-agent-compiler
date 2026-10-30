@@ -118,5 +118,18 @@
     "current_tree_discovered_test_floor": 108,
     "rea_dispatch_wired": false,
     "recovered_policy_scoring_migrated": false
+  },
+  "wave6": {
+    "status": "GUARDED_REA_RELEASE_NODE_CANDIDATE",
+    "release_node": "contracts/rea_release_node.py",
+    "current_tree_discovered_test_floor": 117,
+    "dry_run_default": true,
+    "explicit_dispatch_approval_required": true,
+    "required_capability": "rea.release",
+    "ready_execution_spec_required": true,
+    "passed_review_required": true,
+    "production_publisher_implemented": false,
+    "production_key_custody_certified": false,
+    "distributed_exactly_once_claim": false
   }
 }
