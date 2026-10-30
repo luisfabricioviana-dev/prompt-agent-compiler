@@ -36,7 +36,9 @@ class AuthenticatedReconciliationTests(unittest.TestCase):
         self.ledger.transition(self.statement, b"bytes", expected="DISPATCHING", target="UNCERTAIN")
         self.authenticator = ObserverAuthenticator(observer_id=OBS, verification_key=KEY)
 
-    def reconcile(self, observer=envelope, **kwargs):
+    def reconcile(self, observer=None, **kwargs):
+        if observer is None:
+            observer = lambda **data: envelope(data)
         args = dict(ledger=self.ledger, statement=self.statement, payload=b"bytes",
                     destination_id="destination", observer=observer,
                     authenticator=self.authenticator)
