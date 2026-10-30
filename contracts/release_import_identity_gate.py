@@ -184,7 +184,7 @@ def validate_critical_import_identity(root: str | Path) -> dict:
             for node in ast.walk(fn):
                 if isinstance(node, ast.ImportFrom):
                     for item in node.names:
-                        if (item.asname or item.name) in target_names:
+                        if (item.asname or item.name) in (target_names | {callee}):
                             prefix = node.module or ""
                             if node.level == 1 and module.startswith("contracts."):
                                 prefix = "contracts" + ("." + prefix if prefix else "")
