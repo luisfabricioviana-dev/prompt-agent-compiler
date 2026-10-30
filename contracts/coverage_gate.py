@@ -62,3 +62,22 @@ def enforce_minimum_coverage(value: float, minimum: float) -> float:
             f"coverage_below_threshold:{value:.2f}<{minimum:.2f}"
         )
     return value
+
+
+def enforce_file_minimums(
+    report: dict[str, float],
+    minimums: dict[str, float],
+) -> dict[str, float]:
+    if not isinstance(report, dict) or not isinstance(minimums, dict):
+        raise TypeError("critical_file_coverage_mapping_required")
+    for path, minimum in minimums.items():
+        if path not in report:
+            raise RuntimeError(f"critical_file_coverage_missing:{path}")
+        value = float(report[path])
+        threshold = float(minimum)
+        if value < threshold:
+            raise RuntimeError(
+                "critical_file_coverage_below_threshold:"
+                f"{path}:{value:.2f}<{threshold:.2f}"
+            )
+    return dict(minimums)
