@@ -4,6 +4,7 @@ import unittest
 from contracts.capability_registry import CapabilityRegistry
 from contracts.execution_spec_v2 import ExecutionNode, ExecutionSpecV2
 from contracts.reviewer_spec import ReviewFinding
+from contracts.gate_evidence import GateEvidence
 from contracts.runtime_state import NodeState, RuntimeStateError, RuntimeStateMachine
 
 
@@ -39,6 +40,13 @@ def make_runtime():
     return runtime
 
 
+def bound(runtime, node, labels):
+    rows = tuple(GateEvidence(runtime.run_id, node, name, name.encode())
+                 for name in labels)
+    findings = tuple(ReviewFinding(row.gate_id, True, (row.digest,)) for row in rows)
+    return findings, rows
+
+
 class GateEvidenceRuntimeTests(unittest.TestCase):
     def test_missing_findings_cannot_complete_verify(self):
         runtime = make_runtime()
@@ -67,25 +75,21 @@ class GateEvidenceRuntimeTests(unittest.TestCase):
 
     def test_evidenced_gates_promote_downstream_review(self):
         runtime = make_runtime()
-        runtime.complete("verify", findings=(
-            ReviewFinding("REGRESSION_GATE", True, ("regression-report-sha256",)),
-            ReviewFinding("BASELINE_GATE", True, ("baseline-report-sha256",)),
-        ))
+        findings, evidence = bound(runtime, "verify", ("REGRESSION_GATE", "BASELINE_GATE"))
+        runtime.complete("verify", findings=findings, gate_evidence=evidence)
         self.assertEqual(runtime.node_state("verify"), NodeState.PASS)
         self.assertEqual(runtime.node_state("independent-review"), NodeState.READY)
 
     def test_independent_review_requires_confirmation(self):
         runtime = make_runtime()
-        runtime.complete("verify", findings=(
-            ReviewFinding("REGRESSION_GATE", True, ("report",)),
-            ReviewFinding("BASELINE_GATE", True, ("report",)),
-        ))
+        findings, evidence = bound(runtime, "verify", ("REGRESSION_GATE", "BASELINE_GATE"))
+        runtime.complete("verify", findings=findings, gate_evidence=evidence)
         runtime.start("independent-review")
-        findings = (ReviewFinding("INDEPENDENT_REVIEW_GATE", True, ("review-report",)),)
+        findings, evidence = bound(runtime, "independent-review", ("INDEPENDENT_REVIEW_GATE",))
         with self.assertRaisesRegex(RuntimeStateError, "runtime_gate_review_failed"):
-            runtime.complete("independent-review", findings=findings)
+            runtime.complete("independent-review", findings=findings, gate_evidence=evidence)
         runtime.complete("independent-review", findings=findings,
-                         independent_reviewer_confirmed=True)
+                         independent_reviewer_confirmed=True, gate_evidence=evidence)
         self.assertEqual(runtime.overall_state, "COMPLETE")
 
     def test_ungated_node_still_completes_without_findings(self):
