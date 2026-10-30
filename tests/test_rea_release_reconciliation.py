@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import sqlite3
 import unittest
-from contracts.rea_release_reconciliation import DestinationObservation, reconcile_delivery
+from contracts.rea_release_reconciliation import DestinationObservation, reconcile_delivery, verify_persisted_delivery
 
 class ReconciliationTests(unittest.TestCase):
     RELEASE = "release-001"
@@ -34,6 +34,33 @@ class ReconciliationTests(unittest.TestCase):
             self.assertEqual(self.check(db), (True, "DELIVERY_CONFIRMED"))
             self.assertEqual(self.check(db), (True, "DELIVERY_CONFIRMED"))
             self.assertEqual(db.execute("SELECT COUNT(*) FROM rea_release_confirmations").fetchone()[0], 1)
+
+    def test_evidence_is_auditable_after_restart(self):
+        with sqlite3.connect(":memory:") as db:
+            self.setup_claim(db)
+            self.assertEqual(self.check(db), (True, "DELIVERY_CONFIRMED"))
+            self.assertEqual(verify_persisted_delivery(
+                db, release_id=self.RELEASE, observer_id=self.OBSERVER,
+                trusted_observer_key=self.KEY), (True, "DELIVERY_CONFIRMED"))
+            db.execute("UPDATE rea_release_observer_evidence SET signature_hex='forged'")
+            db.commit()
+            self.assertEqual(verify_persisted_delivery(
+                db, release_id=self.RELEASE, observer_id=self.OBSERVER,
+                trusted_observer_key=self.KEY)[1], "confirmation_signature_invalid")
+            self.assertEqual(self.check(db)[1], "confirmation_evidence_conflict")
+
+    def test_legacy_confirmation_without_evidence_is_rejected(self):
+        with sqlite3.connect(":memory:") as db:
+            self.setup_claim(db)
+            db.execute("CREATE TABLE rea_release_confirmations "
+                       "(release_id TEXT PRIMARY KEY, artifact_sha256 TEXT NOT NULL, destination_id TEXT NOT NULL)")
+            db.execute("INSERT INTO rea_release_confirmations VALUES (?,?,?)",
+                       (self.RELEASE,self.SHA,self.DEST))
+            db.commit()
+            self.assertEqual(self.check(db)[1], "confirmation_evidence_conflict")
+            self.assertEqual(verify_persisted_delivery(
+                db, release_id=self.RELEASE, observer_id=self.OBSERVER,
+                trusted_observer_key=self.KEY)[0], False)
 
     def test_forged_observation_rejected(self):
         with sqlite3.connect(":memory:") as db:
