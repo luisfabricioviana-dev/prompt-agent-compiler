@@ -14,11 +14,15 @@ class EvidenceVerifierTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.report = self.root / "release-gate-differential-report.json"
         self.manifest = self.root / "manifest.json"
+        names = ("baseline", "module_rebind", "local_rebind",
+                 "shadow_import", "nested_capture", "dynamic_exec")
         self.data = {"schema": "release-gate-differential-report-v1", "status": "PASS",
-                     "case_count": 1, "match_count": 1, "scope": "test_scoped",
-                     "cases": [{"case": "baseline", "matched": True,
+                     "case_count": 6, "match_count": 6,
+                     "scope": "six_scoped_deterministic_fixtures_not_exhaustive",
+                     "cases": [{"case": name, "matched": True,
                                 "old": {"status": "PASS_SCOPED"},
-                                "current": {"status": "PASS_SCOPED"}}]}
+                                "current": {"status": "PASS_SCOPED"}}
+                               for name in names]}
         self.write()
 
     def write(self):
