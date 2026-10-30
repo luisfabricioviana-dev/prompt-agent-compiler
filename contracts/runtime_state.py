@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Mapping
+from typing import Mapping, Iterable
 
 from .artifact_registry import ArtifactRegistry
 from .execution_spec_v2 import ExecutionSpecV2
+from .reviewer_spec import ReviewerSpec, ReviewFinding
 
 
 class RuntimeStateError(RuntimeError):
@@ -113,10 +114,32 @@ class RuntimeStateMachine:
         node_id: str,
         *,
         outputs: Mapping[str, bytes] | None = None,
+        findings: Iterable[ReviewFinding] | None = None,
+        independent_reviewer_confirmed: bool = False,
     ) -> None:
         node = self._node(node_id)
         if self._states[node_id] is not NodeState.RUNNING:
             raise RuntimeStateError(f"node_not_running:{node_id}")
+
+        if node.quality_gates:
+            if findings is None:
+                raise RuntimeStateError(f"runtime_gate_evidence_required:{node_id}")
+            reviewer = ReviewerSpec(
+                review_id=f"runtime:{node_id}",
+                target_artifacts=tuple(node.output_artifacts),
+                original_objective=self.spec.objective,
+                required_gates=tuple(node.quality_gates),
+                independent_required=(node.role == "independent_reviewer"),
+            )
+            result = reviewer.evaluate(
+                findings=tuple(findings),
+                independent_reviewer_confirmed=independent_reviewer_confirmed,
+            )
+            if result.state != "PASS":
+                raise RuntimeStateError(
+                    f"runtime_gate_review_failed:{node_id}:"
+                    + ",".join(result.reasons)
+                )
 
         supplied = {} if outputs is None else outputs
         # Artifact validation/recording happens before the state transition.
