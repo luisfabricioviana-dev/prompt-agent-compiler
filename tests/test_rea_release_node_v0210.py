@@ -199,6 +199,7 @@ class ReleaseNodeTests(unittest.TestCase):
             payload=b"artifact",
             enable_dispatch=True,
             release_approved=True,
+            provenance_verifier=lambda **kwargs: True,
             rea_kwargs={"destination_id": "repo:example"},
         )
 
