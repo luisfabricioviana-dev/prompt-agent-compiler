@@ -16,6 +16,16 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11'
+      - name: Assert current-tree test inventory floor
+        run: |
+          python - <<'PY'
+          import unittest
+          suite = unittest.defaultTestLoader.discover("tests", pattern="test_*.py")
+          count = suite.countTestCases()
+          print(f"current_tree_discovered_tests={count}")
+          if count < 64:
+              raise SystemExit(f"current_tree_test_inventory_regressed:{count}")
+          PY
       - name: Compile current tree
         run: python -m compileall -q .
       - name: Run current-tree tests
@@ -40,6 +50,20 @@ jobs:
               raise SystemExit("public_safe_recovered_tree_invalid")
           PY
           test ! -e recovery/prompt_agent_compiler_v0_2_9_recovered.zip
+      - name: Assert recovered v0.2.9 test inventory floor
+        run: |
+          python - <<'PY'
+          import sys
+          import unittest
+          sys.path.insert(0, "recovered_v0_2_9")
+          suite = unittest.defaultTestLoader.discover(
+              "recovered_v0_2_9", pattern="test_*.py"
+          )
+          count = suite.countTestCases()
+          print(f"recovered_v0_2_9_discovered_tests={count}")
+          if count < 83:
+              raise SystemExit(f"recovered_test_inventory_regressed:{count}")
+          PY
       - name: Compile recovered v0.2.9 source
         run: python -m compileall -q recovered_v0_2_9
       - name: Run recovered semantic/compiler regression
