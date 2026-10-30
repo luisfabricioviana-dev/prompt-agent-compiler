@@ -48,7 +48,7 @@ class MonotonicRevisionTests(unittest.TestCase):
 
     def test_missing_tracking_fails_closed(self):
         self.rea.execute("DROP TRIGGER audit_rev_rea_release_claims_update")
-        self.assertEqual(self.audit(), ("BLOCK", "revision_tracking_unavailable"))
+        self.assertEqual(self.audit(), ("BLOCK", "revision_lifecycle_unverified"))
 
     def test_rolled_back_change_does_not_increment(self):
         before = revision(self.rea, role="rea")
