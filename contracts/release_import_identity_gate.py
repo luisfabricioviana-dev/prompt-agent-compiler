@@ -85,6 +85,31 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                     if any(isinstance(name, ast.Name) and name.id in target_names
                            for target_node in targets for name in ast.walk(target_node)):
                         violations.append(f"module_rebound_target:{relative}:{callee}")
+            # Imports nested in control flow are ambiguous: a conditional
+            # import must not certify an unconditional call edge.
+            for node in ast.walk(fn):
+                if isinstance(node, (ast.Import, ast.ImportFrom)):
+                    direct = node in fn.body
+                    if not direct and isinstance(node, ast.ImportFrom):
+                        if any((item.asname or item.name) in target_names
+                               for item in node.names):
+                            violations.append(f"nested_import_target:{relative}:{owner}:{callee}")
+                if isinstance(node, (ast.AugAssign, ast.For, ast.AsyncFor,
+                                     ast.With, ast.AsyncWith, ast.ExceptHandler)):
+                    candidates = []
+                    if isinstance(node, ast.AugAssign):
+                        candidates = [node.target]
+                    elif isinstance(node, (ast.For, ast.AsyncFor)):
+                        candidates = [node.target]
+                    elif isinstance(node, (ast.With, ast.AsyncWith)):
+                        candidates = [item.optional_vars for item in node.items
+                                      if item.optional_vars is not None]
+                    elif isinstance(node, ast.ExceptHandler) and node.name:
+                        if node.name in target_names:
+                            violations.append(f"indirect_rebind:{relative}:{owner}:{callee}")
+                    if any(isinstance(name, ast.Name) and name.id in target_names
+                           for candidate in candidates for name in ast.walk(candidate)):
+                        violations.append(f"indirect_rebind:{relative}:{owner}:{callee}")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
