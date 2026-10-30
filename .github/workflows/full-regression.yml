@@ -85,6 +85,21 @@ jobs:
           mkdir -p artifacts
           python -m tools.build_release_gate_differential_report > artifacts/release-gate-differential-report.json
           python -m tools.build_release_gate_evidence_manifest
+          python - <<'PY'
+          import json
+          import os
+          from contracts.release_gate_evidence_verifier import verify_evidence
+          result = verify_evidence(
+              "artifacts/release-gate-differential-report.json",
+              "artifacts/release-gate-evidence-manifest.json",
+              commit_sha=os.environ["GITHUB_SHA"],
+              run_id=os.environ["GITHUB_RUN_ID"],
+              run_attempt=os.environ["GITHUB_RUN_ATTEMPT"],
+          )
+          print(json.dumps(result, sort_keys=True))
+          if result["status"] != "PASS_SCOPED":
+              raise SystemExit("release_gate_evidence_validation_failed")
+          PY
       - name: Upload differential gate evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
