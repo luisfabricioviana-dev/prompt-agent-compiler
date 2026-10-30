@@ -215,5 +215,21 @@
     "global_minimum_percent": 85,
     "current_tree_discovered_test_floor": 163,
     "authorization_behavior_changed": false
+  },
+  "wave13": {
+    "status": "DURABLE_RUNTIME_TRACE_LEDGER_CANDIDATE",
+    "ledger": "contracts/runtime_trace_ledger.py",
+    "sqlite_persistence": true,
+    "spec_fingerprint_binding": true,
+    "hash_chained_events": true,
+    "artifact_metadata_persistence": true,
+    "artifact_bytes_persisted": false,
+    "runtime_state_integration": true,
+    "trace_failure_blocks_transition": true,
+    "automatic_recovery": false,
+    "distributed_consensus": false,
+    "exactly_once_execution_claim": false,
+    "current_tree_discovered_test_floor": 174,
+    "global_observed_statement_proxy_percent": 88.59
   }
 }
