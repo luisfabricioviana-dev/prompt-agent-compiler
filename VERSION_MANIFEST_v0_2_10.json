@@ -131,5 +131,16 @@
     "production_publisher_implemented": false,
     "production_key_custody_certified": false,
     "distributed_exactly_once_claim": false
+  },
+  "wave7": {
+    "status": "REGISTRY_AWARE_POLICY_EQUIVALENCE_CANDIDATE",
+    "policy": "contracts/registry_policy.py",
+    "registry_contract": "P01-P08-v0.2.10",
+    "recovered_v0_2_9_route_equivalence": true,
+    "canonical_runtime_integration": true,
+    "score_thresholds_changed": false,
+    "anti_overengineering_changed": false,
+    "gate_behavior_changed": false,
+    "current_tree_discovered_test_floor": 124
   }
 }
