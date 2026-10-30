@@ -51,6 +51,8 @@ class ReleaseNode:
         authorization: Any = None,
         enable_dispatch: bool = False,
         release_approved: bool = False,
+        provenance_verifier: Callable[..., bool] | None = None,
+        provenance_verified: bool = False,
         rea_kwargs: Mapping[str, Any] | None = None,
     ) -> PipelineResult:
         if not isinstance(spec, ExecutionSpecV2):
@@ -79,6 +81,25 @@ class ReleaseNode:
 
         if enable_dispatch and release_approved is not True:
             return self._blocked("explicit_release_approval_required", payload)
+
+        # A caller's boolean claim is never provenance evidence. The separately
+        # supplied verifier is a trust boundary and must be provisioned by the
+        # deployment, not inferred from structural gate evidence.
+        if enable_dispatch:
+            if provenance_verifier is None or not callable(provenance_verifier):
+                return self._blocked("provenance_verifier_required", payload)
+            try:
+                verified = provenance_verifier(
+                    spec_id=spec.spec_id,
+                    artifact_id=artifact_id,
+                    digest=self._digest(payload),
+                    statement=statement,
+                    authorization=authorization,
+                )
+            except Exception:
+                return self._blocked("provenance_verification_failed", payload)
+            if verified is not True:
+                return self._blocked("provenance_not_verified", payload)
 
         kwargs = dict(rea_kwargs or {})
         if "enable_dispatch" in kwargs:
