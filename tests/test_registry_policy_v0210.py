@@ -102,7 +102,7 @@ CASES = (
         actions=("OPERATE",),
         external=("DATABASE",),
         execution=("STATEFUL", "HUMAN_APPROVAL"),
-        capabilities=("AUTHORIZATION", "PERSISTENT_STATE_WRITE"),
+        capabilities=("AUTHORIZATION", "HUMAN_APPROVAL", "PERSISTENT_STATE_WRITE"),
     ),
     task(
         "destructive",
