@@ -27,10 +27,22 @@ class ReleaseNode:
         self.signed_release_runner = signed_release_runner
 
     def inspect_delivery(self, *, audit_service, **audit_context):
-        """Read-only governed inspection. Never invokes the release runner."""
+        """Only the governed read-only service may inspect a concrete delivery."""
         from .release_audit_service import AuditDecision, ReleaseAuditService
         if not isinstance(audit_service, ReleaseAuditService):
             return AuditDecision("BLOCK", "governed_audit_service_required")
+        required = frozenset((
+            "ledger", "rea_conn", "recovery", "binding_registry",
+            "issuer", "nonce", "release_id", "artifact_sha256",
+            "destination_id", "observer_id", "observer_key",
+            "binding", "binding_verifier",
+        ))
+        if frozenset(audit_context) != required:
+            return AuditDecision("BLOCK", "release_inspection_context_invalid")
+        if any(not isinstance(audit_context[key], str) or not audit_context[key].strip()
+               for key in ("issuer", "nonce", "release_id", "artifact_sha256",
+                           "destination_id", "observer_id")):
+            return AuditDecision("BLOCK", "release_inspection_identity_invalid")
         return audit_service.inspect(**audit_context)
 
     @staticmethod
