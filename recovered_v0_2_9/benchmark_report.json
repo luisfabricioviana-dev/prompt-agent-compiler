@@ -1,0 +1,395 @@
+{
+  "metrics": {
+    "routing_precision": 1.0,
+    "routing_recall": 1.0,
+    "overengineering_rate": 0.0,
+    "gate_recall": 1.0,
+    "complexity_accuracy": 1.0,
+    "case_pass_rate": 1.0,
+    "cases": 20
+  },
+  "cases": [
+    {
+      "id": "B01",
+      "input": "Explique em uma frase o que é cache.",
+      "selected": [],
+      "required": [],
+      "allowed": [],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N0",
+      "complexity_score": 0,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B02",
+      "input": "Crie uma função que receba dois números e retorne o maior.",
+      "selected": [
+        "P01"
+      ],
+      "required": [
+        "P01"
+      ],
+      "allowed": [],
+      "forbidden": [
+        "P04",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "complexity_score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B03",
+      "input": "Esta função deveria retornar 10, mas está retornando 8. Descubra o erro.",
+      "selected": [
+        "P03"
+      ],
+      "required": [
+        "P03"
+      ],
+      "allowed": [],
+      "forbidden": [],
+      "gates": [],
+      "complexity": "N1",
+      "complexity_score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B04",
+      "input": "Reorganize este módulo sem alterar seu comportamento público.",
+      "selected": [
+        "P02"
+      ],
+      "required": [
+        "P02"
+      ],
+      "allowed": [],
+      "forbidden": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1",
+      "complexity_score": 2,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B05",
+      "input": "Este serviço mistura persistência, regras de negócio e HTTP. Reestruture sem alterar o comportamento externo.",
+      "selected": [
+        "P02",
+        "P06"
+      ],
+      "required": [
+        "P02",
+        "P06"
+      ],
+      "allowed": [],
+      "forbidden": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1",
+      "complexity_score": 2,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B06",
+      "input": "Esta consulta está lenta. Reduza a latência.",
+      "selected": [
+        "P05"
+      ],
+      "required": [
+        "P05"
+      ],
+      "allowed": [],
+      "forbidden": [],
+      "gates": [
+        "BASELINE_GATE"
+      ],
+      "complexity": "N1",
+      "complexity_score": 2,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B07",
+      "input": "Otimize isso.",
+      "selected": [
+        "P05"
+      ],
+      "required": [],
+      "allowed": [
+        "P05"
+      ],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "BASELINE_GATE"
+      ],
+      "complexity": "N2",
+      "complexity_score": 4,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B08",
+      "input": "Projete a arquitetura de uma plataforma de processamento de vídeos antes de implementá-la.",
+      "selected": [
+        "P04"
+      ],
+      "required": [
+        "P04"
+      ],
+      "allowed": [
+        "P01"
+      ],
+      "forbidden": [],
+      "gates": [],
+      "complexity": "N2",
+      "complexity_score": 4,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B09",
+      "input": "Crie um formulário de cadastro pronto para produção, responsivo e acessível.",
+      "selected": [
+        "P01",
+        "P08"
+      ],
+      "required": [
+        "P01",
+        "P08"
+      ],
+      "allowed": [],
+      "forbidden": [],
+      "gates": [
+        "ACCESSIBILITY_GATE",
+        "RESPONSIVE_GATE"
+      ],
+      "complexity": "N1",
+      "complexity_score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B10",
+      "input": "Projete e implemente um sistema crítico, com revisão independente de arquitetura, segurança e performance.",
+      "selected": [
+        "P01",
+        "P04",
+        "P05",
+        "P07"
+      ],
+      "required": [
+        "P01",
+        "P04",
+        "P07"
+      ],
+      "allowed": [
+        "P05"
+      ],
+      "forbidden": [],
+      "gates": [
+        "BASELINE_GATE",
+        "INDEPENDENT_REVIEW_GATE"
+      ],
+      "complexity": "N4",
+      "complexity_score": 11,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B11",
+      "input": "Crie uma função para converter Celsius em Fahrenheit usando vários agentes.",
+      "selected": [
+        "P01"
+      ],
+      "required": [
+        "P01"
+      ],
+      "allowed": [],
+      "forbidden": [
+        "P04",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "complexity_score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B12",
+      "input": "Pesquise as principais alternativas atuais para este serviço e compare evidências.",
+      "selected": [],
+      "required": [],
+      "allowed": [],
+      "forbidden": [
+        "P01",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N2",
+      "complexity_score": 4,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B13",
+      "input": "Analise exclusivamente os documentos fornecidos e não utilize conhecimento externo.",
+      "selected": [],
+      "required": [],
+      "allowed": [],
+      "forbidden": [
+        "P01"
+      ],
+      "gates": [
+        "EVIDENCE_GATE",
+        "TRACEABILITY_GATE"
+      ],
+      "complexity": "N3",
+      "complexity_score": 7,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B14",
+      "input": "Envie o relatório por e-mail.",
+      "selected": [],
+      "required": [],
+      "allowed": [],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N2",
+      "complexity_score": 4,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B15",
+      "input": "Exclua todos os registros antigos do sistema.",
+      "selected": [],
+      "required": [],
+      "allowed": [],
+      "forbidden": [],
+      "gates": [
+        "DESTRUCTIVE_ACTION_GATE"
+      ],
+      "complexity": "N3",
+      "complexity_score": 8,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B16",
+      "input": "Reescreva completamente a arquitetura, mas não altere absolutamente nada no sistema.",
+      "selected": [
+        "P02",
+        "P04"
+      ],
+      "required": [
+        "P02",
+        "P04"
+      ],
+      "allowed": [
+        "P06"
+      ],
+      "forbidden": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N2",
+      "complexity_score": 6,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B17",
+      "input": "Conserte meu aplicativo.",
+      "selected": [
+        "P03"
+      ],
+      "required": [
+        "P03"
+      ],
+      "allowed": [],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "complexity_score": 3,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B18",
+      "input": "Resuma este documento de 200 páginas com boa estrutura.",
+      "selected": [],
+      "required": [],
+      "allowed": [],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "complexity_score": 3,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B19",
+      "input": "Analise o processo administrativo e indique as consequências jurídicas e técnicas de cada pendência.",
+      "selected": [
+        "P07"
+      ],
+      "required": [],
+      "allowed": [
+        "P07"
+      ],
+      "forbidden": [],
+      "gates": [
+        "EVIDENCE_GATE",
+        "TRACEABILITY_GATE"
+      ],
+      "complexity": "N3",
+      "complexity_score": 10,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "B20",
+      "input": "Melhore nosso agente.",
+      "selected": [
+        "P04"
+      ],
+      "required": [],
+      "allowed": [
+        "P02",
+        "P04"
+      ],
+      "forbidden": [
+        "P05",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "complexity_score": 2,
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

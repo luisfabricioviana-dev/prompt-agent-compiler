@@ -1,0 +1,1567 @@
+{
+  "golden": {
+    "metrics": {
+      "routing_precision": 1.0,
+      "routing_recall": 1.0,
+      "overengineering_rate": 0.0,
+      "gate_recall": 1.0,
+      "complexity_accuracy": 1.0,
+      "case_pass_rate": 1.0,
+      "cases": 20
+    },
+    "cases": [
+      {
+        "id": "B01",
+        "input": "Explique em uma frase o que é cache.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N0",
+        "score": 0,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B02",
+        "input": "Crie uma função que receba dois números e retorne o maior.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B03",
+        "input": "Esta função deveria retornar 10, mas está retornando 8. Descubra o erro.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B04",
+        "input": "Reorganize este módulo sem alterar seu comportamento público.",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B05",
+        "input": "Este serviço mistura persistência, regras de negócio e HTTP. Reestruture sem alterar o comportamento externo.",
+        "selected": [
+          "P02",
+          "P06"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B06",
+        "input": "Esta consulta está lenta. Reduza a latência.",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B07",
+        "input": "Otimize isso.",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B08",
+        "input": "Projete a arquitetura de uma plataforma de processamento de vídeos antes de implementá-la.",
+        "selected": [
+          "P04"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B09",
+        "input": "Crie um formulário de cadastro pronto para produção, responsivo e acessível.",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [
+          "ACCESSIBILITY_GATE",
+          "RESPONSIVE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B10",
+        "input": "Projete e implemente um sistema crítico, com revisão independente de arquitetura, segurança e performance.",
+        "selected": [
+          "P01",
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N3",
+        "score": 10,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B11",
+        "input": "Crie uma função para converter Celsius em Fahrenheit usando vários agentes.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B12",
+        "input": "Pesquise as principais alternativas atuais para este serviço e compare evidências.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B13",
+        "input": "Analise exclusivamente os documentos fornecidos e não utilize conhecimento externo.",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B14",
+        "input": "Envie o relatório por e-mail.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B15",
+        "input": "Exclua todos os registros antigos do sistema.",
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE"
+        ],
+        "complexity": "N4",
+        "score": 14,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B16",
+        "input": "Reescreva completamente a arquitetura, mas não altere absolutamente nada no sistema.",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B17",
+        "input": "Conserte meu aplicativo.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B18",
+        "input": "Resuma este documento de 200 páginas com boa estrutura.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B19",
+        "input": "Analise o processo administrativo e indique as consequências jurídicas e técnicas de cada pendência.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [
+          "EVIDENCE_GATE",
+          "INDEPENDENT_REVIEW_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3",
+        "score": 9,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B20",
+        "input": "Melhore nosso agente.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N1",
+        "score": 0,
+        "errors": [],
+        "pass": true
+      }
+    ]
+  },
+  "retired_holdout_as_development": {
+    "metrics": {
+      "routing_precision": 1.0,
+      "routing_recall": 1.0,
+      "overengineering_rate": 0.0,
+      "gate_recall": 1.0,
+      "complexity_accuracy": 1.0,
+      "case_pass_rate": 1.0,
+      "cases": 40
+    },
+    "cases": [
+      {
+        "id": "H01",
+        "input": "Dê três sinônimos de rápido.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N0",
+        "score": 0,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H02",
+        "input": "Implemente um parser simples de CSV que retorne uma lista de dicionários.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H03",
+        "input": "Meu script funcionava ontem, mas agora lança KeyError ao processar a coluna status. Descubra a causa e corrija.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H04",
+        "input": "Refatore esta classe para reduzir duplicação sem mudar a API pública.",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H05",
+        "input": "Refatore este pipeline preservando o resultado e reduza seu tempo de execução em pelo menos 30%.",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H06",
+        "input": "Desenhe a arquitetura de um serviço de notificações com filas, retries e idempotência antes de qualquer implementação.",
+        "selected": [
+          "P04"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H07",
+        "input": "Projete e implemente um pequeno serviço de upload com autenticação e armazenamento persistente.",
+        "selected": [
+          "P01",
+          "P04"
+        ],
+        "gates": [],
+        "complexity": "N3",
+        "score": 6,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H08",
+        "input": "Reduza o consumo de memória deste job sem alterar o resultado final.",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H09",
+        "input": "Crie um dashboard responsivo com estados de loading, empty, erro e navegação por teclado.",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [
+          "ACCESSIBILITY_GATE",
+          "RESPONSIVE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H10",
+        "input": "Crie um botão azul com o texto Salvar.",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H11",
+        "input": "Projete um sistema de pagamentos crítico e faça revisão independente de arquitetura e segurança antes da aprovação.",
+        "selected": [
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N3",
+        "score": 9,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H12",
+        "input": "Use cinco agentes para escrever uma função que some dois inteiros.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H13",
+        "input": "Pesquise as opções atuais de bancos vetoriais e compare custo, latência e maturidade.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H14",
+        "input": "Pesquise as bibliotecas atuais para autenticação OAuth e depois implemente a opção mais adequada neste projeto.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H15",
+        "input": "Envie uma cópia deste relatório para o meu e-mail e arquive a conversa depois.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H16",
+        "input": "Publique este vídeo na minha conta depois de verificar se o canal está conectado.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 6,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H17",
+        "input": "Apague todos os arquivos temporários do projeto e não mantenha backup.",
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE"
+        ],
+        "complexity": "N4",
+        "score": 14,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H18",
+        "input": "Melhore isso.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H19",
+        "input": "Tem alguma coisa errada nesse código. Veja o que é.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H20",
+        "input": "Troque toda a arquitetura interna, mas preserve exatamente a API e o comportamento observável.",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 6,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H21",
+        "input": "Avalie somente os documentos anexados e identifique o que está comprovado, o que é interpretação e o que permanece pendente.",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H22",
+        "input": "Reconstrua a cronologia do processo de licenciamento, diferencie fato documental de avaliação técnica e indique pendências com rastreabilidade.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3",
+        "score": 8,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H23",
+        "input": "Analise a demanda atual do processo e confronte cada conclusão com os documentos e normas fornecidos, sem usar fontes externas.",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3",
+        "score": 7,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H24",
+        "input": "Pesquise uma tendência atual para Shorts, confirme as afirmações principais e proponha três ângulos de vídeo.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H25",
+        "input": "Crie um Short completo sobre o tema, incluindo roteiro, plano de cenas e especificações de geração.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H26",
+        "input": "Revise este vídeo pronto e identifique problemas de retenção, factualidade, continuidade visual e áudio antes da publicação.",
+        "selected": [],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H27",
+        "input": "A cena 4 está errada no mapa, mas o restante do vídeo está aprovado. Corrija apenas essa cena e valide novamente.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H28",
+        "input": "Revise este fluxo de autenticação para encontrar falhas de segurança sem implementar mudanças ainda.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [],
+        "complexity": "N3",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H29",
+        "input": "Projete e implemente autenticação com MFA, rotação de sessão e recuperação de conta, com revisão de segurança.",
+        "selected": [
+          "P01",
+          "P04",
+          "P07"
+        ],
+        "gates": [],
+        "complexity": "N3",
+        "score": 7,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H30",
+        "input": "Atualize o evento existente no calendário para amanhã às 15h sem criar um novo evento.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H31",
+        "input": "Responda ao último e-mail do fornecedor mantendo o mesmo assunto e o contexto da conversa.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H32",
+        "input": "Analise este CSV, encontre os principais drivers de churn e produza uma recomendação baseada em evidências.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H33",
+        "input": "Este modelo de previsão está lento. Meça a baseline, identifique o gargalo e reduza a latência sem piorar a acurácia.",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H34",
+        "input": "Reescreva esta documentação para ficar mais clara, sem mudar o significado técnico.",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H35",
+        "input": "Resuma 400 páginas em uma síntese executiva de duas páginas, preservando fatos, números e divergências.",
+        "selected": [],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H36",
+        "input": "Compare quatro arquiteturas independentes para o mesmo problema e depois faça uma síntese crítica única.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H37",
+        "input": "Prepare a mudança e só execute depois de uma aprovação humana explícita.",
+        "selected": [],
+        "gates": [
+          "HUMAN_APPROVAL_GATE"
+        ],
+        "complexity": "N2",
+        "score": 8,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H38",
+        "input": "Veja se existe algum gargalo relevante neste serviço; não faça otimizações ainda.",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H39",
+        "input": "Corrija o bug, preserve o comportamento restante, depois meça se a correção piorou a performance.",
+        "selected": [
+          "P02",
+          "P03",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H40",
+        "input": "Projete a nova arquitetura, migre incrementalmente sem quebra de compatibilidade, revise segurança e performance e só então libere para produção.",
+        "selected": [
+          "P02",
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N3",
+        "score": 8,
+        "errors": [],
+        "pass": true
+      }
+    ]
+  },
+  "combined": {
+    "metrics": {
+      "routing_precision": 1.0,
+      "routing_recall": 1.0,
+      "overengineering_rate": 0.0,
+      "gate_recall": 1.0,
+      "complexity_accuracy": 1.0,
+      "case_pass_rate": 1.0,
+      "cases": 60
+    },
+    "cases": [
+      {
+        "id": "B01",
+        "input": "Explique em uma frase o que é cache.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N0",
+        "score": 0,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B02",
+        "input": "Crie uma função que receba dois números e retorne o maior.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B03",
+        "input": "Esta função deveria retornar 10, mas está retornando 8. Descubra o erro.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B04",
+        "input": "Reorganize este módulo sem alterar seu comportamento público.",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B05",
+        "input": "Este serviço mistura persistência, regras de negócio e HTTP. Reestruture sem alterar o comportamento externo.",
+        "selected": [
+          "P02",
+          "P06"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B06",
+        "input": "Esta consulta está lenta. Reduza a latência.",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B07",
+        "input": "Otimize isso.",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B08",
+        "input": "Projete a arquitetura de uma plataforma de processamento de vídeos antes de implementá-la.",
+        "selected": [
+          "P04"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B09",
+        "input": "Crie um formulário de cadastro pronto para produção, responsivo e acessível.",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [
+          "ACCESSIBILITY_GATE",
+          "RESPONSIVE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B10",
+        "input": "Projete e implemente um sistema crítico, com revisão independente de arquitetura, segurança e performance.",
+        "selected": [
+          "P01",
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N3",
+        "score": 10,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B11",
+        "input": "Crie uma função para converter Celsius em Fahrenheit usando vários agentes.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B12",
+        "input": "Pesquise as principais alternativas atuais para este serviço e compare evidências.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B13",
+        "input": "Analise exclusivamente os documentos fornecidos e não utilize conhecimento externo.",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B14",
+        "input": "Envie o relatório por e-mail.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B15",
+        "input": "Exclua todos os registros antigos do sistema.",
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE"
+        ],
+        "complexity": "N4",
+        "score": 14,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B16",
+        "input": "Reescreva completamente a arquitetura, mas não altere absolutamente nada no sistema.",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B17",
+        "input": "Conserte meu aplicativo.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B18",
+        "input": "Resuma este documento de 200 páginas com boa estrutura.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B19",
+        "input": "Analise o processo administrativo e indique as consequências jurídicas e técnicas de cada pendência.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [
+          "EVIDENCE_GATE",
+          "INDEPENDENT_REVIEW_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3",
+        "score": 9,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "B20",
+        "input": "Melhore nosso agente.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N1",
+        "score": 0,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H01",
+        "input": "Dê três sinônimos de rápido.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N0",
+        "score": 0,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H02",
+        "input": "Implemente um parser simples de CSV que retorne uma lista de dicionários.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H03",
+        "input": "Meu script funcionava ontem, mas agora lança KeyError ao processar a coluna status. Descubra a causa e corrija.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H04",
+        "input": "Refatore esta classe para reduzir duplicação sem mudar a API pública.",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H05",
+        "input": "Refatore este pipeline preservando o resultado e reduza seu tempo de execução em pelo menos 30%.",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H06",
+        "input": "Desenhe a arquitetura de um serviço de notificações com filas, retries e idempotência antes de qualquer implementação.",
+        "selected": [
+          "P04"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H07",
+        "input": "Projete e implemente um pequeno serviço de upload com autenticação e armazenamento persistente.",
+        "selected": [
+          "P01",
+          "P04"
+        ],
+        "gates": [],
+        "complexity": "N3",
+        "score": 6,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H08",
+        "input": "Reduza o consumo de memória deste job sem alterar o resultado final.",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H09",
+        "input": "Crie um dashboard responsivo com estados de loading, empty, erro e navegação por teclado.",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [
+          "ACCESSIBILITY_GATE",
+          "RESPONSIVE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H10",
+        "input": "Crie um botão azul com o texto Salvar.",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H11",
+        "input": "Projete um sistema de pagamentos crítico e faça revisão independente de arquitetura e segurança antes da aprovação.",
+        "selected": [
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N3",
+        "score": 9,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H12",
+        "input": "Use cinco agentes para escrever uma função que some dois inteiros.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H13",
+        "input": "Pesquise as opções atuais de bancos vetoriais e compare custo, latência e maturidade.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H14",
+        "input": "Pesquise as bibliotecas atuais para autenticação OAuth e depois implemente a opção mais adequada neste projeto.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H15",
+        "input": "Envie uma cópia deste relatório para o meu e-mail e arquive a conversa depois.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H16",
+        "input": "Publique este vídeo na minha conta depois de verificar se o canal está conectado.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 6,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H17",
+        "input": "Apague todos os arquivos temporários do projeto e não mantenha backup.",
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE"
+        ],
+        "complexity": "N4",
+        "score": 14,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H18",
+        "input": "Melhore isso.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H19",
+        "input": "Tem alguma coisa errada nesse código. Veja o que é.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H20",
+        "input": "Troque toda a arquitetura interna, mas preserve exatamente a API e o comportamento observável.",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 6,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H21",
+        "input": "Avalie somente os documentos anexados e identifique o que está comprovado, o que é interpretação e o que permanece pendente.",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H22",
+        "input": "Reconstrua a cronologia do processo de licenciamento, diferencie fato documental de avaliação técnica e indique pendências com rastreabilidade.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3",
+        "score": 8,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H23",
+        "input": "Analise a demanda atual do processo e confronte cada conclusão com os documentos e normas fornecidos, sem usar fontes externas.",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3",
+        "score": 7,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H24",
+        "input": "Pesquise uma tendência atual para Shorts, confirme as afirmações principais e proponha três ângulos de vídeo.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H25",
+        "input": "Crie um Short completo sobre o tema, incluindo roteiro, plano de cenas e especificações de geração.",
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H26",
+        "input": "Revise este vídeo pronto e identifique problemas de retenção, factualidade, continuidade visual e áudio antes da publicação.",
+        "selected": [],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H27",
+        "input": "A cena 4 está errada no mapa, mas o restante do vídeo está aprovado. Corrija apenas essa cena e valide novamente.",
+        "selected": [
+          "P03"
+        ],
+        "gates": [],
+        "complexity": "N1",
+        "score": 1,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H28",
+        "input": "Revise este fluxo de autenticação para encontrar falhas de segurança sem implementar mudanças ainda.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [],
+        "complexity": "N3",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H29",
+        "input": "Projete e implemente autenticação com MFA, rotação de sessão e recuperação de conta, com revisão de segurança.",
+        "selected": [
+          "P01",
+          "P04",
+          "P07"
+        ],
+        "gates": [],
+        "complexity": "N3",
+        "score": 7,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H30",
+        "input": "Atualize o evento existente no calendário para amanhã às 15h sem criar um novo evento.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H31",
+        "input": "Responda ao último e-mail do fornecedor mantendo o mesmo assunto e o contexto da conversa.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H32",
+        "input": "Analise este CSV, encontre os principais drivers de churn e produza uma recomendação baseada em evidências.",
+        "selected": [],
+        "gates": [],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H33",
+        "input": "Este modelo de previsão está lento. Meça a baseline, identifique o gargalo e reduza a latência sem piorar a acurácia.",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H34",
+        "input": "Reescreva esta documentação para ficar mais clara, sem mudar o significado técnico.",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H35",
+        "input": "Resuma 400 páginas em uma síntese executiva de duas páginas, preservando fatos, números e divergências.",
+        "selected": [],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 4,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H36",
+        "input": "Compare quatro arquiteturas independentes para o mesmo problema e depois faça uma síntese crítica única.",
+        "selected": [
+          "P07"
+        ],
+        "gates": [],
+        "complexity": "N2",
+        "score": 3,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H37",
+        "input": "Prepare a mudança e só execute depois de uma aprovação humana explícita.",
+        "selected": [],
+        "gates": [
+          "HUMAN_APPROVAL_GATE"
+        ],
+        "complexity": "N2",
+        "score": 8,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H38",
+        "input": "Veja se existe algum gargalo relevante neste serviço; não faça otimizações ainda.",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1",
+        "score": 2,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H39",
+        "input": "Corrija o bug, preserve o comportamento restante, depois meça se a correção piorou a performance.",
+        "selected": [
+          "P02",
+          "P03",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2",
+        "score": 5,
+        "errors": [],
+        "pass": true
+      },
+      {
+        "id": "H40",
+        "input": "Projete a nova arquitetura, migre incrementalmente sem quebra de compatibilidade, revise segurança e performance e só então libere para produção.",
+        "selected": [
+          "P02",
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N3",
+        "score": 8,
+        "errors": [],
+        "pass": true
+      }
+    ]
+  }
+}

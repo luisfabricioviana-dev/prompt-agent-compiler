@@ -1,6 +1,10 @@
 # PROMPT & AGENT COMPILER
 
-> Status: **RECONSTRUCTED_BASELINE_v0.2.8**
+> Status: **v0.2.10 RECONCILIATION CANDIDATE**
+
+The current reconciliation branch validates the authentic recovered v0.2.9 compiler baseline and the Governed Factory + REA candidate line in one fail-closed CI workflow.
+
+See `docs/V0.2.10_RECONCILIATION.md` and `VERSION_MANIFEST_v0_2_10.json`.
 
 This repository reconstructs the previously documented v0.2.8 baseline of the PROMPT & AGENT COMPILER so that future changes can be versioned, tested, and reviewed in GitHub.
 
@@ -38,3 +42,7 @@ They must not be reported as passing for this reconstructed repository until fre
 - `ONE FAILURE → FIXTURE FIRST → RULE ONLY IF GENERALIZABLE`
 - `GOOD PROMPT ≠ RELIABLE SYSTEM`
 
+
+## Reconciliation safety note
+
+The recovered v0.2.9 source is materialized under `recovered_v0_2_9/` without the blind holdout. The v0.2.9 holdout is retired; future generalization evaluation requires a new private unseen set.

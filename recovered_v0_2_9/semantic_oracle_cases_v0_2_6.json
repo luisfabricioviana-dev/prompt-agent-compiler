@@ -1,0 +1,22 @@
+[
+  {"id":"O01","task":{"actions":["CREATE"]},"required":["P01"],"allowed":[],"forbidden":["P04","P07"],"gates":[],"complexity":["N1"]},
+  {"id":"O02","task":{"actions":["DIAGNOSE"]},"required":["P03"],"allowed":[],"forbidden":["P07"],"gates":[],"complexity":["N1"]},
+  {"id":"O03","task":{"actions":["CREATE"],"ui_requirements":["UI","PRODUCTION","ACCESSIBILITY","RESPONSIVE"]},"required":["P01","P08"],"allowed":[],"forbidden":["P03","P07"],"gates":["ACCESSIBILITY_GATE","RESPONSIVE_GATE"],"complexity":["N2"]},
+  {"id":"O04","task":{"actions":["MODIFY"],"preservation":["API","BEHAVIOR"]},"required":["P02"],"allowed":[],"forbidden":["P07"],"gates":["REGRESSION_GATE"],"complexity":["N1","N2"]},
+  {"id":"O05","task":{"actions":["MODIFY","OPTIMIZE"],"preservation":["QUALITY"],"performance_dimensions":["MEMORY","QUALITY_ACCURACY"],"execution":["MULTI_STEP"]},"required":["P02","P05"],"allowed":[],"forbidden":["P07"],"gates":["BASELINE_GATE","REGRESSION_GATE"],"complexity":["N2","N3"]},
+  {"id":"O06","task":{"actions":["ANALYZE_EVIDENCE"],"evidence_policy":["SUPPLIED_ONLY","TRACEABLE"],"execution":["MULTI_STEP"],"risks":{"LEGAL_REGULATORY":3}},"required":[],"allowed":["P07"],"forbidden":["P01"],"gates":["EVIDENCE_GATE","TRACEABILITY_GATE"],"complexity":["N3","N4"]},
+  {"id":"O07","task":{"actions":["OPERATE"],"external_state":["DATABASE"],"execution":["STATEFUL"],"capabilities":["EXTERNAL_WRITE","AUTHORIZATION"],"risks":{"REVERSIBILITY":4,"DATA_LOSS":4}},"required":[],"allowed":[],"forbidden":["P07"],"gates":["DESTRUCTIVE_ACTION_GATE"],"complexity":["N3","N4"]},
+  {"id":"O08","task":{"actions":["MODIFY"],"execution":["MULTI_STEP","HUMAN_APPROVAL"],"capabilities":["HUMAN_APPROVAL"]},"required":[],"allowed":["P02"],"forbidden":["P07"],"gates":["HUMAN_APPROVAL_GATE"],"complexity":["N2","N3"]},
+  {"id":"O09","task":{"actions":["RESEARCH"],"evidence_policy":["CURRENT_EXTERNAL"],"execution":["MULTI_STEP"],"capabilities":["WEB_CURRENT_EVIDENCE"]},"required":[],"allowed":[],"forbidden":["P01","P07"],"gates":[],"complexity":["N2"]},
+  {"id":"O10","task":{"actions":["DESIGN"],"architecture":["DESIGN_BEFORE_BUILD"],"execution":["MULTI_STEP"]},"required":["P04"],"allowed":[],"forbidden":["P01","P07"],"gates":[],"complexity":["N2","N3"]},
+  {"id":"O11","task":{"actions":["REVIEW"],"execution":["MULTI_STEP","PARALLELIZABLE"]},"required":[],"allowed":["P07"],"forbidden":["P04"],"gates":[],"complexity":["N2"]},
+  {"id":"O12","task":{"actions":["DESIGN","CREATE"],"architecture":["DESIGN_BEFORE_BUILD"],"execution":["MULTI_STEP","INDEPENDENT_REVIEW"],"risks":{"SECURITY":3}},"required":["P01","P04"],"allowed":["P07"],"forbidden":[],"gates":["INDEPENDENT_REVIEW_GATE"],"complexity":["N3","N4"]},
+  {"id":"O13","task":{"actions":["ANALYZE_DATA"],"execution":["MULTI_STEP"]},"required":[],"allowed":[],"forbidden":["P01","P07"],"gates":[],"complexity":["N2"]},
+  {"id":"O14","task":{"actions":["OPERATE","MODIFY"],"external_state":["CALENDAR"],"execution":["STATEFUL"],"capabilities":["CALENDAR_READ","CALENDAR_WRITE"]},"required":[],"allowed":["P02"],"forbidden":["P01","P07"],"gates":[],"complexity":["N2"]},
+  {"id":"O15","task":{"actions":["CREATE"],"execution":["EXPLICIT_MULTI_AGENT"]},"required":["P01"],"allowed":[],"forbidden":["P07"],"gates":[],"complexity":["N1"]},
+  {"id":"O16","task":{"actions":["REVIEW"],"execution":["INDEPENDENT_REVIEW"],"risks":{"SECURITY":3}},"required":[],"allowed":["P07"],"forbidden":[],"gates":["INDEPENDENT_REVIEW_GATE"],"complexity":["N2","N3"]},
+  {"id":"O17","task":{"actions":["REVIEW"],"execution":["LARGE_WORKLOAD","MULTI_STEP"]},"required":[],"allowed":[],"forbidden":["P07"],"gates":[],"complexity":["N2"]},
+  {"id":"O18","task":{"actions":["DESIGN","CREATE"],"architecture":["DESIGN_BEFORE_BUILD"],"ui_requirements":["UI","PRODUCTION","ACCESSIBILITY","RESPONSIVE"],"execution":["MULTI_STEP"]},"required":["P01","P04","P08"],"allowed":[],"forbidden":["P07"],"gates":["ACCESSIBILITY_GATE","RESPONSIVE_GATE"],"complexity":["N2","N3"]},
+  {"id":"O19","task":{"actions":["MODIFY","DESIGN"],"preservation":["COMPATIBILITY"],"architecture":["CHANGE","MIGRATION","DESIGN_BEFORE_BUILD"],"performance_dimensions":["GENERAL"],"execution":["MULTI_STEP","INDEPENDENT_REVIEW"],"risks":{"FINANCIAL":4,"SECURITY":3}},"required":["P02","P04"],"allowed":["P05","P06","P07"],"forbidden":[],"gates":["REGRESSION_GATE","INDEPENDENT_REVIEW_GATE"],"complexity":["N3","N4"]},
+  {"id":"O20","task":{},"required":[],"allowed":[],"forbidden":["P04","P07"],"gates":[],"complexity":["N0"]}
+]

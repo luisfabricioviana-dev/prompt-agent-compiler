@@ -1,0 +1,13 @@
+{
+  "version": "0.2.6",
+  "status": "DEVELOPMENT_CORE",
+  "architecture": "hybrid_semantic_interpreter_plus_deterministic_policy",
+  "policy_reads_raw_request": false,
+  "semantic_provider": "pluggable",
+  "production_semantic_provider_connected": false,
+  "oracle_policy_benchmark_cases": 20,
+  "oracle_policy_case_pass_rate": 1.0,
+  "end_to_end_generalization_status": "NOT_YET_VALIDATED_WITH_MODEL_BACKED_PROVIDER",
+  "retired_holdouts": ["0.2.3", "0.2.5"],
+  "next_required_holdout": "new unseen suite after semantic provider integration"
+}

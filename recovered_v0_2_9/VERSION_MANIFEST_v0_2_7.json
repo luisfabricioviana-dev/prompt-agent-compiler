@@ -1,0 +1,18 @@
+{
+  "version": "0.2.7",
+  "status": "MODEL_PROVIDER_INTEGRATED_LIVE_EVAL_PENDING",
+  "architecture": "model_semantic_interpreter_plus_strict_contract_plus_deterministic_policy",
+  "policy_reads_raw_request": false,
+  "semantic_provider": "OpenAI Responses API adapter with strict JSON schema",
+  "default_semantic_model": "gpt-5.6-terra",
+  "production_semantic_provider_code": true,
+  "live_model_backed_semantic_eval": false,
+  "reason_live_eval_not_run": "OpenAI SDK and API credential are not configured in the artifact-build runtime",
+  "semantic_development_cases": 31,
+  "semantic_oracle_route_pass_rate": 1.0,
+  "retired_holdouts": [
+    "0.2.3",
+    "0.2.5"
+  ],
+  "next_required_experiment": "live semantic development evaluation, then new unseen frozen holdout"
+}

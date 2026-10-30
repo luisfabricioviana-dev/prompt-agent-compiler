@@ -1,0 +1,3443 @@
+{
+  "cases": 31,
+  "contract_valid_rate": 1.0,
+  "semantic": {
+    "groups": {
+      "actions": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "preservation": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "performance_dimensions": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_policy": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ui_requirements": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "architecture": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "external_state": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "execution": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "capabilities": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "risk": {
+      "exact_accuracy": 1.0,
+      "mae": 0.0,
+      "critical_recall": 1.0
+    },
+    "evidence_span_grounding": 1.0,
+    "feature_evidence_coverage": 1.0,
+    "confidence_calibration": {
+      "items": 139,
+      "brier": 0.0,
+      "ece": 0.0
+    },
+    "contradiction_accuracy": 1.0
+  },
+  "route_pass_rate": 1.0,
+  "details": [
+    {
+      "id": "S01",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 5,
+            "expected": 5,
+            "predicted": 5
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 6,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [
+          "ACCESSIBILITY_GATE",
+          "RESPONSIVE_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S02",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 2,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N1",
+        "selected": [
+          "P03"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S03",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 4,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S04",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 3,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S05",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 7,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S06",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 6,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S07",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 5,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S08",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 2,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N1",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S09",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 4,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S10",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 4,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S11",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 3,
+            "expected": 3,
+            "predicted": 3
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 6,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S12",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 7,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S13",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 3,
+            "expected": 3,
+            "predicted": 3
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 9,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N3",
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE",
+          "HUMAN_APPROVAL_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S14",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 3,
+            "expected": 3,
+            "predicted": 3
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 7,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S15",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 1,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N1",
+        "selected": [
+          "P01"
+        ],
+        "gates": []
+      }
+    },
+    {
+      "id": "S16",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 2,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N1",
+        "selected": [
+          "P01"
+        ],
+        "gates": []
+      }
+    },
+    {
+      "id": "S17",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 5,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N3",
+        "selected": [
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S18",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 5,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02",
+          "P06"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S19",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 3,
+            "expected": 3,
+            "predicted": 3
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 7,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S20",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 4,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S21",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 4,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N3",
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S22",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 5,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P01"
+        ],
+        "gates": []
+      }
+    },
+    {
+      "id": "S23",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 4,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02",
+          "P03"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S24",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 2,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S25",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 6,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N3",
+        "selected": [
+          "P01",
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S26",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 2,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N1",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S27",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 6,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S28",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 1,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N1",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S29",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 3,
+            "expected": 3,
+            "predicted": 3
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 6,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N2",
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ]
+      }
+    },
+    {
+      "id": "S30",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 0,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 0.0,
+          "predicted": 0.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N0",
+        "selected": [],
+        "gates": []
+      }
+    },
+    {
+      "id": "S31",
+      "failure_class": null,
+      "false_negatives": [],
+      "false_positives": [],
+      "semantic": {
+        "groups": {
+          "actions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "preservation": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "performance_dimensions": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "evidence_policy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "ui_requirements": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "architecture": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "expected": 0,
+            "predicted": 0
+          },
+          "external_state": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "execution": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 1,
+            "expected": 1,
+            "predicted": 1
+          },
+          "capabilities": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 2,
+            "expected": 2,
+            "predicted": 2
+          }
+        },
+        "risk": {
+          "exact_accuracy": 1.0,
+          "mae": 0.0,
+          "critical_recall": 1.0
+        },
+        "evidence_span_grounding": 1.0,
+        "feature_evidence_coverage": 1.0,
+        "confidence_calibration": {
+          "items": 7,
+          "brier": 0.0,
+          "ece": 0.0
+        },
+        "contradiction": {
+          "expected": 1.0,
+          "predicted": 1.0,
+          "correct": 1.0
+        }
+      },
+      "route": {
+        "errors": [],
+        "pass": true,
+        "complexity": "N3",
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "0.2.8",
+  "status": "CAUSAL_EVAL_AND_REPAIR_HARNESS_IMPLEMENTED_LIVE_MODEL_EVAL_PENDING",
+  "architecture": "model_interpreter_plus_grounding_plus_contract_plus_deterministic_policy_plus_causal_error_decomposition",
+  "policy_reads_raw_request": false,
+  "new_capabilities": [
+    "causal_error_taxonomy",
+    "minimum_scope_repair_router",
+    "recorded_prediction_replay",
+    "stage_specific_metrics",
+    "mutation_regression_suite"
+  ],
+  "live_model_backed_semantic_eval": false,
+  "retired_holdouts": [
+    "0.2.3",
+    "0.2.5"
+  ],
+  "next_required_experiment": "run authenticated model-backed development evaluation, repair interpreter only from development errors, freeze, then create new unseen holdout",
+  "automated_tests_passed": 75,
+  "automated_tests_failed": 0,
+  "compileall_pass": true,
+  "json_artifacts_validated": 20,
+  "oracle_semantic_cases": 31,
+  "oracle_end_to_end_pass_rate": 1.0,
+  "mutation_cases": 9,
+  "mutation_pass_rate": 1.0,
+  "live_eval_blockers": [
+    "openai SDK unavailable in project Python runtime",
+    "OPENAI_API_KEY not configured"
+  ]
+}

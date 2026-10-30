@@ -1,0 +1,230 @@
+{
+  "layer": "DETERMINISTIC_POLICY_ONLY",
+  "semantic_input": "ORACLE_NORMALIZED_TASK",
+  "metrics": {
+    "routing_precision": 1.0,
+    "routing_recall": 1.0,
+    "overengineering_rate": 0.0,
+    "gate_recall": 1.0,
+    "complexity_accuracy": 1.0,
+    "case_pass_rate": 1.0,
+    "cases": 20
+  },
+  "cases": [
+    {
+      "id": "O01",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": "N1"
+    },
+    {
+      "id": "O02",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P03"
+      ],
+      "gates": [],
+      "complexity": "N1"
+    },
+    {
+      "id": "O03",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P01",
+        "P08"
+      ],
+      "gates": [
+        "ACCESSIBILITY_GATE",
+        "RESPONSIVE_GATE"
+      ],
+      "complexity": "N2"
+    },
+    {
+      "id": "O04",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P02"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1"
+    },
+    {
+      "id": "O05",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P02",
+        "P05"
+      ],
+      "gates": [
+        "BASELINE_GATE",
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N2"
+    },
+    {
+      "id": "O06",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [
+        "EVIDENCE_GATE",
+        "TRACEABILITY_GATE"
+      ],
+      "complexity": "N3"
+    },
+    {
+      "id": "O07",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [
+        "DESTRUCTIVE_ACTION_GATE"
+      ],
+      "complexity": "N3"
+    },
+    {
+      "id": "O08",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [
+        "HUMAN_APPROVAL_GATE"
+      ],
+      "complexity": "N2"
+    },
+    {
+      "id": "O09",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [],
+      "complexity": "N2"
+    },
+    {
+      "id": "O10",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P04"
+      ],
+      "gates": [],
+      "complexity": "N2"
+    },
+    {
+      "id": "O11",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [],
+      "complexity": "N2"
+    },
+    {
+      "id": "O12",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P01",
+        "P04",
+        "P07"
+      ],
+      "gates": [
+        "INDEPENDENT_REVIEW_GATE"
+      ],
+      "complexity": "N3"
+    },
+    {
+      "id": "O13",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [],
+      "complexity": "N2"
+    },
+    {
+      "id": "O14",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [],
+      "complexity": "N2"
+    },
+    {
+      "id": "O15",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": "N1"
+    },
+    {
+      "id": "O16",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P07"
+      ],
+      "gates": [
+        "INDEPENDENT_REVIEW_GATE"
+      ],
+      "complexity": "N3"
+    },
+    {
+      "id": "O17",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [],
+      "complexity": "N2"
+    },
+    {
+      "id": "O18",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P01",
+        "P04",
+        "P08"
+      ],
+      "gates": [
+        "ACCESSIBILITY_GATE",
+        "RESPONSIVE_GATE"
+      ],
+      "complexity": "N2"
+    },
+    {
+      "id": "O19",
+      "pass": true,
+      "errors": [],
+      "selected": [
+        "P02",
+        "P04",
+        "P07"
+      ],
+      "gates": [
+        "INDEPENDENT_REVIEW_GATE",
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N3"
+    },
+    {
+      "id": "O20",
+      "pass": true,
+      "errors": [],
+      "selected": [],
+      "gates": [],
+      "complexity": "N0"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "version": "0.2.9",
+  "frozen": true,
+  "algorithm": "sha256",
+  "files": {
+    "blind_holdout_v0_2_9.json": "dcff8740576d0fd870078b6c0fca80e4c027cb8efedf997e0d70126315b33af5",
+    "semantic_interpreter_prompt_v0_2_7.md": "4ce20f7d75a78bbc0d641254a8bac62e599a15ad88dbfeac503ed65fd84bbb74",
+    "semantic_provider_schema_v0_2_7.json": "0f07d8586da7947b5e96319553b304d65f3bc861f37adab82b1774c7963dab04",
+    "openai_responses_semantic_provider.py": "d1713f8eae85729fb43739db1cb21f21e41b536e3d67ed0da372bbf87e3cb3b8",
+    "semantic_contract.py": "e0961b0c69240adf5eab16c4094eb7a69b3745236fc18b494f598d1e1cbed20c",
+    "normalized_task.py": "5d6fb1627235936fb64b3e3cea2cec18a847f346c4ac0fd6a9b9b18a8bfa56b9",
+    "policy_v0_2_7.py": "961e73d4da00b651110d2977f0e616a6a5ed090a2bf2946d00b34079e331fc7c",
+    "semantic_error_taxonomy_v0_2_8.py": "30b407463d7f27f1f2719e2a9156882dd2b8f779286b440c63b80dec7284a8f0",
+    "end_to_end_decomposition_v0_2_8.py": "ac436f69d13dd61f66dfa84b4fce6735ae8a66930774b5fabf09fcf41937423e",
+    "model_eval_runner_v0_2_8.py": "ec7c36e61f1f6cffba6809cab6116f2ccbf76f644462c665c06cfaa4f187a10e",
+    "promotion_gate_v0_2_9.py": "c85a2c26b10080fb6cbe1785024248d7571a9b8f4a61642a402bcac1be4a95fb",
+    "holdout_evaluator_v0_2_9.py": "3dbbeee04c51932458bb00efc470431b376a059b2e2e0826a8e489f790857e08"
+  }
+}

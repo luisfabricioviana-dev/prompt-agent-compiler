@@ -1,0 +1,934 @@
+[
+  {
+    "id": "S01",
+    "request": "A tela precisa mostrar loading, vazio, erro e sucesso, funcionar no celular e permitir navegação por teclado.",
+    "expected": {
+      "actions": [
+        "CREATE"
+      ],
+      "ui_requirements": [
+        "UI",
+        "PRODUCTION",
+        "ACCESSIBILITY",
+        "RESPONSIVE",
+        "STATEFUL_UI"
+      ]
+    },
+    "route": {
+      "required": [
+        "P01",
+        "P08"
+      ],
+      "forbidden": [
+        "P03",
+        "P07"
+      ],
+      "gates": [
+        "ACCESSIBILITY_GATE",
+        "RESPONSIVE_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S02",
+    "request": "O processamento parou de funcionar depois da última mudança; descubra a causa sem mexer no restante.",
+    "expected": {
+      "actions": [
+        "DIAGNOSE"
+      ],
+      "preservation": [
+        "BEHAVIOR"
+      ]
+    },
+    "route": {
+      "required": [
+        "P03"
+      ],
+      "allowed": [
+        "P02"
+      ],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N1",
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S03",
+    "request": "Faça a saída continuar byte a byte idêntica, mas reduza o pico de memória.",
+    "expected": {
+      "actions": [
+        "MODIFY",
+        "OPTIMIZE"
+      ],
+      "preservation": [
+        "OUTPUT"
+      ],
+      "performance_dimensions": [
+        "MEMORY"
+      ]
+    },
+    "route": {
+      "required": [
+        "P02",
+        "P05"
+      ],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "REGRESSION_GATE",
+        "BASELINE_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S04",
+    "request": "Compare três arquiteturas possíveis e recomende uma; não altere o sistema ainda.",
+    "expected": {
+      "actions": [
+        "REVIEW"
+      ],
+      "execution": [
+        "MULTI_STEP",
+        "PARALLELIZABLE"
+      ]
+    },
+    "route": {
+      "allowed": [
+        "P07"
+      ],
+      "forbidden": [
+        "P01",
+        "P04"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S05",
+    "request": "Redesenhe a arquitetura interna sem quebrar a API nem a compatibilidade com clientes atuais.",
+    "expected": {
+      "actions": [
+        "MODIFY",
+        "DESIGN"
+      ],
+      "preservation": [
+        "API",
+        "COMPATIBILITY"
+      ],
+      "architecture": [
+        "CHANGE",
+        "DESIGN_BEFORE_BUILD"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "required": [
+        "P02",
+        "P04"
+      ],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S06",
+    "request": "Use somente os anexos para dizer o que está comprovado e cite de onde vem cada conclusão.",
+    "expected": {
+      "actions": [
+        "ANALYZE_EVIDENCE"
+      ],
+      "evidence_policy": [
+        "SUPPLIED_ONLY",
+        "TRACEABLE"
+      ],
+      "capabilities": [
+        "FILE_READ"
+      ],
+      "external_state": [
+        "FILES"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P01"
+      ],
+      "gates": [
+        "EVIDENCE_GATE",
+        "TRACEABILITY_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S07",
+    "request": "Veja o que mudou hoje nas regras do serviço e compare com a documentação anterior.",
+    "expected": {
+      "actions": [
+        "RESEARCH",
+        "REVIEW"
+      ],
+      "evidence_policy": [
+        "CURRENT_EXTERNAL"
+      ],
+      "capabilities": [
+        "WEB_CURRENT_EVIDENCE"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P01",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S08",
+    "request": "Meça o throughput atual e descubra se há gargalo, mas não otimize nada ainda.",
+    "expected": {
+      "actions": [
+        "REVIEW"
+      ],
+      "performance_dimensions": [
+        "THROUGHPUT"
+      ]
+    },
+    "route": {
+      "allowed": [
+        "P05"
+      ],
+      "forbidden": [
+        "P01",
+        "P07"
+      ],
+      "gates": [
+        "BASELINE_GATE"
+      ],
+      "complexity": [
+        "N1",
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S09",
+    "request": "Aumente o throughput em 25% sem reduzir a precisão do modelo.",
+    "expected": {
+      "actions": [
+        "OPTIMIZE"
+      ],
+      "preservation": [
+        "QUALITY"
+      ],
+      "performance_dimensions": [
+        "THROUGHPUT",
+        "QUALITY_ACCURACY"
+      ]
+    },
+    "route": {
+      "required": [
+        "P05"
+      ],
+      "gates": [
+        "BASELINE_GATE",
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S10",
+    "request": "Corte pela metade o custo por execução sem piorar a qualidade da resposta.",
+    "expected": {
+      "actions": [
+        "OPTIMIZE"
+      ],
+      "preservation": [
+        "QUALITY"
+      ],
+      "performance_dimensions": [
+        "FINANCIAL_COST",
+        "QUALITY_ACCURACY"
+      ]
+    },
+    "route": {
+      "required": [
+        "P05"
+      ],
+      "gates": [
+        "BASELINE_GATE",
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S11",
+    "request": "Responda ao e-mail mais recente do fornecedor mantendo o contexto da conversa.",
+    "expected": {
+      "actions": [
+        "OPERATE"
+      ],
+      "external_state": [
+        "EMAIL"
+      ],
+      "execution": [
+        "STATEFUL"
+      ],
+      "capabilities": [
+        "EMAIL_READ",
+        "EMAIL_WRITE",
+        "PERSISTENT_STATE_READ"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P01",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S12",
+    "request": "Mude a reunião já existente para amanhã às 15h; não crie outra.",
+    "expected": {
+      "actions": [
+        "OPERATE",
+        "MODIFY"
+      ],
+      "external_state": [
+        "CALENDAR"
+      ],
+      "execution": [
+        "STATEFUL"
+      ],
+      "capabilities": [
+        "CALENDAR_READ",
+        "CALENDAR_WRITE"
+      ],
+      "preservation": [
+        "COMPATIBILITY"
+      ]
+    },
+    "route": {
+      "allowed": [
+        "P02"
+      ],
+      "forbidden": [
+        "P01",
+        "P07"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S13",
+    "request": "Prepare a exclusão de todos os registros, mas aguarde meu ok antes de executar.",
+    "expected": {
+      "actions": [
+        "OPERATE"
+      ],
+      "external_state": [
+        "DATABASE"
+      ],
+      "execution": [
+        "STATEFUL",
+        "HUMAN_APPROVAL"
+      ],
+      "capabilities": [
+        "EXTERNAL_WRITE",
+        "AUTHORIZATION",
+        "HUMAN_APPROVAL"
+      ],
+      "risks": {
+        "REVERSIBILITY": 4,
+        "DATA_LOSS": 4
+      }
+    },
+    "route": {
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "DESTRUCTIVE_ACTION_GATE",
+        "HUMAN_APPROVAL_GATE"
+      ],
+      "complexity": [
+        "N3",
+        "N4"
+      ]
+    }
+  },
+  {
+    "id": "S14",
+    "request": "Publique o vídeo apenas se a conta estiver conectada e eu tiver autorizado a postagem.",
+    "expected": {
+      "actions": [
+        "OPERATE"
+      ],
+      "external_state": [
+        "PUBLISHING",
+        "ACCOUNT"
+      ],
+      "execution": [
+        "STATEFUL"
+      ],
+      "capabilities": [
+        "CONNECTION_STATE",
+        "AUTHORIZATION",
+        "EXTERNAL_WRITE"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S15",
+    "request": "Crie uma função que normalize um nome para minúsculas.",
+    "expected": {
+      "actions": [
+        "CREATE"
+      ]
+    },
+    "route": {
+      "required": [
+        "P01"
+      ],
+      "forbidden": [
+        "P04",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N1"
+      ]
+    }
+  },
+  {
+    "id": "S16",
+    "request": "Use cinco agentes para criar uma função que some dois números.",
+    "expected": {
+      "actions": [
+        "CREATE"
+      ],
+      "execution": [
+        "EXPLICIT_MULTI_AGENT"
+      ]
+    },
+    "route": {
+      "required": [
+        "P01"
+      ],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N1"
+      ]
+    }
+  },
+  {
+    "id": "S17",
+    "request": "Faça revisão independente de arquitetura e segurança antes de liberar o sistema de pagamentos.",
+    "expected": {
+      "actions": [
+        "REVIEW"
+      ],
+      "execution": [
+        "INDEPENDENT_REVIEW",
+        "MULTI_STEP"
+      ],
+      "risks": {
+        "SECURITY": 3,
+        "FINANCIAL": 4
+      }
+    },
+    "route": {
+      "allowed": [
+        "P07"
+      ],
+      "gates": [
+        "INDEPENDENT_REVIEW_GATE"
+      ],
+      "complexity": [
+        "N3",
+        "N4"
+      ]
+    }
+  },
+  {
+    "id": "S18",
+    "request": "Separe persistência, HTTP e regras de negócio em limites claros, preservando o comportamento externo.",
+    "expected": {
+      "actions": [
+        "MODIFY"
+      ],
+      "preservation": [
+        "BEHAVIOR"
+      ],
+      "architecture": [
+        "BOUNDARIES",
+        "CHANGE"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "required": [
+        "P02",
+        "P06"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S19",
+    "request": "Migre gradualmente para a nova arquitetura sem quebrar consumidores antigos.",
+    "expected": {
+      "actions": [
+        "MODIFY",
+        "DESIGN"
+      ],
+      "preservation": [
+        "COMPATIBILITY"
+      ],
+      "architecture": [
+        "MIGRATION",
+        "CHANGE",
+        "DESIGN_BEFORE_BUILD"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "required": [
+        "P02",
+        "P04"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S20",
+    "request": "Analise o CSV e identifique os principais fatores associados ao churn.",
+    "expected": {
+      "actions": [
+        "ANALYZE_DATA"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ],
+      "capabilities": [
+        "FILE_READ"
+      ],
+      "external_state": [
+        "FILES"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P01",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S21",
+    "request": "Reconstrua a cronologia do processo e diferencie fato documental de avaliação técnica, com rastreabilidade.",
+    "expected": {
+      "actions": [
+        "ANALYZE_EVIDENCE"
+      ],
+      "evidence_policy": [
+        "TRACEABLE"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ],
+      "risks": {
+        "LEGAL_REGULATORY": 3
+      }
+    },
+    "route": {
+      "gates": [
+        "EVIDENCE_GATE",
+        "TRACEABILITY_GATE"
+      ],
+      "complexity": [
+        "N3",
+        "N4"
+      ]
+    }
+  },
+  {
+    "id": "S22",
+    "request": "Pesquise uma tendência atual, confirme os fatos principais e depois escreva o roteiro do Short.",
+    "expected": {
+      "actions": [
+        "RESEARCH",
+        "CREATE"
+      ],
+      "evidence_policy": [
+        "CURRENT_EXTERNAL"
+      ],
+      "capabilities": [
+        "WEB_CURRENT_EVIDENCE"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "required": [
+        "P01"
+      ],
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S23",
+    "request": "A cena 4 mostra a fronteira no lugar errado. Corrija só essa cena e valide de novo o restante aprovado.",
+    "expected": {
+      "actions": [
+        "DIAGNOSE",
+        "MODIFY"
+      ],
+      "preservation": [
+        "BEHAVIOR"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "required": [
+        "P03",
+        "P02"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S24",
+    "request": "Revise o vídeo pronto quanto a factualidade, continuidade, retenção e áudio; não gere nada novo.",
+    "expected": {
+      "actions": [
+        "REVIEW"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": [
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S25",
+    "request": "Projete e implemente autenticação com MFA e recuperação de conta, com revisão de segurança separada.",
+    "expected": {
+      "actions": [
+        "DESIGN",
+        "CREATE"
+      ],
+      "architecture": [
+        "DESIGN_BEFORE_BUILD"
+      ],
+      "execution": [
+        "MULTI_STEP",
+        "INDEPENDENT_REVIEW"
+      ],
+      "risks": {
+        "SECURITY": 3
+      }
+    },
+    "route": {
+      "required": [
+        "P01",
+        "P04"
+      ],
+      "allowed": [
+        "P07"
+      ],
+      "gates": [
+        "INDEPENDENT_REVIEW_GATE"
+      ],
+      "complexity": [
+        "N3",
+        "N4"
+      ]
+    }
+  },
+  {
+    "id": "S26",
+    "request": "Revise o fluxo de login procurando falhas de segurança, mas não implemente correções ainda.",
+    "expected": {
+      "actions": [
+        "REVIEW"
+      ],
+      "risks": {
+        "SECURITY": 3
+      }
+    },
+    "route": {
+      "forbidden": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": [
+        "N1",
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S27",
+    "request": "Resuma estas 400 páginas em duas páginas sem perder números, fatos ou divergências.",
+    "expected": {
+      "actions": [
+        "REVIEW"
+      ],
+      "preservation": [
+        "MEANING"
+      ],
+      "execution": [
+        "LARGE_WORKLOAD",
+        "MULTI_STEP"
+      ],
+      "capabilities": [
+        "FILE_READ"
+      ],
+      "external_state": [
+        "FILES"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S28",
+    "request": "Melhore nosso agente.",
+    "expected": {
+      "actions": [
+        "MODIFY"
+      ],
+      "unknowns": [
+        "improvement_dimension"
+      ]
+    },
+    "route": {
+      "allowed": [
+        "P02"
+      ],
+      "forbidden": [
+        "P05",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N1",
+        "N2"
+      ]
+    }
+  },
+  {
+    "id": "S29",
+    "request": "Troque toda a implementação, mas mantenha exatamente as mesmas exceções, retornos e API pública.",
+    "expected": {
+      "actions": [
+        "MODIFY"
+      ],
+      "preservation": [
+        "BEHAVIOR",
+        "API",
+        "OUTPUT"
+      ],
+      "architecture": [
+        "CHANGE"
+      ],
+      "execution": [
+        "MULTI_STEP"
+      ]
+    },
+    "route": {
+      "required": [
+        "P02"
+      ],
+      "allowed": [
+        "P04"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": [
+        "N2",
+        "N3"
+      ]
+    }
+  },
+  {
+    "id": "S30",
+    "request": "Quero uma explicação curta do que é cache.",
+    "expected": {},
+    "route": {
+      "forbidden": [
+        "P04",
+        "P07"
+      ],
+      "gates": [],
+      "complexity": [
+        "N0"
+      ]
+    }
+  },
+  {
+    "id": "S31",
+    "request": "Apague definitivamente os registros sem manter cópia, mas garanta que eu possa restaurar todos eles depois.",
+    "expected": {
+      "actions": [
+        "OPERATE"
+      ],
+      "external_state": [
+        "DATABASE"
+      ],
+      "execution": [
+        "STATEFUL"
+      ],
+      "capabilities": [
+        "EXTERNAL_WRITE",
+        "AUTHORIZATION"
+      ],
+      "risks": {
+        "REVERSIBILITY": 4,
+        "DATA_LOSS": 4
+      },
+      "contradictions": [
+        "irreversible deletion conflicts with guaranteed restoration"
+      ]
+    },
+    "route": {
+      "forbidden": [
+        "P07"
+      ],
+      "gates": [
+        "DESTRUCTIVE_ACTION_GATE"
+      ],
+      "complexity": [
+        "N3",
+        "N4"
+      ]
+    }
+  }
+]
