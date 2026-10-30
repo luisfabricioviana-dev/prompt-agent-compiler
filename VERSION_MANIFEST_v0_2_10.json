@@ -41,5 +41,20 @@
     "capability_runtime_implemented": false,
     "execution_spec_v2_implemented": false,
     "rea_execution_graph_wired": false
+  },
+  "wave1": {
+    "status": "EXECUTION_RUNTIME_CONTRACT_CANDIDATE",
+    "capability_registry": "contracts/capability_registry.py",
+    "execution_spec_v2": "contracts/execution_spec_v2.py",
+    "current_tree_discovered_test_floor": 75,
+    "runtime_readiness_states": [
+      "READY",
+      "ADAPT_REQUIRED",
+      "UNKNOWN_CAPABILITY",
+      "BLOCKED",
+      "INVALID"
+    ],
+    "rea_production_release_enabled": false,
+    "semantic_policy_changed": false
   }
 }
