@@ -170,6 +170,27 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                             and isinstance(node.func.value, ast.Name)
                             and node.func.value.id in dangerous_import_aliases):
                         violations.append(f"imported_dynamic_operation:{relative}:{owner}:import_module")
+            # Detect bindings introduced by assignment expressions and
+            # decorators/default values that shadow a pinned target.
+            for node in ast.walk(fn):
+                if isinstance(node, ast.NamedExpr) and isinstance(node.target, ast.Name):
+                    if node.target.id in target_names:
+                        violations.append(f"walrus_rebind:{relative}:{owner}:{callee}")
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    if node is not fn and node.name in target_names:
+                        violations.append(f"nested_definition_shadow:{relative}:{owner}:{callee}")
+            # A local import of an identically named function from an
+            # unapproved module must not be mistaken for the pinned import.
+            for node in ast.walk(fn):
+                if isinstance(node, ast.ImportFrom):
+                    for item in node.names:
+                        if (item.asname or item.name) in target_names:
+                            prefix = node.module or ""
+                            if node.level == 1 and module.startswith("contracts."):
+                                prefix = "contracts" + ("." + prefix if prefix else "")
+                            expected_identity = prefix + "." + item.name
+                            if expected_identity != target:
+                                violations.append(f"shadow_import:{relative}:{owner}:{callee}")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
