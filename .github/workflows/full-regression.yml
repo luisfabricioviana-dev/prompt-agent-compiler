@@ -80,6 +80,18 @@ jobs:
           if result["status"] != "PASS_SCOPED":
               raise SystemExit("critical_release_import_identity_drift")
           PY
+      - name: Generate differential release gate evidence
+        run: |
+          mkdir -p artifacts
+          python -m tools.build_release_gate_differential_report > artifacts/release-gate-differential-report.json
+      - name: Upload differential gate evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-gate-differential-evidence
+          path: artifacts/release-gate-differential-report.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Run current-tree tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Run contract statement coverage gate
