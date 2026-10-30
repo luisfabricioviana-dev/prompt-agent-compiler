@@ -81,6 +81,10 @@ def versioned_audit(*, ledger, rea_conn, binding_registry, audit, **kwargs):
             return (revision(replay, role="replay"),
                     revision(rea_conn, role="rea"),
                     revision(bindings, role="binding"))
+    valid, reason = verify_revision_lifecycle(
+        ledger=ledger, rea_conn=rea_conn, binding_registry=binding_registry)
+    if not valid:
+        return ("BLOCK", reason)
     try:
         before = read_versions()
         result = audit(**kwargs)
