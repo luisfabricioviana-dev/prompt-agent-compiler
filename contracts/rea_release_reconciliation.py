@@ -120,7 +120,7 @@ def verify_persisted_delivery(conn: sqlite3.Connection, *, release_id: str,
     if (claim[0] != digest or observed_digest != digest or observed_destination != destination
             or recorded_observer != observer_id or not isinstance(signature, str)):
         return False, "confirmation_evidence_mismatch"
-    msg = f"REA-DESTINATION-v2\\n{observer_id}\\n{release_id}\\n{digest}\\n{destination}\\ndelivered".encode()
+    msg = f"REA-DESTINATION-v2\n{observer_id}\n{release_id}\n{digest}\n{destination}\ndelivered".encode()
     expected = hmac.new(trusted_observer_key, msg, hashlib.sha256).hexdigest()
     if not hmac.compare_digest(signature, expected):
         return False, "confirmation_signature_invalid"
