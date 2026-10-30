@@ -204,5 +204,16 @@
     "coverage_metric": "stdlib_trace_ast_statement_line_proxy",
     "observed_green_coverage_percent": 87.53,
     "coverage_minimum_percent": 85
+  },
+  "wave12": {
+    "status": "RELEASE_AUTHORITY_COVERAGE_HARDENING_CANDIDATE",
+    "critical_file": "contracts/rea_release_authority.py",
+    "prior_statement_proxy_percent": 53.12,
+    "observed_statement_proxy_percent": 100,
+    "critical_minimum_percent": 90,
+    "global_observed_statement_proxy_percent": 88.53,
+    "global_minimum_percent": 85,
+    "current_tree_discovered_test_floor": 163,
+    "authorization_behavior_changed": false
   }
 }
