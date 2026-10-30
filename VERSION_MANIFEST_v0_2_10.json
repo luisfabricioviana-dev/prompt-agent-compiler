@@ -72,5 +72,15 @@
     "blind_holdout_tuning_prohibited": true,
     "governed_release_opt_in_fail_closed": true,
     "production_activation": false
+  },
+  "wave3": {
+    "status": "PROVIDER_REPRODUCIBILITY_CANDIDATE",
+    "semantic_provider_config": "contracts/semantic_provider_config.py",
+    "evaluation_run_manifest": "contracts/evaluation_run_manifest.py",
+    "model_id_required": true,
+    "model_default_hardcoded": false,
+    "current_tree_discovered_test_floor": 91,
+    "authenticated_model_eval_executed": false,
+    "blind_holdout_exposed": false
   }
 }
