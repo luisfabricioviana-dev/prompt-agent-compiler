@@ -39,6 +39,17 @@ jobs:
           from contracts.runtime_state import RuntimeStateMachine
           print("package_smoke=ok")
           PY
+      - name: Enforce scoped release entrypoint inventory
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from contracts.release_entrypoint_scanner import scan_release_entrypoints
+          result = scan_release_entrypoints(Path("."))
+          print(json.dumps(result, sort_keys=True))
+          if result["status"] != "PASS_SCOPED":
+              raise SystemExit("release_entrypoint_inventory_drift")
+          PY
       - name: Run current-tree tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Run contract statement coverage gate
