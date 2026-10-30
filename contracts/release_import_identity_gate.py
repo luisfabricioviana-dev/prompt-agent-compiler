@@ -22,6 +22,21 @@ EXPECTED = {
 }
 
 
+def _assignment_targets(node: ast.AST) -> tuple[ast.AST, ...]:
+    """Return only LHS targets for the assignment syntax recognized by this gate."""
+    if isinstance(node, ast.Assign):
+        return tuple(node.targets)
+    if isinstance(node, (ast.AnnAssign, ast.NamedExpr, ast.AugAssign)):
+        return (node.target,)
+    return ()
+
+
+def _bound_names(targets: tuple[ast.AST, ...]) -> set[str]:
+    """Walk nested unpacking targets without inspecting RHS expressions."""
+    return {name.id for target in targets for name in ast.walk(target)
+            if isinstance(name, ast.Name)}
+
+
 def validate_critical_import_identity(root: str | Path) -> dict:
     root = Path(root)
     violations: list[str] = []
@@ -89,9 +104,7 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                             if identity == target}
             for statement in tree.body:
                 if isinstance(statement, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
-                    targets = statement.targets if isinstance(statement, ast.Assign) else [statement.target]
-                    if any(isinstance(name, ast.Name) and name.id in target_names
-                           for target_node in targets for name in ast.walk(target_node)):
+                    if _bound_names(_assignment_targets(statement)) & target_names:
                         violations.append(f"module_rebound_target:{relative}:{callee}")
             # Imports nested in control flow are ambiguous: a conditional
             # import must not certify an unconditional call edge.
@@ -241,8 +254,7 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                 violations.append(f"identity_mismatch:{relative}:{owner}:{callee}:{len(calls)}")
             for node in ast.walk(fn):
                 if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
-                    targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-                    names = {n.id for target_node in targets for n in ast.walk(target_node) if isinstance(n, ast.Name)}
+                    names = _bound_names(_assignment_targets(node))
                     if any(name in names for name, resolved in local.items() if resolved == target):
                         violations.append(f"rebound_target:{relative}:{owner}:{callee}")
     return {"status": "BLOCK" if violations else "PASS_SCOPED",
