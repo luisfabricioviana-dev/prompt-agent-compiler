@@ -113,6 +113,26 @@ jobs:
           if result["status"] != "PASS_SCOPED":
               raise SystemExit("git_tree_source_evidence_drift")
           PY
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from contracts.release_gate_run_context import verify_run_context
+          manifest = json.loads(Path("artifacts/release-gate-evidence-manifest.json").read_text())
+          result = verify_run_context(
+              manifest,
+              repository=os.environ["GITHUB_REPOSITORY"],
+              workflow=os.environ["GITHUB_WORKFLOW"],
+              event=os.environ["GITHUB_EVENT_NAME"],
+              sha=os.environ["GITHUB_SHA"],
+              run_id=os.environ["GITHUB_RUN_ID"],
+              attempt=os.environ["GITHUB_RUN_ATTEMPT"],
+              expected_repository="luisfabricioviana-dev/prompt-agent-compiler",
+          )
+          print(json.dumps(result, sort_keys=True))
+          if result["status"] != "PASS_SCOPED":
+              raise SystemExit("release_gate_run_context_mismatch")
+          PY
       - name: Upload differential gate evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
