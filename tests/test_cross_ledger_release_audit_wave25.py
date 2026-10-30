@@ -15,6 +15,7 @@ from contracts.governed_release_recovery import GovernedRecovery
 from contracts.rea_release_reconciliation import DestinationObservation, reconcile_delivery
 from contracts.cross_ledger_release_audit import audit_cross_ledger
 from contracts.cross_ledger_binding import CrossLedgerBindingVerifier, sign_binding_fixture
+from contracts.durable_cross_ledger_binding_registry import DurableBindingRegistry
 
 KEY = b"observer-key-for-wave25-fixtures-1234"
 OBS = "trusted-observer"
@@ -45,6 +46,8 @@ class CrossLedgerTests(unittest.TestCase):
         self.binding_verifier = CrossLedgerBindingVerifier(trusted_issuer="issuer", verification_key=KEY)
         self.binding = sign_binding_fixture(key=KEY, issuer="issuer", nonce="nonce",
             release_id=RELEASE, artifact_sha256=DIGEST, destination_id=DEST)
+        self.registry = DurableBindingRegistry(Path(self.tmp.name) / "bindings.db")
+        self.registry.reserve(binding=self.binding, verifier=self.binding_verifier)
         self.recovery = GovernedRecovery(ledger=self.ledger, authenticator=self.auth)
 
     def args(self):
@@ -52,7 +55,8 @@ class CrossLedgerTests(unittest.TestCase):
                     issuer="issuer", nonce="nonce", release_id=RELEASE,
                     artifact_sha256=DIGEST, destination_id=DEST,
                     observer_id=OBS, observer_key=KEY,
-                    binding=self.binding, binding_verifier=self.binding_verifier)
+                    binding=self.binding, binding_verifier=self.binding_verifier,
+                    binding_registry=self.registry)
 
     def observe_replay(self, **data):
         obs = ObserverConfirmation(**data, delivery_id="delivery-25")
