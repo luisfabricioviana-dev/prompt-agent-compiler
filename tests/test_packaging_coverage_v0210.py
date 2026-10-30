@@ -73,7 +73,7 @@ class CoverageGateUnitTests(unittest.TestCase):
 
         self.assertIn("Run contract statement coverage gate", workflow)
         self.assertIn(
-            "python tools/run_contract_coverage_gate.py --minimum 70",
+            "python tools/run_contract_coverage_gate.py --minimum 85",
             workflow,
         )
 
