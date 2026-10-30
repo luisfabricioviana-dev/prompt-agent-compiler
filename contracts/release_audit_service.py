@@ -14,6 +14,10 @@ class AuditDecision:
     reason: str
     dispatch_authorized: bool = False
 
+    def __post_init__(self) -> None:
+        if self.dispatch_authorized is not False:
+            raise ValueError("audit_decision_cannot_authorize_dispatch")
+
 
 class ReleaseAuditService:
     def __init__(self, *, audit_runner=None):
