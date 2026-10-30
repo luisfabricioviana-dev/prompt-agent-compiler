@@ -142,5 +142,20 @@
     "anti_overengineering_changed": false,
     "gate_behavior_changed": false,
     "current_tree_discovered_test_floor": 124
+  },
+  "wave8": {
+    "status": "AUTOMATIC_EXECUTION_GRAPH_CANDIDATE",
+    "graph_compiler": "contracts/execution_graph_compiler.py",
+    "canonical_runtime_compile_auto": true,
+    "phases": [
+      "prepare",
+      "execute",
+      "verify",
+      "independent-review"
+    ],
+    "policy_gate_invention": false,
+    "pattern_artifact_contracts": true,
+    "provider_policy_single_execution": true,
+    "current_tree_discovered_test_floor": 133
   }
 }
