@@ -56,5 +56,21 @@
     ],
     "rea_production_release_enabled": false,
     "semantic_policy_changed": false
+  },
+  "wave2": {
+    "status": "AGENT_SKILLS_CANDIDATE",
+    "skills": [
+      "compile-execution-spec",
+      "review-execution-spec",
+      "repair-failed-run",
+      "evaluate-compiler",
+      "governed-release"
+    ],
+    "current_tree_discovered_test_floor": 83,
+    "capability_runtime_source": "CapabilityRegistry",
+    "execution_runtime_source": "ExecutionSpecV2",
+    "blind_holdout_tuning_prohibited": true,
+    "governed_release_opt_in_fail_closed": true,
+    "production_activation": false
   }
 }
