@@ -3,11 +3,16 @@ import unittest
 from contracts.rea_release_node import ReleaseNode
 from contracts.rea_pipeline import PipelineResult
 from test_rea_release_node_v0210 import FakeSignedReleaseRunner, make_spec, pass_review
+from contracts.bound_provenance import BoundProvenanceVerifier, sign_fixture
 
 class AdmissionTests(unittest.TestCase):
     def kwargs(self):
+        key = b"k" * 32
         return dict(spec=make_spec(),review=pass_review(),artifact_id="artifact-1",
-                    payload=b"artifact",enable_dispatch=True,release_approved=True)
+                    payload=b"artifact",enable_dispatch=True,release_approved=True,
+                    bound_verifier=BoundProvenanceVerifier(trusted_issuer="fixture", verification_key=key),
+                    bound_statement=sign_fixture(key=key, issuer="fixture", spec_id="spec-release", artifact_id="artifact-1", run_id="run-1", payload=b"artifact", nonce="nonce"),
+                    run_id="run-1")
     def test_unverified_provenance_cannot_dispatch(self):
         runner=FakeSignedReleaseRunner()
         result=ReleaseNode(signed_release_runner=runner).execute(**self.kwargs())
