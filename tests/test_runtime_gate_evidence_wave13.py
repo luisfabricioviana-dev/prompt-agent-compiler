@@ -69,7 +69,7 @@ class GateEvidenceRuntimeTests(unittest.TestCase):
         ):
             with self.subTest(findings=findings):
                 runtime = make_runtime()
-                with self.assertRaisesRegex(RuntimeStateError, "runtime_gate_review_failed"):
+                with self.assertRaisesRegex(RuntimeStateError, "runtime_gate_binding_required"):
                     runtime.complete("verify", findings=findings)
                 self.assertEqual(runtime.node_state("verify"), NodeState.RUNNING)
 
