@@ -11,6 +11,7 @@ import sqlite3
 
 from .durable_replay_ledger import DurableReplayLedger
 from .cross_ledger_binding import CrossLedgerBinding, CrossLedgerBindingVerifier
+from .durable_cross_ledger_binding_registry import DurableBindingRegistry
 from .governed_release_recovery import GovernedRecovery
 from .rea_release_reconciliation import verify_persisted_delivery
 
@@ -28,6 +29,7 @@ def audit_cross_ledger(
     observer_id: str, observer_key: bytes,
     binding: CrossLedgerBinding | None = None,
     binding_verifier: CrossLedgerBindingVerifier | None = None,
+    binding_registry: DurableBindingRegistry | None = None,
 ) -> CrossLedgerAudit:
     if (not isinstance(ledger, DurableReplayLedger)
             or not isinstance(recovery, GovernedRecovery)
@@ -42,6 +44,13 @@ def audit_cross_ledger(
                 binding=binding, issuer=issuer, nonce=nonce, release_id=release_id,
                 artifact_sha256=artifact_sha256, destination_id=destination_id)):
         return CrossLedgerAudit("BLOCK", "cross_ledger_binding_unverified")
+    if not isinstance(binding_registry, DurableBindingRegistry):
+        return CrossLedgerAudit("BLOCK", "durable_binding_registry_required")
+    try:
+        if not binding_registry.matches(binding):
+            return CrossLedgerAudit("BLOCK", "durable_binding_not_reserved")
+    except sqlite3.Error:
+        return CrossLedgerAudit("BLOCK", "durable_binding_registry_unavailable")
     # Avoid confusing different backing databases and accidental cross-tenant
     # correlations. Caller must bind release_id to (issuer, nonce) independently.
     try:
