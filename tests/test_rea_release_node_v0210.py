@@ -1,4 +1,6 @@
+import sys
 import unittest
+from unittest.mock import patch
 
 from contracts.capability_registry import (
     CapabilityRegistry,
@@ -206,6 +208,20 @@ class ReleaseNodeTests(unittest.TestCase):
         self.assertEqual(len(runner.calls), 1)
         _, kwargs = runner.calls[0]
         self.assertTrue(kwargs["enable_dispatch"])
+
+
+    def test_missing_optional_bridge_fails_closed_at_execute_not_constructor(self):
+        with patch.dict(sys.modules, {"rea_signed_release_bridge": None}):
+            node = ReleaseNode()
+            result = node.execute(
+                spec=make_spec(),
+                review=pass_review(),
+                artifact_id="artifact-1",
+                payload=b"artifact",
+            )
+
+        self.assertEqual(result.state, "BLOCKED")
+        self.assertEqual(result.reason, "rea_release_runner_unavailable")
 
     def test_rea_exception_fails_closed(self):
         class FailingRunner:
