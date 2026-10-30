@@ -7,6 +7,7 @@ from typing import Mapping, Iterable
 from .artifact_registry import ArtifactRegistry
 from .execution_spec_v2 import ExecutionSpecV2
 from .reviewer_spec import ReviewerSpec, ReviewFinding
+from .gate_evidence import GateEvidence
 
 
 class RuntimeStateError(RuntimeError):
@@ -28,6 +29,7 @@ class RuntimeStateMachine:
         spec: ExecutionSpecV2,
         *,
         artifact_registry: ArtifactRegistry | None = None,
+        run_id: str | None = None,
     ) -> None:
         if not isinstance(spec, ExecutionSpecV2):
             raise TypeError("execution_spec_v2_required")
@@ -36,6 +38,9 @@ class RuntimeStateMachine:
                 f"execution_spec_not_ready:{spec.readiness}"
             )
         self.spec = spec
+        self.run_id = run_id if run_id is not None else spec.spec_id
+        if not isinstance(self.run_id, str) or not self.run_id.strip():
+            raise RuntimeStateError("runtime_run_id_required")
         self.artifact_registry = (
             artifact_registry
             if artifact_registry is not None
@@ -116,6 +121,7 @@ class RuntimeStateMachine:
         outputs: Mapping[str, bytes] | None = None,
         findings: Iterable[ReviewFinding] | None = None,
         independent_reviewer_confirmed: bool = False,
+        gate_evidence: Iterable[GateEvidence] | None = None,
     ) -> None:
         node = self._node(node_id)
         if self._states[node_id] is not NodeState.RUNNING:
@@ -124,6 +130,8 @@ class RuntimeStateMachine:
         if node.quality_gates:
             if findings is None:
                 raise RuntimeStateError(f"runtime_gate_evidence_required:{node_id}")
+            findings = tuple(findings)
+            self._validate_gate_bindings(node_id, tuple(node.quality_gates), findings, gate_evidence)
             reviewer = ReviewerSpec(
                 review_id=f"runtime:{node_id}",
                 target_artifacts=tuple(node.output_artifacts),
@@ -148,6 +156,48 @@ class RuntimeStateMachine:
 
         self._states[node_id] = NodeState.PASS
         self._promote_dependents(node_id)
+
+    def _validate_gate_bindings(
+        self,
+        node_id: str,
+        gates: tuple[str, ...],
+        findings: Iterable[ReviewFinding],
+        evidence: Iterable[GateEvidence] | None,
+    ) -> None:
+        if evidence is None:
+            raise RuntimeStateError("runtime_gate_binding_required")
+        rows = tuple(evidence)
+        by_gate = {}
+        for row in rows:
+            if not isinstance(row, GateEvidence):
+                raise RuntimeStateError("runtime_gate_binding_invalid")
+            if (row.run_id != self.run_id or row.node_id != node_id
+                    or row.gate_id not in gates):
+                raise RuntimeStateError("runtime_gate_binding_scope_mismatch")
+            if row.gate_id in by_gate:
+                raise RuntimeStateError("runtime_gate_binding_duplicate")
+            if not isinstance(row.payload, bytes) or not row.payload:
+                raise RuntimeStateError("runtime_gate_binding_payload_invalid")
+            if row.artifact_id is not None:
+                if not isinstance(row.artifact_sha256, str):
+                    raise RuntimeStateError("runtime_gate_binding_artifact_digest_required")
+                try:
+                    record = self.artifact_registry.get(row.artifact_id)
+                except Exception as exc:
+                    raise RuntimeStateError("runtime_gate_binding_artifact_missing") from exc
+                if record.sha256 != row.artifact_sha256:
+                    raise RuntimeStateError("runtime_gate_binding_artifact_mismatch")
+            elif row.artifact_sha256 is not None:
+                raise RuntimeStateError("runtime_gate_binding_artifact_id_required")
+            by_gate[row.gate_id] = row
+        for gate in gates:
+            row = by_gate.get(gate)
+            if row is None:
+                raise RuntimeStateError(f"runtime_gate_binding_missing:{gate}")
+        for finding in findings:
+            row = by_gate.get(finding.gate_id)
+            if row is None or row.digest not in finding.evidence:
+                raise RuntimeStateError(f"runtime_gate_binding_digest_mismatch:{finding.gate_id}")
 
     def _block_descendants(self, node_id: str) -> None:
         for dependent_id in sorted(self._dependents[node_id]):
