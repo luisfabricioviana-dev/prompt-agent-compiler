@@ -1,4 +1,7 @@
 import unittest
+import tempfile
+from pathlib import Path
+from contracts.durable_replay_ledger import DurableReplayLedger
 
 from contracts.capability_registry import (
     CapabilityRegistry,
@@ -204,6 +207,7 @@ class ReleaseNodeTests(unittest.TestCase):
             bound_verifier=BoundProvenanceVerifier(trusted_issuer="fixture", verification_key=b"k"*32),
             bound_statement=sign_fixture(key=b"k"*32, issuer="fixture", spec_id="spec-release", artifact_id="artifact-1", run_id="run-1", payload=b"artifact", nonce="nonce"),
             run_id="run-1",
+            replay_ledger=DurableReplayLedger(Path(tempfile.mkdtemp())/"ledger.sqlite"),
             rea_kwargs={"destination_id": "repo:example"},
         )
 

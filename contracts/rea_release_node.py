@@ -14,6 +14,7 @@ from .execution_spec_v2 import ExecutionSpecV2
 from .rea_pipeline import PipelineResult
 from .reviewer_spec import ReviewResult
 from .bound_provenance import BoundProvenanceStatement, BoundProvenanceVerifier
+from .durable_replay_ledger import DurableReplayLedger, ReplayAdmissionError
 
 
 class ReleaseNode:
@@ -57,6 +58,7 @@ class ReleaseNode:
         bound_statement: BoundProvenanceStatement | None = None,
         bound_verifier: BoundProvenanceVerifier | None = None,
         run_id: str | None = None,
+        replay_ledger: DurableReplayLedger | None = None,
         rea_kwargs: Mapping[str, Any] | None = None,
     ) -> PipelineResult:
         if not isinstance(spec, ExecutionSpecV2):
@@ -120,6 +122,19 @@ class ReleaseNode:
         if "enable_dispatch" in kwargs:
             return self._blocked("release_dispatch_flag_must_be_explicit", payload)
 
+        # Reserve before any external side effect. A crash after DISPATCHING
+        # cannot be automatically retried; a trusted observer must reconcile.
+        if enable_dispatch:
+            if not isinstance(replay_ledger, DurableReplayLedger):
+                return self._blocked("durable_replay_ledger_required", payload)
+            try:
+                replay_ledger.reserve(bound_statement, payload)
+                replay_ledger.transition(
+                    bound_statement, payload, expected="RESERVED", target="DISPATCHING"
+                )
+            except (ReplayAdmissionError, OSError, Exception) as exc:
+                return self._blocked("replay_admission_blocked:" + type(exc).__name__, payload)
+
         # The node never synthesizes credentials, signing material, provenance,
         # destination identity, or authorization. Those remain caller/runtime
         # boundary inputs to the existing fail-closed REA bridge.
@@ -134,8 +149,26 @@ class ReleaseNode:
                 **kwargs,
             )
         except Exception:
+            if enable_dispatch:
+                try:
+                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="UNCERTAIN")
+                except Exception:
+                    pass  # Persistent DISPATCHING remains a no-retry barrier.
             return self._blocked("rea_release_runner_failed", payload)
 
+        if enable_dispatch:
+            try:
+                if not isinstance(result, PipelineResult):
+                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="UNCERTAIN")
+                    return self._blocked("rea_release_result_invalid", payload)
+                if result.state == "CONFIRMED_BY_OBSERVER":
+                    # Observer result from signed REA bridge, not a synthesized confirmation.
+                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="DISPATCHED")
+                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHED", target="CONFIRMED")
+                else:
+                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="UNCERTAIN")
+            except Exception:
+                return self._blocked("replay_result_recording_failed", payload)
         if not isinstance(result, PipelineResult):
             return self._blocked("rea_release_result_invalid", payload)
         return result
