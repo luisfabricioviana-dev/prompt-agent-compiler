@@ -13,6 +13,7 @@ from .capability_registry import CapabilityStatus
 from .execution_spec_v2 import ExecutionSpecV2
 from .rea_pipeline import PipelineResult
 from .reviewer_spec import ReviewResult
+from .bound_provenance import BoundProvenanceStatement, BoundProvenanceVerifier
 
 
 class ReleaseNode:
@@ -53,6 +54,9 @@ class ReleaseNode:
         release_approved: bool = False,
         provenance_verifier: Callable[..., bool] | None = None,
         provenance_verified: bool = False,
+        bound_statement: BoundProvenanceStatement | None = None,
+        bound_verifier: BoundProvenanceVerifier | None = None,
+        run_id: str | None = None,
         rea_kwargs: Mapping[str, Any] | None = None,
     ) -> PipelineResult:
         if not isinstance(spec, ExecutionSpecV2):
@@ -81,6 +85,17 @@ class ReleaseNode:
 
         if enable_dispatch and release_approved is not True:
             return self._blocked("explicit_release_approval_required", payload)
+
+        if enable_dispatch:
+            if not isinstance(bound_verifier, BoundProvenanceVerifier) or not isinstance(
+                bound_statement, BoundProvenanceStatement
+            ) or not isinstance(run_id, str) or not run_id.strip():
+                return self._blocked("bound_provenance_required", payload)
+            if not bound_verifier.verify(
+                statement=bound_statement, spec_id=spec.spec_id,
+                artifact_id=artifact_id, run_id=run_id, payload=payload,
+            ):
+                return self._blocked("bound_provenance_invalid", payload)
 
         # A caller's boolean claim is never provenance evidence. The separately
         # supplied verifier is a trust boundary and must be provisioned by the
