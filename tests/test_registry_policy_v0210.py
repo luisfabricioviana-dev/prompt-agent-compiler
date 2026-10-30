@@ -15,6 +15,9 @@ from contracts.registry_policy import (
     RegistryPolicyContractError,
     route_signature,
 )
+from contracts.capability_registry import CapabilityRegistry
+from contracts.canonical_runtime import CanonicalCompilerRuntime, ExecutionPlan
+from contracts.execution_spec_v2 import ExecutionNode
 
 
 def task(
@@ -193,6 +196,37 @@ class RegistryPolicyEquivalenceTests(unittest.TestCase):
     def test_policy_result_records_registry_version(self):
         result = self.compiler(CASES[0])
         self.assertEqual(result.registry_contract, "P01-P08-v0.2.10")
+
+    def test_registry_aware_policy_runs_inside_canonical_runtime(self):
+        class Provider:
+            def interpret(self, request):
+                return task("runtime-create", actions=("CREATE",))
+
+        registry = default_pattern_registry()
+        runtime = CanonicalCompilerRuntime(
+            semantic_provider=Provider(),
+            policy_compiler=RegistryAwarePolicyCompiler(registry),
+            capability_registry=CapabilityRegistry(),
+            pattern_registry=registry,
+        )
+        spec = runtime.compile(
+            "runtime-create",
+            plan=ExecutionPlan(
+                objective="Create a verified result.",
+                success_definition=("result exists",),
+                execution_nodes=(
+                    ExecutionNode(
+                        node_id="execute",
+                        purpose="Execute",
+                        role="executor",
+                    ),
+                ),
+            ),
+        )
+
+        self.assertEqual(spec.readiness, "READY")
+        self.assertEqual(spec.legacy_patterns["P01"].status, "mandatory")
+        self.assertEqual(spec.compiler_version, "0.2.10")
 
 
 if __name__ == "__main__":
