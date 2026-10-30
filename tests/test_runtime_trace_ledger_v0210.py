@@ -260,7 +260,7 @@ class RuntimeStateTraceIntegrationTests(unittest.TestCase):
         self.assertEqual(self.runtime.node_state("build"), NodeState.FAIL)
         self.assertEqual(self.runtime.node_state("verify"), NodeState.BLOCKED)
 
-    def test_trace_write_failure_prevents_start_transition(self):
+    def test_trace_write_failure_prevents_runtime_initialization(self):
         class FailingLedger:
             def register_run(self, run_id, spec):
                 return {"run_id": run_id}
@@ -268,11 +268,35 @@ class RuntimeStateTraceIntegrationTests(unittest.TestCase):
             def commit_step(self, *args, **kwargs):
                 raise RuntimeTraceLedgerError("trace_write_failed")
 
+        with self.assertRaisesRegex(
+            RuntimeTraceLedgerError,
+            "trace_write_failed",
+        ):
+            RuntimeStateMachine(
+                self.spec,
+                artifact_registry=ArtifactRegistry(self.spec.artifacts),
+                trace_ledger=FailingLedger(),
+                run_id="run-init-fail",
+            )
+
+    def test_trace_write_failure_prevents_start_transition(self):
+        class FailingOnSecondCommitLedger:
+            def __init__(self):
+                self.commit_count = 0
+
+            def register_run(self, run_id, spec):
+                return {"run_id": run_id}
+
+            def commit_step(self, *args, **kwargs):
+                self.commit_count += 1
+                if self.commit_count >= 2:
+                    raise RuntimeTraceLedgerError("trace_write_failed")
+
         runtime = RuntimeStateMachine(
             self.spec,
             artifact_registry=ArtifactRegistry(self.spec.artifacts),
-            trace_ledger=FailingLedger(),
-            run_id="run-x",
+            trace_ledger=FailingOnSecondCommitLedger(),
+            run_id="run-start-fail",
         )
 
         with self.assertRaisesRegex(
