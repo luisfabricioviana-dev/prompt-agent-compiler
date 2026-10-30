@@ -101,5 +101,22 @@
     "current_tree_discovered_test_floor": 101,
     "independent_review_enforced_when_required": true,
     "gate_evidence_required_for_pass": true
+  },
+  "wave5": {
+    "status": "CANONICAL_RUNTIME_CANDIDATE",
+    "runtime": "contracts/canonical_runtime.py",
+    "composition": [
+      "semantic_provider",
+      "deterministic_policy",
+      "pattern_registry_validation",
+      "capability_registry",
+      "ExecutionSpecV2"
+    ],
+    "reviewer_compilation": true,
+    "request_identity_enforced": true,
+    "unknown_pattern_rejected": true,
+    "current_tree_discovered_test_floor": 108,
+    "rea_dispatch_wired": false,
+    "recovered_policy_scoring_migrated": false
   }
 }
