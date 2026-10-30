@@ -113,17 +113,24 @@ class CanonicalCompilerRuntime:
                         f"{node.node_id}->{capability}"
                     )
 
-    def compile(self, request: str, *, plan: ExecutionPlan) -> ExecutionSpecV2:
+    def _interpret_and_route(self, request: str):
         if not isinstance(request, str) or not request.strip():
             raise RuntimeCompilationError("request_required")
-        if not isinstance(plan, ExecutionPlan):
-            raise TypeError("execution_plan_invalid")
-
         task = self.semantic_provider.interpret(request)
         legacy = self.policy_compiler(task)
-
         self._validate_request_identity(request, legacy)
         self._validate_policy_patterns(legacy)
+        return legacy
+
+    def _compile_from_policy(
+        self,
+        request: str,
+        *,
+        legacy: Any,
+        plan: ExecutionPlan,
+    ) -> ExecutionSpecV2:
+        if not isinstance(plan, ExecutionPlan):
+            raise TypeError("execution_plan_invalid")
         self._validate_node_capabilities(plan, legacy)
 
         legacy_caps = tuple(getattr(legacy, "capabilities", ()) or ())
@@ -168,6 +175,34 @@ class CanonicalCompilerRuntime:
             output_contract=dict(plan.output_contract),
             learning_trace=dict(plan.learning_trace),
         )
+
+    def compile(self, request: str, *, plan: ExecutionPlan) -> ExecutionSpecV2:
+        legacy = self._interpret_and_route(request)
+        return self._compile_from_policy(request, legacy=legacy, plan=plan)
+
+    def compile_auto(
+        self,
+        request: str,
+        *,
+        graph_compiler: Any,
+        objective: str,
+        success_definition: Iterable[str],
+        required_capabilities: Iterable[str] = (),
+        optional_capabilities: Iterable[str] = (),
+    ) -> ExecutionSpecV2:
+        if not hasattr(graph_compiler, "compile"):
+            raise TypeError("execution_graph_compiler_required")
+        legacy = self._interpret_and_route(request)
+        plan = graph_compiler.compile(
+            legacy,
+            objective=objective,
+            success_definition=success_definition,
+            required_capabilities=required_capabilities,
+            optional_capabilities=optional_capabilities,
+        )
+        if not isinstance(plan, ExecutionPlan):
+            raise RuntimeCompilationError("execution_graph_compiler_invalid_plan")
+        return self._compile_from_policy(request, legacy=legacy, plan=plan)
 
 
 def _gate_id(gate: Any) -> str:
