@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 from typing import Any, Callable, Mapping
+from dataclasses import dataclass
 
 from .capability_registry import CapabilityStatus
 from .execution_spec_v2 import ExecutionSpecV2
@@ -15,14 +16,24 @@ from .rea_pipeline import PipelineResult
 from .reviewer_spec import ReviewResult
 
 
+@dataclass(frozen=True)
+class ReleaseAdmission:
+    """Claim carried across boundaries; never self-attests provenance."""
+    spec_id: str
+    artifact_id: str
+    artifact_sha256: str
+    provenance_reference: str
+
+
 class ReleaseNode:
-    def __init__(self, *, signed_release_runner: Callable[..., PipelineResult] | None = None):
+    def __init__(self, *, signed_release_runner: Callable[..., PipelineResult] | None = None, provenance_verifier: Callable[[ReleaseAdmission], bool] | None = None):
         if signed_release_runner is None:
             from rea_signed_release_bridge import run_signed_optional_release
             signed_release_runner = run_signed_optional_release
         if not callable(signed_release_runner):
             raise TypeError("signed_release_runner_callable_required")
         self.signed_release_runner = signed_release_runner
+        self.provenance_verifier = provenance_verifier
 
     @staticmethod
     def _digest(payload: bytes) -> str:
@@ -51,6 +62,7 @@ class ReleaseNode:
         authorization: Any = None,
         enable_dispatch: bool = False,
         release_approved: bool = False,
+        admission: ReleaseAdmission | None = None,
         rea_kwargs: Mapping[str, Any] | None = None,
     ) -> PipelineResult:
         if not isinstance(spec, ExecutionSpecV2):
@@ -79,6 +91,24 @@ class ReleaseNode:
 
         if enable_dispatch and release_approved is not True:
             return self._blocked("explicit_release_approval_required", payload)
+
+        if enable_dispatch:
+            if not isinstance(admission, ReleaseAdmission):
+                return self._blocked("release_provenance_admission_required", payload)
+            if (admission.spec_id != spec.spec_id
+                or admission.artifact_id != artifact_id
+                or admission.artifact_sha256 != self._digest(payload)
+                or not isinstance(admission.provenance_reference, str)
+                or not admission.provenance_reference.strip()):
+                return self._blocked("release_provenance_binding_mismatch", payload)
+            if self.provenance_verifier is None:
+                return self._blocked("release_provenance_verifier_unavailable", payload)
+            try:
+                verified = self.provenance_verifier(admission)
+            except Exception:
+                return self._blocked("release_provenance_verification_failed", payload)
+            if verified is not True:
+                return self._blocked("release_provenance_not_verified", payload)
 
         kwargs = dict(rea_kwargs or {})
         if "enable_dispatch" in kwargs:
