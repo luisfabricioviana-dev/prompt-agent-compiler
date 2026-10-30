@@ -1,5 +1,8 @@
 """Wave 16: context-bound HMAC, substitution and replay-boundary tests."""
 import unittest
+import tempfile
+from pathlib import Path
+from contracts.durable_replay_ledger import DurableReplayLedger
 from contracts.bound_provenance import BoundProvenanceVerifier, sign_fixture
 from contracts.rea_release_node import ReleaseNode
 from test_rea_release_node_v0210 import FakeSignedReleaseRunner, make_spec, pass_review
@@ -18,9 +21,14 @@ def dispatch(**overrides):
               provenance_verifier=lambda **kwargs: True,
               bound_statement=statement,bound_verifier=verifier,run_id="run-1")
     args.update(overrides)
-    runner=FakeSignedReleaseRunner()
-    result=ReleaseNode(signed_release_runner=runner).execute(**args)
+    with tempfile.TemporaryDirectory() as tmp:
+        args.setdefault('replay_ledger', DurableReplayLedger(Path(tmp)/'ledger.sqlite'))
+        runner=FakeSignedReleaseRunner()
+        result=ReleaseNode(signed_release_runner=runner).execute(**args)
     return result,runner
+
+# end dispatch
+
 
 class SignedContextTests(unittest.TestCase):
     def test_fixture_signature_allows_delegate_only(self):
