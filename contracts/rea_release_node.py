@@ -162,9 +162,12 @@ class ReleaseNode:
                     replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="UNCERTAIN")
                     return self._blocked("rea_release_result_invalid", payload)
                 if result.state == "CONFIRMED_BY_OBSERVER":
-                    # Observer result from signed REA bridge, not a synthesized confirmation.
-                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="DISPATCHED")
-                    replay_ledger.transition(bound_statement, payload, expected="DISPATCHED", target="CONFIRMED")
+                    # A bridge's positive status is NOT authenticated durable evidence.
+                    # Leave a no-retry barrier until governed offline reconciliation.
+                    replay_ledger.transition(
+                        bound_statement, payload, expected="DISPATCHING", target="UNCERTAIN"
+                    )
+                    return self._blocked("authenticated_reconciliation_required", payload)
                 else:
                     replay_ledger.transition(bound_statement, payload, expected="DISPATCHING", target="UNCERTAIN")
             except Exception:

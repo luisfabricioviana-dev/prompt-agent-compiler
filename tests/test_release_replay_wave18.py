@@ -34,10 +34,11 @@ class ReleaseReplayTests(unittest.TestCase):
         node=ReleaseNode(signed_release_runner=runner)
         first=node.execute(**self.kwargs)
         second=node.execute(**self.kwargs)
-        self.assertEqual(first.state,"CONFIRMED_BY_OBSERVER")
+        self.assertEqual(first.state,"BLOCKED")
+        self.assertEqual(first.reason,"authenticated_reconciliation_required")
         self.assertEqual(second.state,"BLOCKED")
         self.assertEqual(len(runner.calls),1)
-        self.assertEqual(self.ledger.state(issuer="fixture",nonce="unique"),"CONFIRMED")
+        self.assertEqual(self.ledger.state(issuer="fixture",nonce="unique"),"UNCERTAIN")
     def test_exception_is_uncertain_and_not_retried(self):
         class CrashRunner:
             def __init__(self): self.calls=0
