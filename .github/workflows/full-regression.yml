@@ -23,7 +23,7 @@ jobs:
           suite = unittest.defaultTestLoader.discover("tests", pattern="test_*.py")
           count = suite.countTestCases()
           print(f"current_tree_discovered_tests={count}")
-          if count < 153:
+          if count < 156:
               raise SystemExit(f"current_tree_test_inventory_regressed:{count}")
           PY
       - name: Compile current tree
@@ -37,6 +37,8 @@ jobs:
           from contracts.canonical_runtime import CanonicalCompilerRuntime
           from contracts.execution_graph_compiler import ExecutionGraphCompiler
           from contracts.runtime_state import RuntimeStateMachine
+          from contracts.rea_release_node import ReleaseNode
+          ReleaseNode()
           print("package_smoke=ok")
           PY
       - name: Run current-tree tests
