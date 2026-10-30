@@ -41,6 +41,18 @@ class ArtifactRegistry:
                 )
             self._contracts[contract.artifact_id] = contract
 
+    def matches_contracts(self, contracts: Iterable[ArtifactContract]) -> bool:
+        """Compare complete declared artifact contracts, not only IDs."""
+        expected = tuple(contracts)
+        return (
+            len(expected) == len(self._contracts)
+            and all(
+                isinstance(contract, ArtifactContract)
+                and self._contracts.get(contract.artifact_id) == contract
+                for contract in expected
+            )
+        )
+
     @property
     def sequence(self) -> int:
         return self._sequence
