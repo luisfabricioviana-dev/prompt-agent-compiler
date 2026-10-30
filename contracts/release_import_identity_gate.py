@@ -51,6 +51,14 @@ def validate_critical_import_identity(root: str | Path) -> dict:
             if fn is None:
                 violations.append(f"missing_owner:{relative}:{owner}")
                 continue
+            # Decorators can replace the callable before the pinned edge runs.
+            # Closures declaring the imported name global/nonlocal can mutate
+            # its binding outside the lexical owner.
+            if fn.decorator_list:
+                violations.append(f"decorated_owner:{relative}:{owner}")
+            for scoped in ast.walk(fn):
+                if isinstance(scoped, (ast.Global, ast.Nonlocal)) and callee in scoped.names:
+                    violations.append(f"scope_escape:{relative}:{owner}:{callee}")
             local = imports.copy()
             # Resolve function-local imports too, but reject rebinding and
             # call-through attributes rather than guessing what they target.
