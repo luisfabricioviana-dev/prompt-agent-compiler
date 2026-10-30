@@ -110,10 +110,14 @@ class ExecutionGraphCompilerTests(unittest.TestCase):
         )
 
         ids = tuple(a.artifact_id for a in plan.artifacts)
-        self.assertEqual(ids, ("implementation", "optimization_result"))
-        self.assertTrue(
-            all(a.producer_node == "execute" for a in plan.artifacts)
+        self.assertEqual(
+            ids,
+            ("prerequisites", "implementation", "optimization_result"),
         )
+        producers = {a.artifact_id: a.producer_node for a in plan.artifacts}
+        self.assertEqual(producers["prerequisites"], "prepare")
+        self.assertEqual(producers["implementation"], "execute")
+        self.assertEqual(producers["optimization_result"], "execute")
 
     def test_verify_phase_uses_policy_emitted_gates_only(self):
         result = policy_result(
