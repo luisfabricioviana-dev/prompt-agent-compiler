@@ -121,6 +121,28 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                     violations.append(f"dynamic_namespace_mutation:{relative}:{owner}:{symbol}")
                 elif symbol == "__import__":
                     violations.append(f"dynamic_import:{relative}:{owner}")
+            # Resolve aliases to dangerous builtins conservatively. A local
+            # alias assignment is unsafe even if the alias is never invoked:
+            # static evidence cannot prove benign runtime effects.
+            risky = {"exec", "eval", "globals", "locals", "setattr", "delattr", "__import__"}
+            aliases = set(risky)
+            changed = True
+            while changed:
+                changed = False
+                for node in ast.walk(fn):
+                    if isinstance(node, (ast.Assign, ast.NamedExpr)):
+                        value = node.value
+                        if not isinstance(value, ast.Name) or value.id not in aliases:
+                            continue
+                        targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                        for target_node in targets:
+                            if isinstance(target_node, ast.Name) and target_node.id not in aliases:
+                                aliases.add(target_node.id)
+                                changed = True
+            for node in ast.walk(fn):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                    if node.func.id in aliases and node.func.id not in risky:
+                        violations.append(f"aliased_dynamic_operation:{relative}:{owner}:{node.func.id}")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
