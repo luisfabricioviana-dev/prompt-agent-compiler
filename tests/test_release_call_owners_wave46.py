@@ -25,7 +25,8 @@ class ReleaseOwnerTests(unittest.TestCase):
         path = self.root / "compiler.py"
         source = path.read_text()
         source = source.replace("return run_optional_rea_release(", "return other_release(")
-        self.assertIn("BLOCK", (validate_release_call_owners(self.root)["status"],))
+        path.write_text(source)
+        self.assertEqual(validate_release_call_owners(self.root)["status"], "BLOCK")
 
     def test_removed_file_blocks(self):
         (self.root / "compiler.py").unlink()
