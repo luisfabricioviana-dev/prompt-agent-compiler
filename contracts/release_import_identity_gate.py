@@ -110,6 +110,17 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                     if any(isinstance(name, ast.Name) and name.id in target_names
                            for candidate in candidates for name in ast.walk(candidate)):
                         violations.append(f"indirect_rebind:{relative}:{owner}:{callee}")
+            # Dynamic namespace writes and reflective mutation cannot be
+            # resolved statically. Quarantine them in pinned critical owners.
+            for node in ast.walk(fn):
+                if not isinstance(node, ast.Call):
+                    continue
+                symbol = node.func.id if isinstance(node.func, ast.Name) else (
+                    node.func.attr if isinstance(node.func, ast.Attribute) else None)
+                if symbol in {"exec", "eval", "globals", "locals", "setattr", "delattr"}:
+                    violations.append(f"dynamic_namespace_mutation:{relative}:{owner}:{symbol}")
+                elif symbol == "__import__":
+                    violations.append(f"dynamic_import:{relative}:{owner}")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
