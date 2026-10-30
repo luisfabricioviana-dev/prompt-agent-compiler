@@ -29,6 +29,7 @@ def audit_cross_ledger(
     if (not isinstance(ledger, DurableReplayLedger)
             or not isinstance(recovery, GovernedRecovery)
             or not isinstance(rea_conn, sqlite3.Connection)
+            or recovery._ledger.path != ledger.path
             or any(not isinstance(x, str) or not x.strip() for x in
                    (issuer, nonce, release_id, artifact_sha256, destination_id,
                     observer_id))):
