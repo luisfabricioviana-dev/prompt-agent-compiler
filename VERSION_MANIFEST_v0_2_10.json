@@ -82,5 +82,24 @@
     "current_tree_discovered_test_floor": 91,
     "authenticated_model_eval_executed": false,
     "blind_holdout_exposed": false
+  },
+  "wave4": {
+    "status": "PATTERN_REVIEW_CONTRACT_CANDIDATE",
+    "pattern_registry": "contracts/pattern_registry.py",
+    "reviewer_spec": "contracts/reviewer_spec.py",
+    "default_patterns": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06",
+      "P07",
+      "P08"
+    ],
+    "policy_migrated_to_registry": false,
+    "current_tree_discovered_test_floor": 101,
+    "independent_review_enforced_when_required": true,
+    "gate_evidence_required_for_pass": true
   }
 }
