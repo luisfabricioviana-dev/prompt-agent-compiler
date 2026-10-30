@@ -40,7 +40,14 @@ jobs:
           mv recovered_v0_2_9/test_holdout_protocol_v0_2_9.py /tmp/test_holdout_protocol_v0_2_9.py
           python -m unittest discover -s recovered_v0_2_9 -p 'test_*.py' -v
           cp /tmp/test_holdout_protocol_v0_2_9.py recovered_v0_2_9/test_holdout_protocol_v0_2_9.py
-          python -m unittest -v             recovered_v0_2_9.test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_prediction_exchange_rejects_unknown_case             recovered_v0_2_9.test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_prediction_exchange_accepts_mapping             recovered_v0_2_9.test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_promotion_rejects_low_semantic_recall             recovered_v0_2_9.test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_promotion_requires_zero_critical_grounding_failures
+          (
+            cd recovered_v0_2_9
+            python -m unittest -v \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_prediction_exchange_rejects_unknown_case \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_prediction_exchange_accepts_mapping \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_promotion_rejects_low_semantic_recall \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_promotion_requires_zero_critical_grounding_failures
+          )
       - name: Validate public-safe JSON artifacts
         run: |
           python - <<'PY'
