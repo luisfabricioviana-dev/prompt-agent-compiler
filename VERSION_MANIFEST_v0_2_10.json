@@ -1,6 +1,6 @@
 {
   "version": "0.2.10-reconciliation-candidate",
-  "status": "RECONCILIATION_CANDIDATE",
+  "status": "RECONCILIATION_CANDIDATE_CI_GATED",
   "date": "2026-10-30",
   "base_main_sha": "b3c20b25c726a940757275d5192a09b913e6d891",
   "reconciliation_pr": 7,
@@ -22,5 +22,24 @@
     "public_safe_recovered_regression_green_required": true,
     "no_blind_holdout_material": true,
     "no_production_activation_claim": true
+  },
+  "regression_contract": {
+    "current_tree_discovered_test_floor": 64,
+    "recovered_v0_2_9_discovered_test_floor": 83,
+    "recovered_public_safe_tests_executed": 79,
+    "recovered_holdout_dependent_tests_not_executed": 4,
+    "semantic_oracle_cases": 31,
+    "mutation_taxonomy_cases": 9,
+    "public_safe_json_artifacts": 26,
+    "public_safe_freeze_files_checked": 11,
+    "public_safe_verifier": "reconciliation_v0_2_10.verify_public_safe_recovered_tree"
+  },
+  "wave0": {
+    "canonical_lines_reconciled_in_single_pr": true,
+    "global_ci_workflow": ".github/workflows/full-regression.yml",
+    "production_runtime_unified": false,
+    "capability_runtime_implemented": false,
+    "execution_spec_v2_implemented": false,
+    "rea_execution_graph_wired": false
   }
 }
