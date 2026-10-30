@@ -199,6 +199,34 @@ def validate_critical_import_identity(root: str | Path) -> dict:
                             expected_identity = prefix + "." + item.name
                             if expected_identity != target:
                                 violations.append(f"shadow_import:{relative}:{owner}:{callee}")
+            # Reject nested lexical captures of pinned release targets.
+            # This is intentionally conservative: no closure flow proof.
+            class NestedCaptureVisitor(ast.NodeVisitor):
+                def __init__(self):
+                    self.depth = 0
+                    self.captured = False
+
+                def visit_FunctionDef(self, node):
+                    self.depth += 1
+                    for statement in node.body:
+                        self.visit(statement)
+                    self.depth -= 1
+
+                visit_AsyncFunctionDef = visit_FunctionDef
+
+                def visit_Lambda(self, node):
+                    self.depth += 1
+                    self.visit(node.body)
+                    self.depth -= 1
+
+                def visit_Name(self, node):
+                    if self.depth > 1 and node.id in target_names:
+                        self.captured = True
+
+            nested_capture = NestedCaptureVisitor()
+            nested_capture.visit(fn)
+            if nested_capture.captured:
+                violations.append(f"nested_target_capture:{relative}:{owner}:{callee}")
             calls = []
             for node in ast.walk(fn):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
