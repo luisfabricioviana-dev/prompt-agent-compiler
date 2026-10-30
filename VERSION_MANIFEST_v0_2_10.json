@@ -177,5 +177,20 @@
     "downstream_block_on_failure": true,
     "durable_external_persistence": false,
     "current_tree_discovered_test_floor": 146
+  },
+  "wave10": {
+    "status": "PACKAGING_COVERAGE_CANDIDATE",
+    "pyproject": "pyproject.toml",
+    "distribution_name": "prompt-agent-compiler",
+    "package_version": "0.2.10",
+    "installable_namespace": "contracts*",
+    "recovered_v0_2_9_packaged": false,
+    "package_smoke_import": true,
+    "coverage_metric": "stdlib_trace_ast_statement_line_proxy",
+    "observed_coverage_percent": 87.6,
+    "coverage_minimum_percent": 85,
+    "third_party_coverage_dependency": false,
+    "build_backend_locked": false,
+    "current_tree_discovered_test_floor": 153
   }
 }
