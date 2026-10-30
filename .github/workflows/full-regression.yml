@@ -1,0 +1,85 @@
+name: Full project regression
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  current-tree:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.11'
+      - name: Assert current-tree test inventory floor
+        run: |
+          python - <<'PY'
+          import unittest
+          suite = unittest.defaultTestLoader.discover("tests", pattern="test_*.py")
+          count = suite.countTestCases()
+          print(f"current_tree_discovered_tests={count}")
+          if count < 64:
+              raise SystemExit(f"current_tree_test_inventory_regressed:{count}")
+          PY
+      - name: Compile current tree
+        run: python -m compileall -q .
+      - name: Run current-tree tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+  recovered-v0-2-9-public-safe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.11'
+      - name: Verify public-safe recovered tree contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from reconciliation_v0_2_10 import verify_public_safe_recovered_tree
+          result = verify_public_safe_recovered_tree(Path("recovered_v0_2_9"))
+          print(json.dumps(result, sort_keys=True))
+          if not result["valid"]:
+              raise SystemExit("public_safe_recovered_tree_invalid")
+          PY
+          test ! -e recovery/prompt_agent_compiler_v0_2_9_recovered.zip
+      - name: Assert recovered v0.2.9 test inventory floor
+        run: |
+          python - <<'PY'
+          import sys
+          import unittest
+          sys.path.insert(0, "recovered_v0_2_9")
+          suite = unittest.defaultTestLoader.discover(
+              "recovered_v0_2_9", pattern="test_*.py"
+          )
+          count = suite.countTestCases()
+          print(f"recovered_v0_2_9_discovered_tests={count}")
+          if count < 83:
+              raise SystemExit(f"recovered_test_inventory_regressed:{count}")
+          PY
+      - name: Compile recovered v0.2.9 source
+        run: python -m compileall -q recovered_v0_2_9
+      - name: Run recovered semantic/compiler regression
+        run: |
+          mv recovered_v0_2_9/test_holdout_protocol_v0_2_9.py /tmp/test_holdout_protocol_v0_2_9.py
+          python -m unittest discover -s recovered_v0_2_9 -p 'test_*.py' -v
+          cp /tmp/test_holdout_protocol_v0_2_9.py recovered_v0_2_9/test_holdout_protocol_v0_2_9.py
+          (
+            cd recovered_v0_2_9
+            python -m unittest -v \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_prediction_exchange_rejects_unknown_case \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_prediction_exchange_accepts_mapping \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_promotion_rejects_low_semantic_recall \
+              test_holdout_protocol_v0_2_9.HoldoutProtocolTests.test_promotion_requires_zero_critical_grounding_failures
+          )
+      - name: Re-run recovered oracle and mutation fixtures
+        run: |
+          python recovered_v0_2_9/evaluate_oracle_v0_2_8.py
+          python recovered_v0_2_9/mutation_suite_v0_2_8.py

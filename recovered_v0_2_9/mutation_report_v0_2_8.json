@@ -1,0 +1,86 @@
+{
+  "cases": 9,
+  "passed": 9,
+  "pass_rate": 1.0,
+  "details": [
+    {
+      "id": "M01",
+      "expected_code": "INTERPRETER_ACTION_FALSE_NEGATIVE",
+      "codes": [
+        "INTERPRETER_ACTION_FALSE_NEGATIVE",
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M02",
+      "expected_code": "INTERPRETER_ROLE_CONFUSION_UI_ERROR_AS_DEBUG",
+      "codes": [
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS",
+        "INTERPRETER_ROLE_CONFUSION_UI_ERROR_AS_DEBUG"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M03",
+      "expected_code": "INTERPRETER_PERFORMANCE_DIMENSION_FALSE_NEGATIVE",
+      "codes": [
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS",
+        "INTERPRETER_PERFORMANCE_DIMENSION_FALSE_NEGATIVE"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M04",
+      "expected_code": "INTERPRETER_EVIDENCE_POLICY_FALSE_NEGATIVE",
+      "codes": [
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS",
+        "INTERPRETER_EVIDENCE_POLICY_FALSE_NEGATIVE"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M05",
+      "expected_code": "INTERPRETER_RISK_UNDERESTIMATION",
+      "codes": [
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS",
+        "INTERPRETER_RISK_UNDERESTIMATION"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M06",
+      "expected_code": "INTERPRETER_CONTRADICTION_MISS",
+      "codes": [
+        "INTERPRETER_CONTRADICTION_MISS"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M07",
+      "expected_code": "PROVIDER_GROUNDING_ERROR",
+      "codes": [
+        "PROVIDER_GROUNDING_ERROR"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M08",
+      "expected_code": "INTERPRETER_EXTERNAL_STATE_FALSE_NEGATIVE",
+      "codes": [
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS",
+        "INTERPRETER_EXTERNAL_STATE_FALSE_NEGATIVE"
+      ],
+      "pass": true
+    },
+    {
+      "id": "M09",
+      "expected_code": "INTERPRETER_CAPABILITY_FALSE_NEGATIVE",
+      "codes": [
+        "INTERPRETER_CAPABILITY_FALSE_NEGATIVE",
+        "INTERPRETER_EVIDENCE_COVERAGE_MISS"
+      ],
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "router_version_tested": "v0.2.2",
+  "holdout_version": "v0.2.3",
+  "status": "RETIRED_AFTER_SINGLE_BLIND_EVALUATION",
+  "may_be_used_for_tuning": false,
+  "metrics": {
+    "routing_precision": 0.8889,
+    "routing_recall": 0.7143,
+    "overengineering_rate": 0.025,
+    "gate_recall": 0.3478,
+    "complexity_accuracy": 0.375,
+    "case_pass_rate": 0.275,
+    "cases": 40
+  },
+  "error_taxonomy": {
+    "missing_quality_gate": 12,
+    "complexity_under_or_misclassification": 25,
+    "pattern_false_negative": 8,
+    "pattern_false_positive_unexpected": 3,
+    "pattern_false_positive_forbidden": 1
+  },
+  "next_required_holdout": "v0.2.5_or_later_after_router_changes"
+}

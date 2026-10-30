@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prompt Agent Compiler v0.2.9 prediction exchange",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": "0.2.9",
+  "status": "HOLDOUT_PREPARED_NOT_YET_MODEL_EVALUATED",
+  "holdout": "blind_holdout_v0_2_9.json",
+  "holdout_cases": 60,
+  "frozen": true,
+  "tuning_prohibited": true,
+  "live_model_evaluation_completed": false,
+  "promotion_thresholds": {
+    "provider_success_rate": 1.0,
+    "contract_valid_rate": 1.0,
+    "semantic_exact_rate": 0.85,
+    "end_to_end_pass_rate": 0.9,
+    "critical_risk_recall": 1.0,
+    "evidence_grounding_rate": 1.0,
+    "min_group_f1": 0.9,
+    "feature_evidence_coverage": 0.9,
+    "contradiction_accuracy": 0.95
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": "0.2.10-reconciliation-candidate",
+  "status": "RECONCILIATION_CANDIDATE_CI_GATED",
+  "date": "2026-10-30",
+  "base_main_sha": "b3c20b25c726a940757275d5192a09b913e6d891",
+  "reconciliation_pr": 7,
+  "recovered_v0_2_9": {
+    "origin_drive_file_id": "1a6h9u7JtEYGkbK8nzVE3scClYUvO9E4T",
+    "original_archive_sha256": "a0986c482309b6de7bf1bf90be3db9cba546f4cd0703813fe8b2161508fede7a",
+    "public_materialization_root": "recovered_v0_2_9",
+    "public_materialized_files": 101,
+    "blind_holdout_content_present": false,
+    "blind_holdout_status": "RETIRED_COMPROMISED_BY_TRANSIENT_PUBLIC_EXPOSURE",
+    "future_generalization_requires_new_private_holdout": true
+  },
+  "rea": {
+    "production_release_enabled": false,
+    "execution_spec_runtime_wired": false
+  },
+  "merge_gate": {
+    "current_tree_green_required": true,
+    "public_safe_recovered_regression_green_required": true,
+    "no_blind_holdout_material": true,
+    "no_production_activation_claim": true
+  },
+  "regression_contract": {
+    "current_tree_discovered_test_floor": 64,
+    "recovered_v0_2_9_discovered_test_floor": 83,
+    "recovered_public_safe_tests_executed": 79,
+    "recovered_holdout_dependent_tests_not_executed": 4,
+    "semantic_oracle_cases": 31,
+    "mutation_taxonomy_cases": 9,
+    "public_safe_json_artifacts": 26,
+    "public_safe_freeze_files_checked": 11,
+    "public_safe_verifier": "reconciliation_v0_2_10.verify_public_safe_recovered_tree"
+  },
+  "wave0": {
+    "canonical_lines_reconciled_in_single_pr": true,
+    "global_ci_workflow": ".github/workflows/full-regression.yml",
+    "production_runtime_unified": false,
+    "capability_runtime_implemented": false,
+    "execution_spec_v2_implemented": false,
+    "rea_execution_graph_wired": false
+  }
+}

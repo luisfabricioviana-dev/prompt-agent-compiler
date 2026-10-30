@@ -1,0 +1,1605 @@
+{
+  "A tela precisa mostrar loading, vazio, erro e sucesso, funcionar no celular e permitir navegação por teclado.": {
+    "raw_request": "A tela precisa mostrar loading, vazio, erro e sucesso, funcionar no celular e permitir navegação por teclado.",
+    "actions": [
+      "CREATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [
+      "ACCESSIBILITY",
+      "PRODUCTION",
+      "RESPONSIVE",
+      "STATEFUL_UI",
+      "UI"
+    ],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.CREATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "ui_requirements.UI": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "ui_requirements.PRODUCTION": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "ui_requirements.ACCESSIBILITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "ui_requirements.RESPONSIVE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "ui_requirements.STATEFUL_UI": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "O processamento parou de funcionar depois da última mudança; descubra a causa sem mexer no restante.": {
+    "raw_request": "O processamento parou de funcionar depois da última mudança; descubra a causa sem mexer no restante.",
+    "actions": [
+      "DIAGNOSE"
+    ],
+    "preservation": [
+      "BEHAVIOR"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.DIAGNOSE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.BEHAVIOR": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Faça a saída continuar byte a byte idêntica, mas reduza o pico de memória.": {
+    "raw_request": "Faça a saída continuar byte a byte idêntica, mas reduza o pico de memória.",
+    "actions": [
+      "MODIFY",
+      "OPTIMIZE"
+    ],
+    "preservation": [
+      "OUTPUT"
+    ],
+    "performance_dimensions": [
+      "MEMORY"
+    ],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.OPTIMIZE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.OUTPUT": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "performance_dimensions.MEMORY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Compare três arquiteturas possíveis e recomende uma; não altere o sistema ainda.": {
+    "raw_request": "Compare três arquiteturas possíveis e recomende uma; não altere o sistema ainda.",
+    "actions": [
+      "REVIEW"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP",
+      "PARALLELIZABLE"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.PARALLELIZABLE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Redesenhe a arquitetura interna sem quebrar a API nem a compatibilidade com clientes atuais.": {
+    "raw_request": "Redesenhe a arquitetura interna sem quebrar a API nem a compatibilidade com clientes atuais.",
+    "actions": [
+      "DESIGN",
+      "MODIFY"
+    ],
+    "preservation": [
+      "API",
+      "COMPATIBILITY"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [
+      "CHANGE",
+      "DESIGN_BEFORE_BUILD"
+    ],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.DESIGN": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.API": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.COMPATIBILITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.CHANGE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.DESIGN_BEFORE_BUILD": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Use somente os anexos para dizer o que está comprovado e cite de onde vem cada conclusão.": {
+    "raw_request": "Use somente os anexos para dizer o que está comprovado e cite de onde vem cada conclusão.",
+    "actions": [
+      "ANALYZE_EVIDENCE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [
+      "SUPPLIED_ONLY",
+      "TRACEABLE"
+    ],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "FILES"
+    ],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [
+      "FILE_READ"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.ANALYZE_EVIDENCE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "evidence_policy.SUPPLIED_ONLY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "evidence_policy.TRACEABLE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.FILES": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.FILE_READ": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Veja o que mudou hoje nas regras do serviço e compare com a documentação anterior.": {
+    "raw_request": "Veja o que mudou hoje nas regras do serviço e compare com a documentação anterior.",
+    "actions": [
+      "RESEARCH",
+      "REVIEW"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [
+      "CURRENT_EXTERNAL"
+    ],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [
+      "WEB_CURRENT_EVIDENCE"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.RESEARCH": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "evidence_policy.CURRENT_EXTERNAL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.WEB_CURRENT_EVIDENCE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Meça o throughput atual e descubra se há gargalo, mas não otimize nada ainda.": {
+    "raw_request": "Meça o throughput atual e descubra se há gargalo, mas não otimize nada ainda.",
+    "actions": [
+      "REVIEW"
+    ],
+    "preservation": [],
+    "performance_dimensions": [
+      "THROUGHPUT"
+    ],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "performance_dimensions.THROUGHPUT": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Aumente o throughput em 25% sem reduzir a precisão do modelo.": {
+    "raw_request": "Aumente o throughput em 25% sem reduzir a precisão do modelo.",
+    "actions": [
+      "OPTIMIZE"
+    ],
+    "preservation": [
+      "QUALITY"
+    ],
+    "performance_dimensions": [
+      "QUALITY_ACCURACY",
+      "THROUGHPUT"
+    ],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.OPTIMIZE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.QUALITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "performance_dimensions.THROUGHPUT": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "performance_dimensions.QUALITY_ACCURACY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Corte pela metade o custo por execução sem piorar a qualidade da resposta.": {
+    "raw_request": "Corte pela metade o custo por execução sem piorar a qualidade da resposta.",
+    "actions": [
+      "OPTIMIZE"
+    ],
+    "preservation": [
+      "QUALITY"
+    ],
+    "performance_dimensions": [
+      "FINANCIAL_COST",
+      "QUALITY_ACCURACY"
+    ],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.OPTIMIZE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.QUALITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "performance_dimensions.FINANCIAL_COST": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "performance_dimensions.QUALITY_ACCURACY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Responda ao e-mail mais recente do fornecedor mantendo o contexto da conversa.": {
+    "raw_request": "Responda ao e-mail mais recente do fornecedor mantendo o contexto da conversa.",
+    "actions": [
+      "OPERATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "EMAIL"
+    ],
+    "execution": [
+      "STATEFUL"
+    ],
+    "capabilities": [
+      "EMAIL_READ",
+      "EMAIL_WRITE",
+      "PERSISTENT_STATE_READ"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.OPERATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.EMAIL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.STATEFUL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.EMAIL_READ": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.EMAIL_WRITE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.PERSISTENT_STATE_READ": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Mude a reunião já existente para amanhã às 15h; não crie outra.": {
+    "raw_request": "Mude a reunião já existente para amanhã às 15h; não crie outra.",
+    "actions": [
+      "MODIFY",
+      "OPERATE"
+    ],
+    "preservation": [
+      "COMPATIBILITY"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "CALENDAR"
+    ],
+    "execution": [
+      "STATEFUL"
+    ],
+    "capabilities": [
+      "CALENDAR_READ",
+      "CALENDAR_WRITE"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.OPERATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.COMPATIBILITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.CALENDAR": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.STATEFUL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.CALENDAR_READ": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.CALENDAR_WRITE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Prepare a exclusão de todos os registros, mas aguarde meu ok antes de executar.": {
+    "raw_request": "Prepare a exclusão de todos os registros, mas aguarde meu ok antes de executar.",
+    "actions": [
+      "OPERATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "DATABASE"
+    ],
+    "execution": [
+      "HUMAN_APPROVAL",
+      "STATEFUL"
+    ],
+    "capabilities": [
+      "AUTHORIZATION",
+      "EXTERNAL_WRITE",
+      "HUMAN_APPROVAL"
+    ],
+    "risks": {
+      "REVERSIBILITY": 4,
+      "DATA_LOSS": 4
+    },
+    "feature_evidence": {
+      "actions.OPERATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.DATABASE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.STATEFUL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.HUMAN_APPROVAL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.EXTERNAL_WRITE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.AUTHORIZATION": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.HUMAN_APPROVAL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.REVERSIBILITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.DATA_LOSS": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Publique o vídeo apenas se a conta estiver conectada e eu tiver autorizado a postagem.": {
+    "raw_request": "Publique o vídeo apenas se a conta estiver conectada e eu tiver autorizado a postagem.",
+    "actions": [
+      "OPERATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "ACCOUNT",
+      "PUBLISHING"
+    ],
+    "execution": [
+      "STATEFUL"
+    ],
+    "capabilities": [
+      "AUTHORIZATION",
+      "CONNECTION_STATE",
+      "EXTERNAL_WRITE"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.OPERATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.PUBLISHING": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.ACCOUNT": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.STATEFUL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.CONNECTION_STATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.AUTHORIZATION": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.EXTERNAL_WRITE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Crie uma função que normalize um nome para minúsculas.": {
+    "raw_request": "Crie uma função que normalize um nome para minúsculas.",
+    "actions": [
+      "CREATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.CREATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Use cinco agentes para criar uma função que some dois números.": {
+    "raw_request": "Use cinco agentes para criar uma função que some dois números.",
+    "actions": [
+      "CREATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "EXPLICIT_MULTI_AGENT"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.CREATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.EXPLICIT_MULTI_AGENT": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Faça revisão independente de arquitetura e segurança antes de liberar o sistema de pagamentos.": {
+    "raw_request": "Faça revisão independente de arquitetura e segurança antes de liberar o sistema de pagamentos.",
+    "actions": [
+      "REVIEW"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "INDEPENDENT_REVIEW",
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {
+      "SECURITY": 3,
+      "FINANCIAL": 4
+    },
+    "feature_evidence": {
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.INDEPENDENT_REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.SECURITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.FINANCIAL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Separe persistência, HTTP e regras de negócio em limites claros, preservando o comportamento externo.": {
+    "raw_request": "Separe persistência, HTTP e regras de negócio em limites claros, preservando o comportamento externo.",
+    "actions": [
+      "MODIFY"
+    ],
+    "preservation": [
+      "BEHAVIOR"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [
+      "BOUNDARIES",
+      "CHANGE"
+    ],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.BEHAVIOR": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.BOUNDARIES": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.CHANGE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Migre gradualmente para a nova arquitetura sem quebrar consumidores antigos.": {
+    "raw_request": "Migre gradualmente para a nova arquitetura sem quebrar consumidores antigos.",
+    "actions": [
+      "DESIGN",
+      "MODIFY"
+    ],
+    "preservation": [
+      "COMPATIBILITY"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [
+      "CHANGE",
+      "DESIGN_BEFORE_BUILD",
+      "MIGRATION"
+    ],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.DESIGN": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.COMPATIBILITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.MIGRATION": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.CHANGE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.DESIGN_BEFORE_BUILD": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Analise o CSV e identifique os principais fatores associados ao churn.": {
+    "raw_request": "Analise o CSV e identifique os principais fatores associados ao churn.",
+    "actions": [
+      "ANALYZE_DATA"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "FILES"
+    ],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [
+      "FILE_READ"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.ANALYZE_DATA": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.FILES": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.FILE_READ": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Reconstrua a cronologia do processo e diferencie fato documental de avaliação técnica, com rastreabilidade.": {
+    "raw_request": "Reconstrua a cronologia do processo e diferencie fato documental de avaliação técnica, com rastreabilidade.",
+    "actions": [
+      "ANALYZE_EVIDENCE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [
+      "TRACEABLE"
+    ],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {
+      "LEGAL_REGULATORY": 3
+    },
+    "feature_evidence": {
+      "actions.ANALYZE_EVIDENCE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "evidence_policy.TRACEABLE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.LEGAL_REGULATORY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Pesquise uma tendência atual, confirme os fatos principais e depois escreva o roteiro do Short.": {
+    "raw_request": "Pesquise uma tendência atual, confirme os fatos principais e depois escreva o roteiro do Short.",
+    "actions": [
+      "CREATE",
+      "RESEARCH"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [
+      "CURRENT_EXTERNAL"
+    ],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [
+      "WEB_CURRENT_EVIDENCE"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.RESEARCH": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.CREATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "evidence_policy.CURRENT_EXTERNAL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.WEB_CURRENT_EVIDENCE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "A cena 4 mostra a fronteira no lugar errado. Corrija só essa cena e valide de novo o restante aprovado.": {
+    "raw_request": "A cena 4 mostra a fronteira no lugar errado. Corrija só essa cena e valide de novo o restante aprovado.",
+    "actions": [
+      "DIAGNOSE",
+      "MODIFY"
+    ],
+    "preservation": [
+      "BEHAVIOR"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.DIAGNOSE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.BEHAVIOR": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Revise o vídeo pronto quanto a factualidade, continuidade, retenção e áudio; não gere nada novo.": {
+    "raw_request": "Revise o vídeo pronto quanto a factualidade, continuidade, retenção e áudio; não gere nada novo.",
+    "actions": [
+      "REVIEW"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Projete e implemente autenticação com MFA e recuperação de conta, com revisão de segurança separada.": {
+    "raw_request": "Projete e implemente autenticação com MFA e recuperação de conta, com revisão de segurança separada.",
+    "actions": [
+      "CREATE",
+      "DESIGN"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [
+      "DESIGN_BEFORE_BUILD"
+    ],
+    "external_state": [],
+    "execution": [
+      "INDEPENDENT_REVIEW",
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {
+      "SECURITY": 3
+    },
+    "feature_evidence": {
+      "actions.DESIGN": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "actions.CREATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.DESIGN_BEFORE_BUILD": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.INDEPENDENT_REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.SECURITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Revise o fluxo de login procurando falhas de segurança, mas não implemente correções ainda.": {
+    "raw_request": "Revise o fluxo de login procurando falhas de segurança, mas não implemente correções ainda.",
+    "actions": [
+      "REVIEW"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {
+      "SECURITY": 3
+    },
+    "feature_evidence": {
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.SECURITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Resuma estas 400 páginas em duas páginas sem perder números, fatos ou divergências.": {
+    "raw_request": "Resuma estas 400 páginas em duas páginas sem perder números, fatos ou divergências.",
+    "actions": [
+      "REVIEW"
+    ],
+    "preservation": [
+      "MEANING"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "FILES"
+    ],
+    "execution": [
+      "LARGE_WORKLOAD",
+      "MULTI_STEP"
+    ],
+    "capabilities": [
+      "FILE_READ"
+    ],
+    "risks": {},
+    "feature_evidence": {
+      "actions.REVIEW": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.MEANING": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.FILES": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.LARGE_WORKLOAD": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.FILE_READ": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Melhore nosso agente.": {
+    "raw_request": "Melhore nosso agente.",
+    "actions": [
+      "MODIFY"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [
+      "improvement_dimension"
+    ],
+    "contradictions": []
+  },
+  "Troque toda a implementação, mas mantenha exatamente as mesmas exceções, retornos e API pública.": {
+    "raw_request": "Troque toda a implementação, mas mantenha exatamente as mesmas exceções, retornos e API pública.",
+    "actions": [
+      "MODIFY"
+    ],
+    "preservation": [
+      "API",
+      "BEHAVIOR",
+      "OUTPUT"
+    ],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [
+      "CHANGE"
+    ],
+    "external_state": [],
+    "execution": [
+      "MULTI_STEP"
+    ],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {
+      "actions.MODIFY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.BEHAVIOR": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.API": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "preservation.OUTPUT": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "architecture.CHANGE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.MULTI_STEP": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Quero uma explicação curta do que é cache.": {
+    "raw_request": "Quero uma explicação curta do que é cache.",
+    "actions": [],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [],
+    "execution": [],
+    "capabilities": [],
+    "risks": {},
+    "feature_evidence": {},
+    "unknowns": [],
+    "contradictions": []
+  },
+  "Apague definitivamente os registros sem manter cópia, mas garanta que eu possa restaurar todos eles depois.": {
+    "raw_request": "Apague definitivamente os registros sem manter cópia, mas garanta que eu possa restaurar todos eles depois.",
+    "actions": [
+      "OPERATE"
+    ],
+    "preservation": [],
+    "performance_dimensions": [],
+    "evidence_policy": [],
+    "ui_requirements": [],
+    "architecture": [],
+    "external_state": [
+      "DATABASE"
+    ],
+    "execution": [
+      "STATEFUL"
+    ],
+    "capabilities": [
+      "AUTHORIZATION",
+      "EXTERNAL_WRITE"
+    ],
+    "risks": {
+      "REVERSIBILITY": 4,
+      "DATA_LOSS": 4
+    },
+    "feature_evidence": {
+      "actions.OPERATE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "external_state.DATABASE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "execution.STATEFUL": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.EXTERNAL_WRITE": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "capabilities.AUTHORIZATION": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.REVERSIBILITY": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      },
+      "risks.DATA_LOSS": {
+        "source": "INFERRED",
+        "confidence": 1.0,
+        "evidence_span": null,
+        "rationale": "oracle benchmark annotation"
+      }
+    },
+    "unknowns": [],
+    "contradictions": [
+      "irreversible deletion conflicts with guaranteed restoration"
+    ]
+  }
+}

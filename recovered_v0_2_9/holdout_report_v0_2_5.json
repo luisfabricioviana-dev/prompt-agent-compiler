@@ -1,0 +1,728 @@
+{
+  "suite": "UNSEEN_HOLDOUT_v0.2.5",
+  "router_version": "v0.2.4",
+  "frozen_before_evaluation": true,
+  "post_observation_tuning_allowed": false,
+  "metrics": {
+    "routing_precision": 0.8,
+    "routing_recall": 0.3333,
+    "overengineering_rate": 0.04,
+    "gate_recall": 0.1351,
+    "complexity_accuracy": 0.3,
+    "case_pass_rate": 0.2,
+    "cases": 50
+  },
+  "cases": [
+    {
+      "id": "U01",
+      "category": "trivial",
+      "input": "Qual é a diferença entre uma lista e uma tupla em Python?",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U02",
+      "category": "simple_build",
+      "input": "Faça uma função que devolva o menor de três números.",
+      "selected": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U03",
+      "category": "build_paraphrase",
+      "input": "Escreva um validador de CPF reutilizável e inclua exemplos de uso.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P01']",
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U04",
+      "category": "debug_paraphrase",
+      "input": "Depois da última alteração o importador parou de funcionar e encerra antes de ler a segunda linha. Encontre a causa.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N2",
+      "score": 2,
+      "errors": [
+        "missing required patterns: ['P03']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U05",
+      "category": "ui_error_semantic_role",
+      "input": "Monte uma tela de login que mostre mensagem de erro abaixo do campo e permita navegação completa pelo teclado.",
+      "selected": [
+        "P03"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [
+        "missing required patterns: ['P01', 'P08']",
+        "forbidden patterns selected: ['P03']",
+        "missing gates: ['ACCESSIBILITY_GATE']",
+        "unexpected selected patterns: ['P03']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U06",
+      "category": "refactor_paraphrase",
+      "input": "Simplifique este módulo mantendo as mesmas entradas, saídas e exceções públicas.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P02']",
+        "missing gates: ['REGRESSION_GATE']",
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U07",
+      "category": "clean_architecture",
+      "input": "Separe domínio, persistência e transporte deste serviço sem modificar o contrato externo.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P02', 'P06']",
+        "missing gates: ['REGRESSION_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U08",
+      "category": "throughput_optimization",
+      "input": "Aumente o throughput deste consumidor em 40% sem elevar o uso de memória.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P05']",
+        "missing gates: ['BASELINE_GATE', 'REGRESSION_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U09",
+      "category": "cost_optimization",
+      "input": "Corte o custo computacional deste pipeline preservando a qualidade das previsões.",
+      "selected": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1",
+      "score": 2,
+      "errors": [
+        "missing required patterns: ['P05']",
+        "missing gates: ['BASELINE_GATE']",
+        "complexity N1 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U10",
+      "category": "profiling_only",
+      "input": "Faça profiling deste serviço para saber onde está o gargalo; por enquanto não altere nada.",
+      "selected": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1",
+      "score": 2,
+      "errors": [
+        "missing gates: ['BASELINE_GATE']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U11",
+      "category": "production_ui_paraphrase",
+      "input": "Monte uma tela de cadastro adaptável a celular e desktop, com foco visível, labels e leitura correta por leitor de tela.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P01', 'P08']",
+        "missing gates: ['ACCESSIBILITY_GATE', 'RESPONSIVE_GATE']",
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U12",
+      "category": "simple_ui",
+      "input": "Adicione um componente que exiba um badge com a quantidade de notificações.",
+      "selected": [
+        "P01",
+        "P08"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U13",
+      "category": "system_design_paraphrase",
+      "input": "Defina componentes, contratos e fluxo de dados para um serviço de ingestão em tempo real antes de começar a codificar.",
+      "selected": [
+        "P08"
+      ],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P04']",
+        "complexity N0 not in ['N2', 'N3']",
+        "unexpected selected patterns: ['P08']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U14",
+      "category": "architecture_comparison",
+      "input": "Compare event sourcing, CRUD tradicional e CQRS para este cenário; não desenhe nem altere a arquitetura ainda.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U15",
+      "category": "independent_review",
+      "input": "Quero uma proposta de arquitetura para um sistema financeiro e uma segunda revisão independente focada em segurança e falhas.",
+      "selected": [
+        "P07"
+      ],
+      "gates": [
+        "INDEPENDENT_REVIEW_GATE"
+      ],
+      "complexity": "N3",
+      "score": 7,
+      "errors": [
+        "missing required patterns: ['P04']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U16",
+      "category": "multiagent_overengineering",
+      "input": "Divida entre quatro agentes a tarefa de criar uma função que concatene duas strings.",
+      "selected": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U17",
+      "category": "document_only_paraphrase",
+      "input": "Use apenas os anexos desta conversa para determinar fatos confirmados, dúvidas e pendências; não complemente com outras fontes.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['EVIDENCE_GATE', 'TRACEABILITY_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U18",
+      "category": "high_stakes_evidence",
+      "input": "Revise o parecer e os anexos, ligue cada conclusão ao respectivo documento e destaque qualquer afirmação sem suporte.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [
+        "missing gates: ['EVIDENCE_GATE', 'TRACEABILITY_GATE']",
+        "complexity N1 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U19",
+      "category": "data_analysis_paraphrase",
+      "input": "Examine a planilha de clientes, descubra quais variáveis estão mais associadas ao cancelamento e recomende as três ações prioritárias.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U20",
+      "category": "data_summary",
+      "input": "Calcule as métricas principais da tabela e explique os dois movimentos mais relevantes.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U21",
+      "category": "calendar_state",
+      "input": "Mova a reunião com a equipe para sexta-feira às 14h, mantendo os mesmos convidados.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U22",
+      "category": "email_state",
+      "input": "Encaminhe o e-mail do fornecedor para o gerente e preserve o histórico da mensagem.",
+      "selected": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N2",
+      "score": 7,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U23",
+      "category": "publishing_state",
+      "input": "Agende a postagem para amanhã de manhã na conta já conectada e não publique uma segunda cópia.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N2",
+      "score": 6,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U24",
+      "category": "destructive_paraphrase",
+      "input": "Limpe definitivamente todos os registros de teste do banco, sem possibilidade de restauração.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['DESTRUCTIVE_ACTION_GATE']",
+        "complexity N0 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U25",
+      "category": "human_approval_paraphrase",
+      "input": "Prepare tudo, mas não aplique a mudança até eu responder explicitamente que está aprovado.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['HUMAN_APPROVAL_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U26",
+      "category": "current_research_paraphrase",
+      "input": "Levante as soluções mais recentes para observabilidade de agentes e compare preço, maturidade e integrações.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U27",
+      "category": "research_build_paraphrase",
+      "input": "Descubra qual biblioteca OAuth atual atende melhor aos requisitos e integre-a no projeto com testes.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P01']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U28",
+      "category": "ambiguous_improvement",
+      "input": "Aprimore o projeto.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U29",
+      "category": "preserving_rewrite",
+      "input": "Refaça a implementação do zero, porém mantenha o output byte a byte idêntico para os mesmos inputs.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P02']",
+        "missing gates: ['REGRESSION_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U30",
+      "category": "large_summary_paraphrase",
+      "input": "Condense um dossiê de 300 folhas em três páginas sem perder datas, números nem divergências entre fontes.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U31",
+      "category": "youtube_build_paraphrase",
+      "input": "Produza um Short de 45 segundos com hook, narração, sequência de cenas, prompts visuais e CTA.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P01']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U32",
+      "category": "youtube_review",
+      "input": "Audite o vídeo final antes do upload: cheque retenção, claims, mapa, continuidade, voz e mixagem.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [
+        "complexity N1 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U33",
+      "category": "youtube_local_repair",
+      "input": "O mapa da cena 2 está geograficamente incorreto; todo o restante está aprovado. Repare só esse trecho e revalide o resultado.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P03']",
+        "complexity N0 not in ['N1', 'N2']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U34",
+      "category": "laf_documentary",
+      "input": "Monte o histórico processual a partir das peças do processo, separe constatação documental de juízo técnico e indique lacunas de prova.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['EVIDENCE_GATE', 'TRACEABILITY_GATE']",
+        "complexity N0 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U35",
+      "category": "laf_normative",
+      "input": "Confronte a demanda administrativa com a documentação e a base normativa fornecida e mostre a consequência técnica de cada pendência.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['EVIDENCE_GATE', 'TRACEABILITY_GATE']",
+        "complexity N0 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U36",
+      "category": "security_review_paraphrase",
+      "input": "Faça um threat model do fluxo de login e procure caminhos de abuso; não implemente correções nesta etapa.",
+      "selected": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 1,
+      "errors": [
+        "forbidden patterns selected: ['P01']",
+        "complexity N1 not in ['N2', 'N3']",
+        "unexpected selected patterns: ['P01']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U37",
+      "category": "security_build",
+      "input": "Implemente login com segundo fator, expiração de sessão e recuperação segura de conta, incluindo revisão antes do release.",
+      "selected": [
+        "P01"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 3,
+      "errors": [
+        "missing gates: ['INDEPENDENT_REVIEW_GATE']",
+        "complexity N1 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U38",
+      "category": "rollback_state",
+      "input": "Faça rollback da última implantação e confirme que a versão anterior voltou a atender o tráfego.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['REGRESSION_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U39",
+      "category": "quality_preserving_perf",
+      "input": "Aumente a vazão do modelo sem reduzir o F1 e sem ultrapassar o orçamento atual de GPU.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing required patterns: ['P05']",
+        "missing gates: ['BASELINE_GATE', 'REGRESSION_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U40",
+      "category": "mixed_debug_perf",
+      "input": "Resolva a exceção atual e depois confira se o tempo de resposta continua dentro do valor anterior.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N2",
+      "score": 2,
+      "errors": [
+        "missing required patterns: ['P03']",
+        "missing gates: ['BASELINE_GATE', 'REGRESSION_GATE']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U41",
+      "category": "file_dependency",
+      "input": "Use os arquivos anexados para gerar uma síntese e cite de qual arquivo veio cada afirmação material.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['EVIDENCE_GATE', 'TRACEABILITY_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U42",
+      "category": "authorization_state",
+      "input": "Antes de postar no canal, confirme a conexão da conta e só então faça a publicação.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N2",
+      "score": 2,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U43",
+      "category": "review_only",
+      "input": "Revise esta implementação procurando problemas de manutenção e edge cases, mas não altere o código.",
+      "selected": [],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1",
+      "score": 2,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U44",
+      "category": "design_ui",
+      "input": "Projete a arquitetura do painel administrativo e depois implemente a interface responsiva e acessível.",
+      "selected": [
+        "P01",
+        "P04",
+        "P08"
+      ],
+      "gates": [
+        "ACCESSIBILITY_GATE",
+        "RESPONSIVE_GATE"
+      ],
+      "complexity": "N2",
+      "score": 6,
+      "errors": [
+        "complexity N2 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U45",
+      "category": "refactor_boundaries",
+      "input": "Reorganize o serviço em módulos de domínio, aplicação e infraestrutura mantendo a API atual intacta.",
+      "selected": [
+        "P02",
+        "P06"
+      ],
+      "gates": [],
+      "complexity": "N1",
+      "score": 0,
+      "errors": [
+        "missing gates: ['REGRESSION_GATE']",
+        "complexity N1 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U46",
+      "category": "destructive_data",
+      "input": "Remova permanentemente todas as contas de demonstração e seus dados associados.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['DESTRUCTIVE_ACTION_GATE']",
+        "complexity N0 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U47",
+      "category": "fresh_evidence",
+      "input": "Verifique quais modelos de vídeo receberam atualizações nas últimas semanas e compare as capacidades anunciadas com fontes atuais.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N2",
+      "score": 1,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "id": "U48",
+      "category": "parallel_review",
+      "input": "Peça três avaliações independentes da mesma proposta e produza uma síntese final apontando concordâncias e conflitos.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [
+        "missing gates: ['INDEPENDENT_REVIEW_GATE']",
+        "complexity N0 not in ['N2', 'N3']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U49",
+      "category": "critical_migration",
+      "input": "Migre o núcleo de pagamentos por etapas, sem quebrar compatibilidade, com checagem independente de segurança e desempenho antes do corte final.",
+      "selected": [
+        "P02"
+      ],
+      "gates": [
+        "REGRESSION_GATE"
+      ],
+      "complexity": "N1",
+      "score": 4,
+      "errors": [
+        "missing required patterns: ['P04']",
+        "missing gates: ['INDEPENDENT_REVIEW_GATE']",
+        "complexity N1 not in ['N3', 'N4']"
+      ],
+      "pass": false
+    },
+    {
+      "id": "U50",
+      "category": "direct_language",
+      "input": "Traduza 'bom dia' para inglês.",
+      "selected": [],
+      "gates": [],
+      "complexity": "N0",
+      "score": 0,
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

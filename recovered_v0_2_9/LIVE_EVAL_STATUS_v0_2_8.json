@@ -1,0 +1,7 @@
+{
+  "version": "0.2.8",
+  "live_eval_run": false,
+  "status": "BLOCKED",
+  "reason": "openai SDK is not installed in this runtime",
+  "model": "gpt-5.6-terra"
+}

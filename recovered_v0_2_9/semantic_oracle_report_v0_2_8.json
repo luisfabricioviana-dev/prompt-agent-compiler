@@ -1,0 +1,693 @@
+{
+  "cases": 31,
+  "stage_metrics": {
+    "provider_success_rate": 1.0,
+    "contract_valid_rate": 1.0,
+    "semantic_exact_rate": 1.0,
+    "causal_policy_pass_rate": 1.0,
+    "end_to_end_pass_rate": 1.0,
+    "policy_cases_with_exact_semantics": 31
+  },
+  "semantic_metrics": {
+    "groups": {
+      "actions": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "preservation": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "performance_dimensions": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "evidence_policy": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ui_requirements": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "architecture": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "external_state": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "execution": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "capabilities": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "risk": {
+      "exact_accuracy": 1.0,
+      "mae": 0.0,
+      "critical_recall": 1.0
+    },
+    "evidence_span_grounding": 1.0,
+    "feature_evidence_coverage": 1.0,
+    "confidence_calibration": {
+      "items": 139,
+      "brier": 0.0,
+      "ece": 0.0
+    },
+    "contradiction_accuracy": 1.0
+  },
+  "error_counts": {},
+  "owner_counts": {},
+  "causal_error_counts": {},
+  "details": [
+    {
+      "id": "S01",
+      "request": "A tela precisa mostrar loading, vazio, erro e sucesso, funcionar no celular e permitir navegação por teclado.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P01",
+          "P08"
+        ],
+        "gates": [
+          "ACCESSIBILITY_GATE",
+          "RESPONSIVE_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S02",
+      "request": "O processamento parou de funcionar depois da última mudança; descubra a causa sem mexer no restante.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P03"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N1"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S03",
+      "request": "Faça a saída continuar byte a byte idêntica, mas reduza o pico de memória.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02",
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S04",
+      "request": "Compare três arquiteturas possíveis e recomende uma; não altere o sistema ainda.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S05",
+      "request": "Redesenhe a arquitetura interna sem quebrar a API nem a compatibilidade com clientes atuais.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S06",
+      "request": "Use somente os anexos para dizer o que está comprovado e cite de onde vem cada conclusão.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S07",
+      "request": "Veja o que mudou hoje nas regras do serviço e compare com a documentação anterior.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S08",
+      "request": "Meça o throughput atual e descubra se há gargalo, mas não otimize nada ainda.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE"
+        ],
+        "complexity": "N1"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S09",
+      "request": "Aumente o throughput em 25% sem reduzir a precisão do modelo.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S10",
+      "request": "Corte pela metade o custo por execução sem piorar a qualidade da resposta.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P05"
+        ],
+        "gates": [
+          "BASELINE_GATE",
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S11",
+      "request": "Responda ao e-mail mais recente do fornecedor mantendo o contexto da conversa.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S12",
+      "request": "Mude a reunião já existente para amanhã às 15h; não crie outra.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S13",
+      "request": "Prepare a exclusão de todos os registros, mas aguarde meu ok antes de executar.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE",
+          "HUMAN_APPROVAL_GATE"
+        ],
+        "complexity": "N3"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S14",
+      "request": "Publique o vídeo apenas se a conta estiver conectada e eu tiver autorizado a postagem.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S15",
+      "request": "Crie uma função que normalize um nome para minúsculas.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S16",
+      "request": "Use cinco agentes para criar uma função que some dois números.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N1"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S17",
+      "request": "Faça revisão independente de arquitetura e segurança antes de liberar o sistema de pagamentos.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N3"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S18",
+      "request": "Separe persistência, HTTP e regras de negócio em limites claros, preservando o comportamento externo.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02",
+          "P06"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S19",
+      "request": "Migre gradualmente para a nova arquitetura sem quebrar consumidores antigos.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S20",
+      "request": "Analise o CSV e identifique os principais fatores associados ao churn.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S21",
+      "request": "Reconstrua a cronologia do processo e diferencie fato documental de avaliação técnica, com rastreabilidade.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [
+          "EVIDENCE_GATE",
+          "TRACEABILITY_GATE"
+        ],
+        "complexity": "N3"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S22",
+      "request": "Pesquise uma tendência atual, confirme os fatos principais e depois escreva o roteiro do Short.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P01"
+        ],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S23",
+      "request": "A cena 4 mostra a fronteira no lugar errado. Corrija só essa cena e valide de novo o restante aprovado.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02",
+          "P03"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S24",
+      "request": "Revise o vídeo pronto quanto a factualidade, continuidade, retenção e áudio; não gere nada novo.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S25",
+      "request": "Projete e implemente autenticação com MFA e recuperação de conta, com revisão de segurança separada.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P01",
+          "P04",
+          "P07"
+        ],
+        "gates": [
+          "INDEPENDENT_REVIEW_GATE"
+        ],
+        "complexity": "N3"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S26",
+      "request": "Revise o fluxo de login procurando falhas de segurança, mas não implemente correções ainda.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N1"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S27",
+      "request": "Resuma estas 400 páginas em duas páginas sem perder números, fatos ou divergências.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S28",
+      "request": "Melhore nosso agente.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N1"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S29",
+      "request": "Troque toda a implementação, mas mantenha exatamente as mesmas exceções, retornos e API pública.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [
+          "P02",
+          "P04"
+        ],
+        "gates": [
+          "REGRESSION_GATE"
+        ],
+        "complexity": "N2"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S30",
+      "request": "Quero uma explicação curta do que é cache.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [],
+        "complexity": "N0"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    },
+    {
+      "id": "S31",
+      "request": "Apague definitivamente os registros sem manter cópia, mas garanta que eu possa restaurar todos eles depois.",
+      "semantic_exact": true,
+      "errors": [],
+      "route": {
+        "selected": [],
+        "gates": [
+          "DESTRUCTIVE_ACTION_GATE"
+        ],
+        "complexity": "N3"
+      },
+      "repair_plan": {
+        "minimum_scope": "none",
+        "components_to_change": [],
+        "actions": [],
+        "reverification_scope": "none"
+      }
+    }
+  ]
+}

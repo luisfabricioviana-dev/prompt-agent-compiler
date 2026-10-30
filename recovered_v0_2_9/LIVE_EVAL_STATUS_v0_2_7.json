@@ -1,0 +1,10 @@
+{
+  "version": "0.2.7",
+  "model_provider_adapter": "OpenAI Responses API Structured Outputs",
+  "default_model": "gpt-5.6-terra",
+  "openai_sdk_installed": false,
+  "api_credential_present_in_runtime": false,
+  "live_model_backed_semantic_eval": "NOT_RUN_MISSING_SDK_AND_CREDENTIAL",
+  "oracle_harness_eval": "RUN",
+  "interpretation": "Provider adapter is implemented and verified with injected clients; live semantic generalization requires installing the SDK and configuring authentication."
+}

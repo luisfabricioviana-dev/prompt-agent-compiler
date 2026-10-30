@@ -1,0 +1,264 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "CREATE",
+          "MODIFY",
+          "DIAGNOSE",
+          "REVIEW",
+          "RESEARCH",
+          "ANALYZE_EVIDENCE",
+          "ANALYZE_DATA",
+          "DESIGN",
+          "OPTIMIZE",
+          "OPERATE"
+        ]
+      }
+    },
+    "preservation": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "BEHAVIOR",
+          "API",
+          "OUTPUT",
+          "MEANING",
+          "QUALITY",
+          "COMPATIBILITY"
+        ]
+      }
+    },
+    "performance_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "LATENCY",
+          "THROUGHPUT",
+          "MEMORY",
+          "COMPUTE",
+          "FINANCIAL_COST",
+          "TOKEN_COST",
+          "QUALITY_ACCURACY",
+          "RESOURCE_UTILIZATION",
+          "GENERAL"
+        ]
+      }
+    },
+    "evidence_policy": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "SUPPLIED_ONLY",
+          "CURRENT_EXTERNAL",
+          "TRACEABLE"
+        ]
+      }
+    },
+    "ui_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "UI",
+          "PRODUCTION",
+          "ACCESSIBILITY",
+          "RESPONSIVE",
+          "STATEFUL_UI"
+        ]
+      }
+    },
+    "architecture": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "DESIGN_BEFORE_BUILD",
+          "CHANGE",
+          "BOUNDARIES",
+          "MIGRATION"
+        ]
+      }
+    },
+    "external_state": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "EMAIL",
+          "CALENDAR",
+          "PUBLISHING",
+          "DATABASE",
+          "FILES",
+          "ACCOUNT",
+          "OTHER"
+        ]
+      }
+    },
+    "execution": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "MULTI_STEP",
+          "LARGE_WORKLOAD",
+          "PARALLELIZABLE",
+          "INDEPENDENT_REVIEW",
+          "EXPLICIT_MULTI_AGENT",
+          "HUMAN_APPROVAL",
+          "STATEFUL"
+        ]
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "WEB_CURRENT_EVIDENCE",
+          "FILE_READ",
+          "EMAIL_READ",
+          "EMAIL_WRITE",
+          "CALENDAR_READ",
+          "CALENDAR_WRITE",
+          "EXTERNAL_WRITE",
+          "AUTHORIZATION",
+          "CONNECTION_STATE",
+          "HUMAN_APPROVAL",
+          "PERSISTENT_STATE_READ",
+          "PERSISTENT_STATE_WRITE"
+        ]
+      }
+    },
+    "risks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "REVERSIBILITY": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "BLAST_RADIUS": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "FINANCIAL": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "LEGAL_REGULATORY": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "SECURITY": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "DATA_LOSS": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "REPUTATIONAL": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        }
+      },
+      "required": [
+        "REVERSIBILITY",
+        "BLAST_RADIUS",
+        "FINANCIAL",
+        "LEGAL_REGULATORY",
+        "SECURITY",
+        "DATA_LOSS",
+        "REPUTATIONAL"
+      ]
+    },
+    "feature_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "feature": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "EXPLICIT",
+              "INFERRED",
+              "UNKNOWN",
+              "CONTRADICTION"
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "evidence_span": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rationale": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "feature",
+          "source",
+          "confidence",
+          "evidence_span",
+          "rationale"
+        ]
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "actions",
+    "preservation",
+    "performance_dimensions",
+    "evidence_policy",
+    "ui_requirements",
+    "architecture",
+    "external_state",
+    "execution",
+    "capabilities",
+    "risks",
+    "feature_evidence",
+    "unknowns",
+    "contradictions"
+  ]
+}
