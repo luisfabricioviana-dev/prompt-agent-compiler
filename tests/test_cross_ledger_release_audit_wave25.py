@@ -14,6 +14,7 @@ from contracts.release_reconciliation import ObserverConfirmation
 from contracts.governed_release_recovery import GovernedRecovery
 from contracts.rea_release_reconciliation import DestinationObservation, reconcile_delivery
 from contracts.cross_ledger_release_audit import audit_cross_ledger
+from contracts.cross_ledger_binding import CrossLedgerBindingVerifier, sign_binding_fixture
 
 KEY = b"observer-key-for-wave25-fixtures-1234"
 OBS = "trusted-observer"
@@ -41,13 +42,17 @@ class CrossLedgerTests(unittest.TestCase):
         self.ledger.transition(self.statement, PAYLOAD, expected="RESERVED", target="DISPATCHING")
         self.ledger.transition(self.statement, PAYLOAD, expected="DISPATCHING", target="UNCERTAIN")
         self.auth = ObserverAuthenticator(observer_id=OBS, verification_key=KEY)
+        self.binding_verifier = CrossLedgerBindingVerifier(trusted_issuer="issuer", verification_key=KEY)
+        self.binding = sign_binding_fixture(key=KEY, issuer="issuer", nonce="nonce",
+            release_id=RELEASE, artifact_sha256=DIGEST, destination_id=DEST)
         self.recovery = GovernedRecovery(ledger=self.ledger, authenticator=self.auth)
 
     def args(self):
         return dict(ledger=self.ledger, rea_conn=self.db, recovery=self.recovery,
                     issuer="issuer", nonce="nonce", release_id=RELEASE,
                     artifact_sha256=DIGEST, destination_id=DEST,
-                    observer_id=OBS, observer_key=KEY)
+                    observer_id=OBS, observer_key=KEY,
+                    binding=self.binding, binding_verifier=self.binding_verifier)
 
     def observe_replay(self, **data):
         obs = ObserverConfirmation(**data, delivery_id="delivery-25")
@@ -89,7 +94,7 @@ class CrossLedgerTests(unittest.TestCase):
         self.confirm_both()
         args = self.args()
         args["artifact_sha256"] = "0" * 64
-        self.assertEqual(audit_cross_ledger(**args).reason, "audit_artifact_digest_mismatch")
+        self.assertEqual(audit_cross_ledger(**args).reason, "cross_ledger_binding_unverified")
 
     def test_cross_ledger_destination_mismatch_blocks(self):
         self.confirm_both()
