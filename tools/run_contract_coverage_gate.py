@@ -15,12 +15,16 @@ if str(ROOT) not in sys.path:
 
 from contracts.coverage_gate import (
     coverage_percent,
+    enforce_file_minimums,
     enforce_minimum_coverage,
     executable_statement_lines,
 )
 
 CONTRACTS = ROOT / "contracts"
 EXCLUDED_FILES = {"coverage_gate.py"}
+CRITICAL_FILE_MINIMUMS = {
+    "contracts/rea_release_authority.py": 90.0,
+}
 
 
 def _run_tests() -> unittest.result.TestResult:
@@ -74,6 +78,9 @@ def main() -> int:
         executed_lines.update((relative, line) for line in executed)
 
     overall = coverage_percent(executed_lines, total_lines)
+    per_file_percent = {
+        path: details["percent"] for path, details in per_file.items()
+    }
     report = {
         "metric": "stdlib_trace_ast_statement_line_proxy",
         "minimum": args.minimum,
@@ -81,10 +88,12 @@ def main() -> int:
         "executed_statement_lines": len(executed_lines),
         "executable_statement_lines": len(total_lines),
         "excluded_files": sorted(EXCLUDED_FILES),
+        "critical_file_minimums": dict(CRITICAL_FILE_MINIMUMS),
         "files": per_file,
     }
     print(json.dumps(report, indent=2, sort_keys=True))
     enforce_minimum_coverage(overall, args.minimum)
+    enforce_file_minimums(per_file_percent, CRITICAL_FILE_MINIMUMS)
     return 0
 
 

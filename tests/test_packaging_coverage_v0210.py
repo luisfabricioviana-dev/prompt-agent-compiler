@@ -5,6 +5,7 @@ import unittest
 
 from contracts.coverage_gate import (
     coverage_percent,
+    enforce_file_minimums,
     enforce_minimum_coverage,
     executable_statement_lines,
 )
@@ -65,6 +66,30 @@ class CoverageGateUnitTests(unittest.TestCase):
             enforce_minimum_coverage(69.99, 70.0)
 
         self.assertEqual(enforce_minimum_coverage(70.0, 70.0), 70.0)
+
+
+    def test_critical_file_minimums_fail_closed(self):
+        report = {
+            "contracts/rea_release_authority.py": 89.99,
+            "contracts/runtime_state.py": 100.0,
+        }
+        with self.assertRaisesRegex(
+            RuntimeError,
+            "critical_file_coverage_below_threshold:"
+            "contracts/rea_release_authority.py:89.99<90.00",
+        ):
+            enforce_file_minimums(
+                report,
+                {"contracts/rea_release_authority.py": 90.0},
+            )
+
+        self.assertEqual(
+            enforce_file_minimums(
+                {"contracts/rea_release_authority.py": 90.0},
+                {"contracts/rea_release_authority.py": 90.0},
+            ),
+            {"contracts/rea_release_authority.py": 90.0},
+        )
 
     def test_ci_runs_contract_statement_coverage_gate(self):
         workflow = (
