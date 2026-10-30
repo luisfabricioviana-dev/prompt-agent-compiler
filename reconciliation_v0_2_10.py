@@ -185,3 +185,65 @@ def verify_public_safe_recovered_tree(root: str | Path) -> dict:
         "freeze_files_checked": checked,
         "holdout_present": holdout_present,
     }
+
+
+PUBLIC_SAFE_HOLDOUT_SHA256 = (
+    "dcff8740576d0fd870078b6c0fca80e4c027cb8efedf997e0d70126315b33af5"
+)
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def verify_public_safe_recovered_tree(root: Path) -> dict:
+    """Verify the public recovered source without requiring blind holdout bytes."""
+    root = Path(root)
+    reasons: list[str] = []
+    holdout = root / "blind_holdout_v0_2_9.json"
+    holdout_present = holdout.exists()
+    if holdout_present:
+        reasons.append("blind_holdout_present")
+
+    json_artifacts = len(list(root.glob("*.json"))) if root.is_dir() else 0
+    if json_artifacts != 26:
+        reasons.append("public_json_artifact_count_mismatch")
+
+    manifest_path = root / "FREEZE_MANIFEST_v0_2_9.json"
+    freeze_files_checked = 0
+    if not manifest_path.is_file():
+        reasons.append("freeze_manifest_missing")
+    else:
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            files = manifest["files"]
+        except (OSError, ValueError, KeyError, TypeError):
+            reasons.append("freeze_manifest_invalid")
+        else:
+            if files.get("blind_holdout_v0_2_9.json") != PUBLIC_SAFE_HOLDOUT_SHA256:
+                reasons.append("holdout_hash_metadata_mismatch")
+            for name, expected in files.items():
+                if name == "blind_holdout_v0_2_9.json":
+                    continue
+                path = root / name
+                if not path.is_file():
+                    reasons.append(f"frozen_file_missing:{name}")
+                    continue
+                if _sha256_file(path) != expected:
+                    reasons.append(f"frozen_file_drift:{name}")
+                    continue
+                freeze_files_checked += 1
+            if freeze_files_checked != 11:
+                reasons.append("public_freeze_file_count_mismatch")
+
+    return {
+        "valid": not reasons,
+        "reasons": reasons,
+        "holdout_present": holdout_present,
+        "json_artifacts": json_artifacts,
+        "freeze_files_checked": freeze_files_checked,
+    }
