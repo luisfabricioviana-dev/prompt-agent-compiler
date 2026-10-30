@@ -2,7 +2,7 @@
 import unittest
 from contracts.rea_release_node import ReleaseNode
 from contracts.rea_pipeline import PipelineResult
-from tests.test_rea_release_node_v0210 import FakeSignedReleaseRunner, make_spec, pass_review
+from test_rea_release_node_v0210 import FakeSignedReleaseRunner, make_spec, pass_review
 
 class AdmissionTests(unittest.TestCase):
     def kwargs(self):
