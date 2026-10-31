@@ -38,7 +38,7 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                 if offset < 0 or offset + 30 > len(raw):
                     return {"status": "BLOCK", "violations": ["invalid_zip_local_header"]}
                 local = raw[offset:offset + 30]
-                if local[:4] != b'PK\x03\x04':
+                if local[:4] != bytes((80, 75, 3, 4)):
                     return {"status": "BLOCK", "violations": ["invalid_zip_local_header"]}
                 local_method = int.from_bytes(local[8:10], 'little')
                 name_size = int.from_bytes(local[26:28], 'little')
