@@ -16,6 +16,25 @@ from tools.audit_postrun_release_archive import audit_postrun_archive
 REPOSITORY = "luisfabricioviana-dev/prompt-agent-compiler"
 ARTIFACT_NAME = "release-gate-differential-evidence"
 
+def parse_archive_content_length(headers):
+    """Return an integer, None for absent, or raise ValueError on ambiguity."""
+    if hasattr(headers, "get_all"):
+        values = headers.get_all("Content-Length", [])
+    else:
+        values = [headers.get("Content-Length")] if headers.get("Content-Length") is not None else []
+    if len(values) > 1:
+        raise ValueError("duplicate_content_length")
+    if not values:
+        return None
+    value = values[0]
+    if not isinstance(value, str) or re.fullmatch(r"[0-9]+", value) is None:
+        raise ValueError("malformed_content_length")
+    parsed = int(value)
+    if parsed > 10_000_000:
+        raise ValueError("oversized_content_length")
+    return parsed
+
+
 class SafeArtifactRedirect(HTTPRedirectHandler):
     max_redirections = 3
     max_repeats = 2
@@ -74,10 +93,10 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
             final_url = getattr(handle, "url", None)
             if final_url is not None and urlsplit(final_url).scheme != "https":
                 return {"status": "BLOCK", "violations": ["unexpected_archive_url_scheme"]}
-            declared_length = getattr(handle, "headers", {}).get("Content-Length")
-            if declared_length is not None:
-                if not declared_length.isdecimal() or int(declared_length) > 10_000_000:
-                    return {"status": "BLOCK", "violations": ["invalid_archive_content_length"]}
+            try:
+                declared_length = parse_archive_content_length(getattr(handle, "headers", {}))
+            except ValueError:
+                return {"status": "BLOCK", "violations": ["invalid_archive_content_length"]}
             chunks = []
             total_bytes = 0
             while True:
@@ -90,13 +109,13 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
                 if not chunk:
                     break
                 total_bytes += len(chunk)
-                if declared_length is not None and total_bytes > int(declared_length):
+                if declared_length is not None and total_bytes > declared_length:
                     return {"status": "BLOCK", "violations": ["archive_exceeds_declared_length"]}
                 if total_bytes > 10_000_000:
                     return {"status": "BLOCK", "violations": ["remote_archive_too_large"]}
                 chunks.append(chunk)
             raw = b"".join(chunks)
-        if declared_length is not None and len(raw) != int(declared_length):
+        if declared_length is not None and len(raw) != declared_length:
             return {"status": "BLOCK", "violations": ["truncated_archive_response"]}
         if len(raw) > 10_000_000:
             return {"status": "BLOCK", "violations": ["remote_archive_too_large"]}
