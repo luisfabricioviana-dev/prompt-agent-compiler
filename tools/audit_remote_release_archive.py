@@ -17,6 +17,9 @@ REPOSITORY = "luisfabricioviana-dev/prompt-agent-compiler"
 ARTIFACT_NAME = "release-gate-differential-evidence"
 
 class SafeArtifactRedirect(HTTPRedirectHandler):
+    max_redirections = 3
+    max_repeats = 2
+
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         target = urlsplit(newurl)
         if (target.scheme != 'https' or not target.hostname or target.username is not None
