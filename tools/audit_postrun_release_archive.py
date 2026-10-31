@@ -56,6 +56,11 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                     return {"status": "BLOCK", "violations": ["unsupported_zip_filename_encoding"]}
                 if raw[offset + 30:offset + 30 + name_size] != info.filename.encode('ascii'):
                     return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
+                next_offsets = [other.header_offset for other in zf.infolist()
+                                if other.header_offset > offset]
+                region_end = min(next_offsets + [zf.start_dir])
+                if end > region_end or end + info.compress_size > region_end:
+                    return {"status": "BLOCK", "violations": ["zip_member_region_overlap"]}
                 # Bit 3 allows a trailing data descriptor; local size/CRC
                 # fields are not authoritative in that case.
                 if local_flags & 0x0008:
