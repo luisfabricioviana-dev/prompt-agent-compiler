@@ -50,7 +50,11 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                 end = offset + 30 + name_size + extra_size
                 if end > len(raw) or local_method != info.compress_type:
                     return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
-                if raw[offset + 30:offset + 30 + name_size] != info.filename.encode('utf-8'):
+                # Only canonical ASCII evidence filenames are permitted.
+                # A UTF-8 filename flag is unnecessary and can conceal aliasing.
+                if info.flag_bits & 0x0800:
+                    return {"status": "BLOCK", "violations": ["unsupported_zip_filename_encoding"]}
+                if raw[offset + 30:offset + 30 + name_size] != info.filename.encode('ascii'):
                     return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
                 mode = (info.external_attr >> 16) & 0o170000
                 if (info.is_dir() or info.flag_bits & 0x1
