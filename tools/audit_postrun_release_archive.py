@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import zipfile
+import zlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -39,8 +40,15 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                     return {"status": "BLOCK", "violations": ["unsafe_archive_entry"]}
             if any(info.file_size > 1_000_000 for info in zf.infolist()):
                 return {"status": "BLOCK", "violations": ["archive_entry_too_large"]}
-            report = zf.read("release-gate-differential-report.json")
-            manifest_raw = zf.read("release-gate-evidence-manifest.json")
+            try:
+                report = zf.read("release-gate-differential-report.json")
+                manifest_raw = zf.read("release-gate-evidence-manifest.json")
+            except (EOFError, RuntimeError, zipfile.BadZipFile, zlib.error):
+                return {"status": "BLOCK", "violations": ["archive_entry_integrity_failure"]}
+            for info in zf.infolist():
+                content = report if info.filename == "release-gate-differential-report.json" else manifest_raw
+                if len(content) != info.file_size:
+                    return {"status": "BLOCK", "violations": ["archive_entry_size_mismatch"]}
         manifest = json.loads(manifest_raw)
         metadata = reconcile_artifact_metadata(
             manifest, artifact, expected_run_id=run_id,
