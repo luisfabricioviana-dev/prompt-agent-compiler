@@ -33,6 +33,10 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
             }
             if len(names) != len(expected_names) or set(names) != expected_names:
                 return {"status": "BLOCK", "violations": ["archive_inventory_mismatch"]}
+            offsets = [info.header_offset for info in zf.infolist()]
+            if (len(set(offsets)) != len(offsets)
+                    or any(offset < 0 or offset >= zf.start_dir for offset in offsets)):
+                return {"status": "BLOCK", "violations": ["zip_local_offsets_invalid"]}
             for info in zf.infolist():
                 offset = info.header_offset
                 if offset < 0 or offset + 30 > len(raw):
