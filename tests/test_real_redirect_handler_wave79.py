@@ -31,6 +31,7 @@ class RedirectHandlerExerciseTests(unittest.TestCase):
         self.handler.parent = type("Parent", (), {"open": staticmethod(fake_open)})()
 
     def redirect(self, request, destination):
+        request.timeout = 10
         response = RedirectResponse(b"")
         response.location = destination
         return self.handler.http_error_302(request, response, 302, "Found",
