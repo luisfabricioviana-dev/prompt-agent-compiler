@@ -81,9 +81,12 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
             chunks = []
             total_bytes = 0
             while True:
-                chunk = handle.read(min(65536, 10_000_001 - total_bytes))
+                requested = min(65536, 10_000_001 - total_bytes)
+                chunk = handle.read(requested)
                 if not isinstance(chunk, bytes):
                     return {"status": "BLOCK", "violations": ["invalid_archive_read_type"]}
+                if len(chunk) > requested:
+                    return {"status": "BLOCK", "violations": ["archive_overread"]}
                 if not chunk:
                     break
                 total_bytes += len(chunk)
