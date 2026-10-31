@@ -30,7 +30,7 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                 "release-gate-differential-report.json",
                 "release-gate-evidence-manifest.json",
             }
-            if set(names) != expected_names:
+            if len(names) != len(expected_names) or set(names) != expected_names:
                 return {"status": "BLOCK", "violations": ["archive_inventory_mismatch"]}
             if any(info.file_size > 1_000_000 for info in zf.infolist()):
                 return {"status": "BLOCK", "violations": ["archive_entry_too_large"]}
