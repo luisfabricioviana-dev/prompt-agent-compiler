@@ -56,6 +56,15 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                     return {"status": "BLOCK", "violations": ["unsupported_zip_filename_encoding"]}
                 if raw[offset + 30:offset + 30 + name_size] != info.filename.encode('ascii'):
                     return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
+                # Bit 3 allows a trailing data descriptor; local size/CRC
+                # fields are not authoritative in that case.
+                if not (local_flags & 0x0008):
+                    local_crc = int.from_bytes(local[14:18], 'little')
+                    local_compressed = int.from_bytes(local[18:22], 'little')
+                    local_uncompressed = int.from_bytes(local[22:26], 'little')
+                    if (local_crc != info.CRC or local_compressed != info.compress_size
+                            or local_uncompressed != info.file_size):
+                        return {"status": "BLOCK", "violations": ["zip_local_integrity_metadata_mismatch"]}
                 mode = (info.external_attr >> 16) & 0o170000
                 if (info.is_dir() or info.flag_bits & 0x1
                         or mode not in (0, 0o100000)):
