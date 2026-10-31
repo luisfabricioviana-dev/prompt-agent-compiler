@@ -58,6 +58,18 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                     return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
                 # Bit 3 allows a trailing data descriptor; local size/CRC
                 # fields are not authoritative in that case.
+                if local_flags & 0x0008:
+                    descriptor_offset = end + info.compress_size
+                    expected_fields = (info.CRC, info.compress_size, info.file_size)
+                    descriptor = raw[descriptor_offset:descriptor_offset + 16]
+                    if descriptor[:4] == bytes((80, 75, 7, 8)):
+                        values = descriptor[4:16]
+                    else:
+                        values = descriptor[:12]
+                    if len(values) != 12 or tuple(
+                            int.from_bytes(values[i:i + 4], "little")
+                            for i in (0, 4, 8)) != expected_fields:
+                        return {"status": "BLOCK", "violations": ["zip_data_descriptor_mismatch"]}
                 if not (local_flags & 0x0008):
                     local_crc = int.from_bytes(local[14:18], 'little')
                     local_compressed = int.from_bytes(local[18:22], 'little')
