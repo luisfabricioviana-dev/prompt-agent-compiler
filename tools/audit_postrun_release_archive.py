@@ -61,8 +61,16 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                 if local_flags & 0x0008:
                     descriptor_offset = end + info.compress_size
                     expected_fields = (info.CRC, info.compress_size, info.file_size)
+                    # The descriptor must fit before the next local entry or central directory.
+                    boundaries = [other.header_offset for other in zf.infolist()
+                                  if other.header_offset > info.header_offset]
+                    boundary = min(boundaries + [zf.start_dir])
+                    if descriptor_offset < end or descriptor_offset + 12 > boundary:
+                        return {"status": "BLOCK", "violations": ["zip_descriptor_boundary_violation"]}
                     descriptor = raw[descriptor_offset:descriptor_offset + 16]
                     if descriptor[:4] == bytes((80, 75, 7, 8)):
+                        if descriptor_offset + 16 > boundary:
+                            return {"status": "BLOCK", "violations": ["zip_descriptor_boundary_violation"]}
                         values = descriptor[4:16]
                     else:
                         values = descriptor[:12]
