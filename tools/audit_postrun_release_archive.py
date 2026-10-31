@@ -34,6 +34,20 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
             if len(names) != len(expected_names) or set(names) != expected_names:
                 return {"status": "BLOCK", "violations": ["archive_inventory_mismatch"]}
             for info in zf.infolist():
+                offset = info.header_offset
+                if offset < 0 or offset + 30 > len(raw):
+                    return {"status": "BLOCK", "violations": ["invalid_zip_local_header"]}
+                local = raw[offset:offset + 30]
+                if local[:4] != b'PK\x03\x04':
+                    return {"status": "BLOCK", "violations": ["invalid_zip_local_header"]}
+                local_method = int.from_bytes(local[8:10], 'little')
+                name_size = int.from_bytes(local[26:28], 'little')
+                extra_size = int.from_bytes(local[28:30], 'little')
+                end = offset + 30 + name_size + extra_size
+                if end > len(raw) or local_method != info.compress_type:
+                    return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
+                if raw[offset + 30:offset + 30 + name_size] != info.filename.encode('utf-8'):
+                    return {"status": "BLOCK", "violations": ["zip_local_header_mismatch"]}
                 mode = (info.external_attr >> 16) & 0o170000
                 if (info.is_dir() or info.flag_bits & 0x1
                         or mode not in (0, 0o100000)):
