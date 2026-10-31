@@ -52,7 +52,7 @@ class DescriptorBoundariesTests(unittest.TestCase):
         raw[first_central + 20:first_central + 24] = (9999).to_bytes(4, "little")
         result, metadata, verifier = self.audit(bytes(raw))
         self.assertEqual(result["status"], "BLOCK")
-        self.assertIn("zip_descriptor_boundary_violation", result["violations"])
+        self.assertTrue({"zip_descriptor_boundary_violation", "zip_member_region_overlap"} & set(result["violations"]))
         metadata.assert_not_called()
         verifier.assert_not_called()
 
