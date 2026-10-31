@@ -78,7 +78,19 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
             if declared_length is not None:
                 if not declared_length.isdecimal() or int(declared_length) > 10_000_000:
                     return {"status": "BLOCK", "violations": ["invalid_archive_content_length"]}
-            raw = handle.read(10_000_001)
+            chunks = []
+            total_bytes = 0
+            while True:
+                chunk = handle.read(min(65536, 10_000_001 - total_bytes))
+                if not isinstance(chunk, bytes):
+                    return {"status": "BLOCK", "violations": ["invalid_archive_read_type"]}
+                if not chunk:
+                    break
+                total_bytes += len(chunk)
+                if total_bytes > 10_000_000:
+                    return {"status": "BLOCK", "violations": ["remote_archive_too_large"]}
+                chunks.append(chunk)
+            raw = b"".join(chunks)
         if declared_length is not None and len(raw) != int(declared_length):
             return {"status": "BLOCK", "violations": ["truncated_archive_response"]}
         if len(raw) > 10_000_000:
