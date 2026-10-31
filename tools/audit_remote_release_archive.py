@@ -83,6 +83,16 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
         artifact_id = artifact.get("id")
         if not isinstance(artifact_id, int) or artifact_id <= 0:
             return {"status": "BLOCK", "violations": ["invalid_remote_artifact_id"]}
+        # Preflight must reject inconsistent provider metadata before downloading.
+        workflow_run = artifact.get("workflow_run")
+        digest = artifact.get("digest")
+        if (artifact.get("expired") is not False
+                or not isinstance(workflow_run, dict)
+                or str(workflow_run.get("id")) != run_id
+                or workflow_run.get("head_sha") != commit_sha
+                or not isinstance(digest, str)
+                or re.fullmatch(r"sha256:[0-9a-f]{64}", digest) is None):
+            return {"status": "BLOCK", "violations": ["artifact_identity_preflight_failed"]}
         # The GitHub archive endpoint redirects to a short-lived download URL.
         download_request = Request(prefix + "/actions/artifacts/" +
                                    str(artifact_id) + "/zip", headers=headers)
