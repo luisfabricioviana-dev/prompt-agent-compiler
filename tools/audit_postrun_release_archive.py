@@ -38,6 +38,12 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                 if (info.is_dir() or info.flag_bits & 0x1
                         or mode not in (0, 0o100000)):
                     return {"status": "BLOCK", "violations": ["unsafe_archive_entry"]}
+            if any(info.compress_type not in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED)
+                   for info in zf.infolist()):
+                return {"status": "BLOCK", "violations": ["unsupported_archive_compression"]}
+            if any(info.compress_size < 0 or info.file_size < 0
+                   for info in zf.infolist()):
+                return {"status": "BLOCK", "violations": ["invalid_archive_member_size"]}
             if any(info.file_size > 1_000_000 for info in zf.infolist()):
                 return {"status": "BLOCK", "violations": ["archive_entry_too_large"]}
             try:
