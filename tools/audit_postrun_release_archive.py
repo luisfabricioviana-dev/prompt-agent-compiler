@@ -32,6 +32,11 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
             }
             if len(names) != len(expected_names) or set(names) != expected_names:
                 return {"status": "BLOCK", "violations": ["archive_inventory_mismatch"]}
+            for info in zf.infolist():
+                mode = (info.external_attr >> 16) & 0o170000
+                if (info.is_dir() or info.flag_bits & 0x1
+                        or mode not in (0, 0o100000)):
+                    return {"status": "BLOCK", "violations": ["unsafe_archive_entry"]}
             if any(info.file_size > 1_000_000 for info in zf.infolist()):
                 return {"status": "BLOCK", "violations": ["archive_entry_too_large"]}
             report = zf.read("release-gate-differential-report.json")
