@@ -90,6 +90,8 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
                 if not chunk:
                     break
                 total_bytes += len(chunk)
+                if declared_length is not None and total_bytes > int(declared_length):
+                    return {"status": "BLOCK", "violations": ["archive_exceeds_declared_length"]}
                 if total_bytes > 10_000_000:
                     return {"status": "BLOCK", "violations": ["remote_archive_too_large"]}
                 chunks.append(chunk)
