@@ -4,23 +4,40 @@ All requests are GET-only; no release dispatch or GitHub mutation.
 """
 import json
 import os
+import re
+from urllib.parse import urlsplit
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
 
 from tools.audit_postrun_release_archive import audit_postrun_archive
 
 REPOSITORY = "luisfabricioviana-dev/prompt-agent-compiler"
 ARTIFACT_NAME = "release-gate-differential-evidence"
 
+class SafeArtifactRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        target = urlsplit(newurl)
+        if target.scheme != 'https' or not target.hostname:
+            raise URLError('untrusted_archive_redirect')
+        request = super().redirect_request(req, fp, code, msg, headers, newurl)
+        if request is None:
+            return None
+        for key in list(request.headers):
+            if key.lower() in {'authorization', 'cookie', 'proxy-authorization'}:
+                del request.headers[key]
+        return request
+
+
 
 def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
                          token: str, source_root: str | Path = ".",
                          opener=None) -> dict:
-    if not token or not run_id.isdecimal() or len(commit_sha) != 40:
+    if (not token or not run_id.isdecimal() or not attempt.isdecimal()
+            or re.fullmatch(r'[0-9a-f]{40}', commit_sha) is None):
         return {"status": "BLOCK", "violations": ["invalid_remote_audit_inputs"]}
-    open_url = opener or urlopen
+    open_url = opener or build_opener(SafeArtifactRedirect()).open
     prefix = "https://api.github.com/repos/" + REPOSITORY
     headers = {"Accept": "application/vnd.github+json",
                "Authorization": "Bearer " + token,
@@ -31,8 +48,10 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
         with open_url(listing_request, timeout=20) as handle:
             payload = json.load(handle)
         artifacts = payload.get("artifacts", [])
+        if not isinstance(artifacts, list) or not isinstance(payload.get('total_count'), int):
+            return {'status': 'BLOCK', 'violations': ['invalid_remote_inventory']}
         matches = [a for a in artifacts if a.get("name") == ARTIFACT_NAME]
-        if payload.get("total_count", 0) > 100 or len(matches) != 1:
+        if payload['total_count'] != len(artifacts) or len(matches) != 1:
             return {"status": "BLOCK", "violations": ["ambiguous_remote_artifacts"]}
         artifact = matches[0]
         artifact_id = artifact.get("id")
