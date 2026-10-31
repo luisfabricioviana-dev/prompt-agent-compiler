@@ -30,6 +30,26 @@ def first_descriptor(raw):
     extra_len=int.from_bytes(raw[offset+28:offset+30],"little")
     return offset+30+name_len+extra_len+entry.compress_size
 
+def remove_descriptor_signature(raw, index):
+    """Remove four bytes and repair later central offsets and EOCD start."""
+    data = bytearray(raw[:index] + raw[index+4:])
+    cursor = 0
+    while True:
+        cursor = data.find(bytes((80, 75, 1, 2)), cursor)
+        if cursor < 0:
+            break
+        old_offset = int.from_bytes(data[cursor+42:cursor+46], "little")
+        if old_offset > index:
+            data[cursor+42:cursor+46] = (old_offset-4).to_bytes(4, "little")
+        cursor += 46
+    eocd = data.rfind(bytes((80, 75, 5, 6)))
+    if eocd < 0:
+        raise AssertionError("missing eocd")
+    central_offset = int.from_bytes(data[eocd+16:eocd+20], "little")
+    data[eocd+16:eocd+20] = (central_offset-4).to_bytes(4, "little")
+    return data
+
+
 class UnsignedDescriptorTests(unittest.TestCase):
     def audit(self,raw):
         with tempfile.TemporaryDirectory() as folder:
@@ -48,7 +68,7 @@ class UnsignedDescriptorTests(unittest.TestCase):
         raw=make_archive()
         index=first_descriptor(raw)
         self.assertEqual(raw[index:index+4],bytes((80,75,7,8)))
-        unsigned=raw[:index]+raw[index+4:]
+        unsigned=remove_descriptor_signature(raw,index)
         result,metadata,verifier=self.audit(unsigned)
         self.assertEqual(result["status"],"PASS_SCOPED")
         metadata.assert_called_once()
@@ -57,7 +77,7 @@ class UnsignedDescriptorTests(unittest.TestCase):
     def test_unsigned_descriptor_wrong_compressed_size_blocks(self):
         raw=make_archive()
         index=first_descriptor(raw)
-        unsigned=bytearray(raw[:index]+raw[index+4:])
+        unsigned=remove_descriptor_signature(raw,index)
         unsigned[index+4:index+8]=(999).to_bytes(4,"little")
         result,metadata,verifier=self.audit(bytes(unsigned))
         self.assertIn("zip_data_descriptor_mismatch",result["violations"])
