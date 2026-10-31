@@ -34,7 +34,7 @@ class RedirectHandlerExerciseTests(unittest.TestCase):
         response = RedirectResponse(b"")
         response.location = destination
         return self.handler.http_error_302(request, response, 302, "Found",
-                                           {"Location": destination})
+                                           {"location": destination})
 
     def test_one_redirect_invokes_handler_and_drops_credentials(self):
         request = Request("https://api.github.com/artifact",
