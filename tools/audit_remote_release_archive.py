@@ -61,7 +61,19 @@ def audit_remote_archive(*, run_id: str, commit_sha: str, attempt: str,
         download_request = Request(prefix + "/actions/artifacts/" +
                                    str(artifact_id) + "/zip", headers=headers)
         with open_url(download_request, timeout=30) as handle:
+            status = getattr(handle, "status", 200)
+            if status != 200:
+                return {"status": "BLOCK", "violations": ["unexpected_archive_http_status"]}
+            final_url = getattr(handle, "url", None)
+            if final_url is not None and urlsplit(final_url).scheme != "https":
+                return {"status": "BLOCK", "violations": ["unexpected_archive_url_scheme"]}
+            declared_length = getattr(handle, "headers", {}).get("Content-Length")
+            if declared_length is not None:
+                if not declared_length.isdecimal() or int(declared_length) > 10_000_000:
+                    return {"status": "BLOCK", "violations": ["invalid_archive_content_length"]}
             raw = handle.read(10_000_001)
+        if declared_length is not None and len(raw) != int(declared_length):
+            return {"status": "BLOCK", "violations": ["truncated_archive_response"]}
         if len(raw) > 10_000_000:
             return {"status": "BLOCK", "violations": ["remote_archive_too_large"]}
         with TemporaryDirectory() as temp:
