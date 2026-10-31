@@ -19,7 +19,8 @@ ARTIFACT_NAME = "release-gate-differential-evidence"
 class SafeArtifactRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         target = urlsplit(newurl)
-        if target.scheme != 'https' or not target.hostname:
+        if (target.scheme != 'https' or not target.hostname or target.username is not None
+                or target.password is not None or target.port not in (None, 443)):
             raise URLError('untrusted_archive_redirect')
         request = super().redirect_request(req, fp, code, msg, headers, newurl)
         if request is None:
@@ -27,6 +28,9 @@ class SafeArtifactRedirect(HTTPRedirectHandler):
         for key in list(request.headers):
             if key.lower() in {'authorization', 'cookie', 'proxy-authorization'}:
                 del request.headers[key]
+        for key in list(request.unredirected_hdrs):
+            if key.lower() in {'authorization', 'cookie', 'proxy-authorization'}:
+                del request.unredirected_hdrs[key]
         return request
 
 
