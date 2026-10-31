@@ -40,6 +40,10 @@ def audit_postrun_archive(archive: str | Path, artifact: dict, *,
                 local = raw[offset:offset + 30]
                 if local[:4] != bytes((80, 75, 3, 4)):
                     return {"status": "BLOCK", "violations": ["invalid_zip_local_header"]}
+                local_flags = int.from_bytes(local[6:8], 'little')
+                # Evidence ZIP uses only ordinary stored/deflated members.
+                if local_flags != info.flag_bits or (local_flags & ~0x0808):
+                    return {"status": "BLOCK", "violations": ["zip_local_flags_mismatch"]}
                 local_method = int.from_bytes(local[8:10], 'little')
                 name_size = int.from_bytes(local[26:28], 'little')
                 extra_size = int.from_bytes(local[28:30], 'little')
