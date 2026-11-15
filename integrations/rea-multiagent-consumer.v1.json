@@ -1,0 +1,25 @@
+{
+  "schema": "rea.multiagent.consumer.v1",
+  "agent_id": "compiler",
+  "domain": "prompt-runtime",
+  "shared_core_repo": "luisfabricioviana-dev/Apredizagem-e-Inova-o",
+  "shared_core_pr": 156,
+  "shared_core_package": "rea_multiagent",
+  "distribution_status": "CANDIDATE_NOT_DEPLOYED",
+  "runtime_enabled": false,
+  "publication": "BLOCKED",
+  "default_permissions": {
+    "read_only": true,
+    "delegate": false,
+    "network": false,
+    "repository_write": false
+  },
+  "requires": [
+    "cross-repository-CI-on-exact-SHA",
+    "authenticated-Codex-executor-on-isolated-host",
+    "independent-domain-QA",
+    "security-review",
+    "explicit-promotion-authorization"
+  ],
+  "domain_invariant": "Compiler validates specs; cannot silently elevate tool privileges."
+}
